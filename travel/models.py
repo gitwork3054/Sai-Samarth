@@ -6,6 +6,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
+from .curated_photos import photo_url
 
 
 class SiteSettings(models.Model):
@@ -198,7 +199,7 @@ class Package(models.Model):
     def cover(self):
         if self.cover_image:
             return self.cover_image.url
-        return self.cover_url or (self.destination.image.url if self.destination.image else "")
+        return self.cover_url or (self.destination.image.url if self.destination.image else photo_url(self.destination.name))
 
     @property
     def youtube_id(self):
