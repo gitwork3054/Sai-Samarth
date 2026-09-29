@@ -179,9 +179,10 @@
   </div>
   <div class="places auto-rail" aria-label="Popular places">
     {% for d in popular %}
+      {% curated_photo_url d.name as place_photo %}
       <a
         class="place"
-        style="background:{% if d.image %}url('{{ d.image.url }}') center/cover{% else %}{{ d.pk|gradient }}{% endif %}"
+        style="background:{% if d.image %}url('{{ d.image.url }}') center/cover{% elif place_photo %}url('{{ place_photo }}') center/cover{% else %}{{ d.pk|gradient }}{% endif %}"
         href="{% url 'packages' %}?destination={{ d.slug }}"
       >
         <b>{{ d.name }}</b>
