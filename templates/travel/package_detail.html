@@ -114,7 +114,7 @@
 </section>
 {% if more_here %}<section class="wrap sec"><div class="sec-head"><div><h2>More of {{ pkg.destination.state_or_country|default:pkg.destination.name }}</h2><p>Other ways to explore the same region.</p></div></div><div class="grid four">{% for p in more_here %}{% include "travel/_card.html" %}{% endfor %}</div></section>{% endif %}
 {% if places %}<section class="wrap sec"><div class="sec-head"><div><h2>More places to explore</h2><p>Inspiration for your next holiday.</p></div></div>
-  <div class="places">{% for d in places %}<a class="place" style="background:{% if d.image %}url('{{ d.image.url }}') center/cover{% else %}{{ d.pk|gradient }}{% endif %}" href="{% url 'packages' %}?destination={{ d.slug }}"><b>{{ d.name }}</b><small>{{ d.n }} trip{{ d.n|pluralize }}</small></a>{% endfor %}</div></section>{% endif %}
+  <div class="places">{% for d in places %}{% curated_photo_url d.name as place_photo %}<a class="place" style="background:{% if d.image %}url('{{ d.image.url }}') center/cover{% elif place_photo %}url('{{ place_photo }}') center/cover{% else %}{{ d.pk|gradient }}{% endif %}" href="{% url 'packages' %}?destination={{ d.slug }}"><b>{{ d.name }}</b><small>{{ d.n }} trip{{ d.n|pluralize }}</small></a>{% endfor %}</div></section>{% endif %}
 {{ config|json_script:"pkg-config" }}
 <script>window.PKG={title:"{{ pkg.title|escapejs }}",code:"{{ pkg.tour_code }}",wa:"{{ site.whatsapp_number }}",mail:"{{ site.email }}",url:"{{ request.build_absolute_uri }}"};</script>
 {% endblock %}
