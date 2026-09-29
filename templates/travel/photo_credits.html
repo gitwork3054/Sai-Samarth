@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Photo credits · {{ site.brand_name }}{% endblock %}
+{% block content %}
+<section class="wrap sec">
+  <div class="sec-head"><div><h1>Photo credits</h1><p>Photography used across our travel pages.</p></div></div>
+  {% for path, credit in credits %}
+    <p><a href="{{ credit.source }}" target="_blank" rel="noopener noreferrer">{{ credit.title }}</a>
+      · {{ credit.author }} · {% if credit.license_url %}<a href="{{ credit.license_url }}" target="_blank" rel="noopener noreferrer">{{ credit.license }}</a>{% else %}{{ credit.license }}{% endif %}</p>
+  {% empty %}<p>Photo credits will appear here when trip photos are added.</p>{% endfor %}
+</section>
+{% endblock %}

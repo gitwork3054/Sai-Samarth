@@ -1,0 +1,208 @@
+{% extends "base.html" %}{% load static travel_extras %}
+
+{% block content %}
+<section class="hero">
+  <div class="sun" aria-hidden="true"></div>
+  <div class="clouds" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <div class="wrap hero-in">
+    <h1>{{ site.hero_title }}</h1>
+    <p class="lead">{{ site.hero_subtitle }}</p>
+
+    <form class="finder" action="{% url 'packages' %}" method="get" role="search">
+      <label class="f-wide">
+        <span>Where to?</span>
+        <input name="q" list="dest-list" placeholder="Bali, Kerala, FTD-0012…" autocomplete="off">
+      </label>
+
+      <label>
+        <span>Trip type</span>
+        <select name="region">
+          <option value="">All trips</option>
+          <option value="domestic">Domestic</option>
+          <option value="international">International</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Duration</span>
+        <select name="duration">
+          <option value="">Any</option>
+          {% for d in durations %}
+            <option value="{{ d }}">{{ d }} days</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label>
+        <span>Budget</span>
+        <select name="budget">
+          <option value="">Any</option>
+          {% for k, v in budgets %}
+            <option value="{{ k }}">{{ v }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <button class="btn btn-sun" type="submit">Find trips</button>
+    </form>
+
+    <datalist id="dest-list">
+      {% for d in destinations %}
+        <option value="{{ d.name }}">
+      {% endfor %}
+    </datalist>
+  </div>
+
+  <svg class="waves" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <path class="w1" d="M0 80 C 240 20 480 140 720 80 S 1200 20 1440 80 V160 H0Z"/>
+    <path class="w2" d="M0 100 C 300 60 520 150 780 100 S 1220 60 1440 110 V160 H0Z"/>
+    <path class="w3" d="M0 125 C 260 95 560 160 820 125 S 1240 100 1440 130 V160 H0Z"/>
+  </svg>
+</section>
+
+<section class="wrap tiles">
+  <a class="tile t1" href="{% url 'domestic' %}">
+    <b>Domestic</b><span>India, top to bottom</span>
+  </a>
+  <a class="tile t2" href="{% url 'international' %}">
+    <b>International</b><span>Visa-friendly favourites</span>
+  </a>
+  <a class="tile t3" href="{% url 'group_tours' %}">
+    <b>Group tours</b><span>Fixed departures, zero stress</span>
+  </a>
+  <a class="tile t4" href="{% url 'corporate_tours' %}">
+    <b>Corporate</b><span>Offsites, incentives, MICE</span>
+  </a>
+</section>
+
+{% if offers %}
+<section class="wrap sec" id="offers">
+  <div class="sec-head">
+    <div>
+      <h2>Offers & discounts</h2>
+      <p>Limited-time prices, already applied.</p>
+    </div>
+    <a class="more" href="{% url 'offers' %}">See all offers</a>
+  </div>
+  <div class="grid auto-rail" aria-label="Offers and discounts">
+    {% for p in offers %}{% include "travel/_card.html" %}{% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if events %}
+<section class="band band-dusk" id="events">
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div>
+        <h2>Events & festival tours</h2>
+        <p>Travel around the moments worth planning for.</p>
+      </div>
+      <a class="more" href="{% url 'events' %}">All festival tours</a>
+    </div>
+    <div class="grid auto-rail" aria-label="Events and festival tours">
+      {% for p in events %}{% include "travel/_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="wrap sec">
+  <div class="sec-head">
+    <div>
+      <h2>Travel your way</h2>
+      <p>Pick a traveller category and we'll show trips built for it.</p>
+    </div>
+  </div>
+  <div class="aud auto-rail" aria-label="Traveller categories">
+    {% for a in audiences %}
+      <a href="{% url 'packages' %}?audience={{ a.slug }}" class="aud-card">
+        <span class="ic">{{ a.icon }}</span>
+        <b>{{ a.name }}</b>
+        <small>{{ a.description }}</small>
+        <em>{{ a.n }} trips</em>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="wrap sec">
+  <div class="sec-head">
+    <div>
+      <h2>Domestic favourites</h2>
+      <p>From desert forts to Himalayan passes.</p>
+    </div>
+    <a class="more" href="{% url 'domestic' %}">All domestic</a>
+  </div>
+  <div class="grid auto-rail" aria-label="Domestic favourites">
+    {% for p in domestic %}{% include "travel/_card.html" %}{% endfor %}
+  </div>
+</section>
+
+<section class="wrap sec">
+  <div class="sec-head">
+    <div>
+      <h2>International escapes</h2>
+      <p>Islands, cities and snow peaks abroad.</p>
+    </div>
+    <a class="more" href="{% url 'international' %}">All international</a>
+  </div>
+  <div class="grid auto-rail" aria-label="International escapes">
+    {% for p in international %}{% include "travel/_card.html" %}{% endfor %}
+  </div>
+</section>
+
+{% if group_tours %}
+<section class="band band-sand">
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div>
+        <h2>Group departures</h2>
+        <p>Join a fixed-date group with a tour manager, all-inclusive.</p>
+      </div>
+      <a class="more" href="{% url 'group_tours' %}">All group tours</a>
+    </div>
+    <div class="grid auto-rail" aria-label="Group departures">
+      {% for p in group_tours %}{% include "travel/_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="wrap sec">
+  <div class="sec-head">
+    <div>
+      <h2>Popular places</h2>
+      <p>Where our travellers keep going back.</p>
+    </div>
+  </div>
+  <div class="places auto-rail" aria-label="Popular places">
+    {% for d in popular %}
+      <a
+        class="place"
+        style="background:{% if d.image %}url('{{ d.image.url }}') center/cover{% else %}{{ d.pk|gradient }}{% endif %}"
+        href="{% url 'packages' %}?destination={{ d.slug }}"
+      >
+        <b>{{ d.name }}</b>
+        <small>{{ d.n }} trip{{ d.n|pluralize }}</small>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="wrap sec cta-band">
+  <div>
+    <h2>Not sure where to go?</h2>
+    <p>Tell us your dates and budget. A travel expert replies on WhatsApp within the hour.</p>
+  </div>
+  <div class="cta-actions">
+    <a class="btn btn-sun" href="https://wa.me/{{ site.whatsapp_number }}?text=Hi%2C%20please%20suggest%20a%20trip%20for%20me" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a class="btn btn-ghost-l" href="mailto:{{ site.email }}">Email us</a>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/carousel.js' %}?v=1" defer></script>
+{% endblock %}

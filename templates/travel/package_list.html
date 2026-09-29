@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% load travel_extras %}
+{% block title %}{{ title }} · {{ site.brand_name }}{% endblock %}
+{% block content %}
+<section class="page-head"><div class="wrap"><h1>{{ title }}</h1><p>{{ count }} trip{{ count|pluralize }} found</p></div></section>
+<div class="wrap list-layout">
+  <button class="btn btn-ghost filter-toggle" type="button" data-toggle="#filters">Filters{% if active_filters %} · on{% endif %}</button>
+  <aside class="filters" id="filters">
+    <form method="get" id="filter-form">
+      <label class="fl"><span>Search</span><input type="search" name="q" value="{{ params.q|default:'' }}" placeholder="Place, keyword or tour code"></label>
+      <label class="fl"><span>Destination</span><select name="destination"><option value="">All destinations</option>{% for d in destinations %}<option value="{{ d.slug }}" {% if params.destination == d.slug %}selected{% endif %}>{{ d.name }} ({{ d.n }})</option>{% endfor %}</select></label>
+      <label class="fl"><span>Trip type</span><select name="theme"><option value="">All interests</option>{% for t in themes %}<option value="{{ t.slug }}" {% if params.theme == t.slug %}selected{% endif %}>{{ t.icon }} {{ t.name }}</option>{% endfor %}</select></label>
+      <label class="fl"><span>Traveller</span><select name="audience"><option value="">Everyone</option>{% for a in audiences %}<option value="{{ a.slug }}" {% if params.audience == a.slug %}selected{% endif %}>{{ a.icon }} {{ a.name }}</option>{% endfor %}</select></label>
+      <label class="fl"><span>Region</span><select name="region"><option value="">Domestic + international</option><option value="domestic" {% if params.region == 'domestic' %}selected{% endif %}>Domestic</option><option value="international" {% if params.region == 'international' %}selected{% endif %}>International</option></select></label>
+      <label class="fl"><span>Tour style</span><select name="tour_type"><option value="">All styles</option><option value="individual" {% if params.tour_type == 'individual' %}selected{% endif %}>Individual</option><option value="group" {% if params.tour_type == 'group' %}selected{% endif %}>Group</option><option value="corporate" {% if params.tour_type == 'corporate' %}selected{% endif %}>Corporate</option></select></label>
+      <label class="fl"><span>Duration</span><select name="duration"><option value="">Any</option>{% for d in durations %}<option value="{{ d }}" {% if params.duration == d %}selected{% endif %}>{{ d }} days</option>{% endfor %}</select></label>
+      <label class="fl"><span>Budget per person</span><select name="budget"><option value="">Any</option>{% for k,v in budgets %}<option value="{{ k }}" {% if params.budget == k %}selected{% endif %}>{{ v }}</option>{% endfor %}</select></label>
+      <label class="check"><input type="checkbox" name="offers" value="1" {% if params.offers %}checked{% endif %}> Offers only</label>
+      <label class="check"><input type="checkbox" name="events" value="1" {% if params.events %}checked{% endif %}> Festival tours only</label>
+      <label class="fl"><span>Sort by</span><select name="sort"><option value="">Featured</option><option value="price_low" {% if params.sort == 'price_low' %}selected{% endif %}>Price: low to high</option><option value="price_high" {% if params.sort == 'price_high' %}selected{% endif %}>Price: high to low</option><option value="duration" {% if params.sort == 'duration' %}selected{% endif %}>Shortest first</option><option value="newest" {% if params.sort == 'newest' %}selected{% endif %}>Newest</option></select></label>
+      <div class="f-actions"><button class="btn btn-sun" type="submit">Apply</button><a class="btn btn-link" href="{{ request.path }}">Reset</a></div>
+    </form>
+  </aside>
+  <section class="results">
+    {% if page.object_list %}
+      <div class="grid two-up">{% for p in page.object_list %}{% include "travel/_card.html" %}{% endfor %}</div>
+      {% if page.paginator.num_pages > 1 %}<nav class="pager" aria-label="Pages">
+        {% if page.has_previous %}<a class="btn btn-ghost sm" href="?{{ qs_keep }}{% if qs_keep %}&{% endif %}page={{ page.previous_page_number }}">Previous</a>{% endif %}
+        <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+        {% if page.has_next %}<a class="btn btn-ghost sm" href="?{{ qs_keep }}{% if qs_keep %}&{% endif %}page={{ page.next_page_number }}">Next</a>{% endif %}
+      </nav>{% endif %}
+    {% else %}
+      <div class="empty"><h3>No trips match these filters</h3><p>Try a wider budget or another duration, or reset the filters.</p><a class="btn btn-sun" href="{{ request.path }}">Reset filters</a></div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Sign up · {{ site.brand_name }}{% endblock %}
+{% block content %}
+<section class="auth"><div class="auth-box">
+  <h1>Create your account</h1><p class="muted">Save trips, track enquiries and re-book faster.</p>
+  <form method="post" novalidate>{% csrf_token %}
+    {{ form.non_field_errors }}
+    <label class="fl"><span>Full name</span>{{ form.first_name }}{{ form.first_name.errors }}</label>
+    <label class="fl"><span>Email</span>{{ form.email }}{{ form.email.errors }}</label>
+    <label class="fl"><span>Phone / WhatsApp (optional)</span>{{ form.phone }}{{ form.phone.errors }}</label>
+    <label class="fl"><span>Password</span>{{ form.password1 }}{{ form.password1.errors }}</label>
+    <label class="fl"><span>Confirm password</span>{{ form.password2 }}{{ form.password2.errors }}</label>
+    <button class="btn btn-sun block" type="submit">Sign up</button>
+  </form>
+  <p class="muted center">Already registered? <a href="{% url 'login' %}">Log in</a></p>
+</div></section>
+{% endblock %}

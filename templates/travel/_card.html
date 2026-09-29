@@ -1,0 +1,24 @@
+{% load travel_extras %}
+<article class="card">
+  <a class="card-img" href="{{ p.get_absolute_url }}" style="background:{% if p.cover %}url('{{ p.cover }}') center/cover{% else %}{{ p.pk|gradient }}{% endif %}">
+    {% if not p.cover %}<span class="card-place">{{ p.destination.name }}</span>{% endif %}
+    <span class="badges">
+      {% if p.offer_active %}<b class="badge b-off">{{ p.discount_percent }}% off</b>{% endif %}
+      {% if p.is_event %}<b class="badge b-evt">Festival</b>{% endif %}
+      {% if p.tour_type == 'group' %}<b class="badge b-grp">Group</b>{% elif p.tour_type == 'corporate' %}<b class="badge b-grp">Corporate</b>{% endif %}
+    </span>
+  </a>
+  {% is_saved p as saved %}
+  <button class="heart{% if saved %} on{% endif %}" data-save="{% url 'toggle_save' p.slug %}" aria-pressed="{% if saved %}true{% else %}false{% endif %}" aria-label="Save {{ p.title }}">
+    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 21s-7.500-4.600-9.600-9.300C.9 8.300 3 4.500 6.700 4.500c2 0 3.600 1 5.300 3 1.700-2 3.300-3 5.300-3 3.700 0 5.800 3.800 4.300 7.200C19.500 16.400 12 21 12 21z"/></svg>
+  </button>
+  <div class="card-body">
+    <p class="meta">{{ p.tour_code }} · {{ p.days }}D/{{ p.nights }}N · {{ p.destination.state_or_country|default:p.destination.get_region_display }}</p>
+    <h3><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></h3>
+    <p class="chips">{% for t in p.themes.all|slice:":2" %}<span>{{ t.icon }} {{ t.name }}</span>{% endfor %}{% for a in p.audiences.all|slice:":1" %}<span>{{ a.icon }} {{ a.name }}</span>{% endfor %}</p>
+    <div class="card-foot">
+      <div class="price">{% if p.savings %}<s>{{ p.base_price|inr }}</s>{% endif %}<strong>{{ p.price_from|inr }}</strong><small>per person</small></div>
+      <a class="btn btn-sun sm" href="{{ p.get_absolute_url }}">View trip</a>
+    </div>
+  </div>
+</article>

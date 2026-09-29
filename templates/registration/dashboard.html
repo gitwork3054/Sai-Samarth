@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% load travel_extras %}
+{% block title %}My trips · {{ site.brand_name }}{% endblock %}
+{% block content %}
+<section class="page-head"><div class="wrap"><h1>Hi {{ user.first_name|default:"traveller" }}</h1><p>Your saved trips and booking history</p></div></section>
+<div class="wrap sec">
+  <div class="tabs" role="tablist"><a href="?tab=saved" class="{% if tab != 'history' %}on{% endif %}">Saved trips ({{ saved|length }})</a><a href="?tab=history" class="{% if tab == 'history' %}on{% endif %}">Enquiries & bookings ({{ enquiries|length }})</a></div>
+  {% if tab == 'history' %}
+    {% for e in enquiries %}<div class="hist"><div><b>{{ e.package.title }}</b><small>{{ e.reference }} · {{ e.package.tour_code }} · {{ e.adults }} adult{{ e.adults|pluralize }}{% if e.children %}, {{ e.children }} child{{ e.children|pluralize:"ren" }}{% endif %} · {{ e.get_hotel_tier_display }} hotels{% if e.travel_date %} · {{ e.travel_date|date:"d M Y" }}{% endif %}</small></div>
+      <div class="hist-r"><strong>{{ e.total_price|inr }}</strong><span class="st st-{{ e.status }}">{{ e.get_status_display }}</span><a class="btn btn-ghost sm" href="{{ e.package.get_absolute_url }}">View trip</a></div></div>
+    {% empty %}<div class="empty"><h3>No enquiries yet</h3><p>When you send an inquiry, it shows up here.</p><a class="btn btn-sun" href="{% url 'packages' %}">Browse trips</a></div>{% endfor %}
+  {% else %}
+    {% if saved %}<div class="grid">{% for s in saved %}{% with p=s.package %}{% include "travel/_card.html" %}{% endwith %}{% endfor %}</div>
+    {% else %}<div class="empty"><h3>Nothing saved yet</h3><p>Tap the heart on any trip to keep it here.</p><a class="btn btn-sun" href="{% url 'packages' %}">Browse trips</a></div>{% endif %}
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends "base.html" %}{% load travel_extras %}
+{% block title %}{{ pkg.title }} · {{ pkg.tour_code }} · {{ site.brand_name }}{% endblock %}
+{% block desc %}{{ pkg.short_description }}{% endblock %}
+{% block content %}
+<section class="d-hero" style="background:{% if pkg.cover %}linear-gradient(180deg,rgba(36,26,77,.15),rgba(36,26,77,.75)),url('{{ pkg.cover }}') center/cover{% else %}{{ pkg.pk|gradient }}{% endif %}">
+  <div class="wrap">
+    <p class="crumbs"><a href="{% url 'home' %}">Home</a> / <a href="{% if pkg.region == 'domestic' %}{% url 'domestic' %}{% else %}{% url 'international' %}{% endif %}">{{ pkg.destination.get_region_display }}</a> / {{ pkg.destination.name }}</p>
+    <h1>{{ pkg.title }}</h1>
+    <p class="d-meta"><span class="pill">Tour code {{ pkg.tour_code }}</span><span class="pill">{{ pkg.days }} days / {{ pkg.nights }} nights</span><span class="pill">{{ pkg.get_tour_type_display }}</span>
+      {% if pkg.offer_active %}<span class="pill hot">{{ pkg.discount_percent }}% off{% if pkg.offer_label %} · {{ pkg.offer_label }}{% endif %}{% if pkg.offer_valid_till %} · till {{ pkg.offer_valid_till|date:"d M" }}{% endif %}</span>{% endif %}
+      {% if pkg.is_event %}<span class="pill hot">{{ pkg.event_name|default:"Festival tour" }}{% if pkg.event_date %} · {{ pkg.event_date|date:"M Y" }}{% endif %}</span>{% endif %}</p>
+    <p class="chips light">{% for t in pkg.themes.all %}<span>{{ t.icon }} {{ t.name }}</span>{% endfor %}{% for a in pkg.audiences.all %}<span>{{ a.icon }} {{ a.name }}</span>{% endfor %}</p>
+  </div>
+</section>
+
+<nav class="subnav" aria-label="Sections"><div class="wrap"><a href="#overview">Overview</a><a href="#itinerary">Itinerary</a><a href="#sightseeing">Sightseeing</a><a href="#gallery">Gallery</a><a href="#hotels">Hotels</a>{% if pkg.activities.all %}<a href="#optional">Optional</a>{% endif %}{% if pkg.youtube_id %}<a href="#video">Video</a>{% endif %}<a href="#info">Inclusions & info</a></div></nav>
+
+<div class="wrap d-layout">
+<div class="d-main">
+  <section id="overview" class="blk"><h2>Overview</h2><p class="prose">{{ pkg.overview|default:pkg.short_description|linebreaksbr }}</p>
+    {% if pkg.departure_list %}<div class="dep"><b>Fixed departures</b>{% for d in pkg.departure_list %}<span>{{ d }}</span>{% endfor %}</div>{% endif %}
+    <div class="actions-row">
+      <a class="btn btn-ghost" href="{% url 'package_pdf' pkg.slug %}">Download itinerary PDF</a>
+      <button class="btn btn-ghost heart-btn{% if is_saved %} on{% endif %}" data-save="{% url 'toggle_save' pkg.slug %}" aria-pressed="{% if is_saved %}true{% else %}false{% endif %}"><span class="t-off">♡ Save for later</span><span class="t-on">♥ Saved</span></button>
+    </div>
+  </section>
+
+  <section id="itinerary" class="blk"><h2>Day-wise itinerary</h2>
+    <div class="days">{% for d in pkg.itinerary.all %}
+      <details class="day" {% if forloop.first %}open{% endif %}><summary><span class="dn">Day {{ d.day_number }}</span><b>{{ d.title }}</b></summary>
+        <p>{{ d.description|linebreaksbr }}</p>{% if d.meals or d.stay %}<p class="day-meta">{% if d.meals %}<span>🍽 {{ d.meals }}</span>{% endif %}{% if d.stay %}<span>🛏 {{ d.stay }}</span>{% endif %}</p>{% endif %}</details>
+    {% empty %}<p class="muted">Itinerary coming soon. Send an inquiry and we'll share it.</p>{% endfor %}</div>
+  </section>
+
+  <section id="sightseeing" class="blk"><h2>Sightseeing</h2>
+    <div class="spots">{% for s in pkg.sightseeing.all %}{% curated_photo_url pkg.destination.name s.name as fallback_photo %}<div class="spot"><div class="spot-img" style="background:{% if s.image %}url('{{ s.image.url }}') center/cover{% elif fallback_photo %}url('{{ fallback_photo }}') center/cover{% else %}{{ forloop.counter|add:pkg.pk|gradient }}{% endif %}"></div><b>{{ s.name }}</b><small>{{ s.description }}</small></div>{% empty %}<p class="muted">Sightseeing details will be added soon.</p>{% endfor %}</div>
+  </section>
+
+  <section id="gallery" class="blk"><h2>Gallery</h2>
+    {% with photos=pkg.gallery.all %}
+    <div class="gal" data-gal>
+      {% for g in photos %}<button class="gal-i{% if forloop.counter > 6 %} extra{% endif %}" data-full="{{ g.image.url }}" data-cap="{{ g.caption }}" style="background:url('{{ g.image.url }}') center/cover" aria-label="Open photo {{ forloop.counter }}"></button>
+      {% endfor %}{% for s in gallery_fallback %}{% curated_photo_url pkg.destination.name s.name as fallback_photo %}
+        {% if fallback_photo %}<button type="button" class="gal-i" data-full="{{ fallback_photo }}" data-cap="{{ s.name }}" style="background:url('{{ fallback_photo }}') center/cover" aria-label="Open photo of {{ s.name }}"></button>
+        {% else %}<div class="gal-i ph" style="background:{{ forloop.counter|add:pkg.pk|gradient }}"><span>{{ s.name }}</span></div>{% endif %}
+      {% endfor %}
+    </div>
+    {% if photos|length > 6 %}<button class="btn btn-ghost sm" data-gal-more>Show all {{ photos|length }} photos</button>{% endif %}
+    {% endwith %}
+  </section>
+
+  <section id="hotels" class="blk"><h2>Hotels & room categories</h2>
+    <div class="tiers">{% for tier, hs in hotels_by_tier.items %}<div class="tier"><h3>{{ tier }}</h3>{% for h in hs %}<div class="hotel"><b>{{ h.name }}</b><span class="stars" aria-label="{{ h.star_rating }} star">{% for i in "12345"|slice:h.star_rating %}★{% endfor %}</span><small>{{ h.room_category }}{% if h.city %} · {{ h.city }}{% endif %} · {{ h.nights }} night{{ h.nights|pluralize }}</small></div>{% endfor %}</div>{% empty %}<p class="muted">Hotel details will be shared with your quote.</p>{% endfor %}</div>
+  </section>
+
+  {% if pkg.activities.all %}<section id="optional" class="blk"><h2>Optional experiences</h2><p class="muted">Add these in the price calculator; prices update automatically.</p>
+    <div class="opts">{% for a in pkg.activities.all %}<div class="opt"><b>{{ a.name }}</b><small>{{ a.description }}</small><span>{{ a.adult_price|inr }} adult · {{ a.child_price|inr }} child</span></div>{% endfor %}</div></section>{% endif %}
+
+  {% if pkg.youtube_id %}<section id="video" class="blk"><h2>Tour video</h2><div class="video"><iframe src="https://www.youtube-nocookie.com/embed/{{ pkg.youtube_id }}" title="{{ pkg.title }} video" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div></section>{% endif %}
+
+  <section id="info" class="blk"><h2>Inclusions, exclusions & tour information</h2>
+    <div class="ie"><div><h3 class="ok">Included</h3><ul class="ticks">{% for i in pkg.inclusion_list %}<li>{{ i }}</li>{% endfor %}</ul></div>
+    <div><h3 class="no">Not included</h3><ul class="crosses">{% for i in pkg.exclusion_list %}<li>{{ i }}</li>{% endfor %}</ul></div></div>
+    {% if pkg.info_list %}<h3>Good to know</h3><dl class="info">{% for t, d in pkg.info_list %}<div>{% if t %}<dt>{{ t }}</dt>{% endif %}<dd>{{ d }}</dd></div>{% endfor %}</dl>{% endif %}
+  </section>
+</div>
+
+<aside class="calc" id="calc" aria-label="Price calculator">
+  <div class="calc-in">
+    <h3>Calculate your price</h3>
+    <div class="row-2">
+      <div class="stepper" data-step="adults"><span>Adults</span><div><button type="button" data-d="-1" aria-label="Fewer adults">−</button><output>2</output><button type="button" data-d="1" aria-label="More adults">+</button></div></div>
+      <div class="stepper" data-step="children"><span>Children (2-11)</span><div><button type="button" data-d="-1" aria-label="Fewer children">−</button><output>0</output><button type="button" data-d="1" aria-label="More children">+</button></div></div>
+    </div>
+    <fieldset class="tierpick"><legend>Hotel category</legend>
+      {% for key, label, up in tiers_available %}<label><input type="radio" name="tier" value="{{ key }}" {% if forloop.first %}checked{% endif %}><span>{{ label }}{% if up %}<small>+{{ up|inr }} pp</small>{% endif %}</span></label>{% endfor %}
+    </fieldset>
+    {% if config.departures %}<label class="fl"><span>Departure city</span><select id="dep-city"><option value="">Select city</option>{% for d in config.departures %}<option value="{{ d.city }}">{{ d.city }}{% if d.surcharge %} (+{{ d.surcharge|inr }} pp){% else %} (no extra){% endif %}</option>{% endfor %}</select></label>{% endif %}
+    {% if config.activities %}<fieldset class="acts"><legend>Optional experiences</legend>{% for a in config.activities %}<label><input type="checkbox" value="{{ a.id }}" data-act><span>{{ a.name }}<small>{{ a.adult|inr }} / {{ a.child|inr }}</small></span></label>{% endfor %}</fieldset>{% endif %}
+    <dl class="break" id="breakdown"></dl>
+    <div class="total"><span>Estimated total</span><strong id="total">₹0</strong></div>
+    <p class="fine">Taxes as applicable. Final quote confirmed by our travel expert.</p>
+    <button class="btn btn-sun block" data-open-enq>Send inquiry</button>
+    <div class="two"><a class="btn btn-ghost" id="wa-link" target="_blank" rel="noopener" href="#">WhatsApp</a><a class="btn btn-ghost" id="mail-link" href="#">Email</a></div>
+  </div>
+</aside>
+</div>
+
+<div class="mbar"><div><small>Estimated total</small><strong id="total-m">₹0</strong></div><button class="btn btn-sun" data-open-enq>Send inquiry</button></div>
+
+<div class="modal" id="enq" role="dialog" aria-modal="true" aria-labelledby="enq-t" hidden>
+  <div class="modal-box">
+    <button class="x" data-close aria-label="Close">×</button>
+    <div id="enq-form-wrap">
+      <h3 id="enq-t">Send inquiry</h3><p class="muted">{{ pkg.title }} · {{ pkg.tour_code }}</p>
+      <div class="enq-sum"><span id="enq-sum-text"></span><strong id="enq-total"></strong></div>
+      <form id="enq-form" method="post" action="{% url 'create_enquiry' pkg.slug %}" novalidate>{% csrf_token %}
+        <input type="hidden" name="adults"><input type="hidden" name="children"><input type="hidden" name="hotel_tier"><input type="hidden" name="departure_city"><input type="hidden" name="activities">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+        <div class="row-2"><label class="fl"><span>Full name</span><input name="name" required value="{{ user.get_full_name|default:'' }}"></label><label class="fl"><span>Phone / WhatsApp</span><input name="phone" required inputmode="tel" value="{{ user.profile.phone|default:'' }}"></label></div>
+        <div class="row-2"><label class="fl"><span>Email</span><input name="email" type="email" required value="{{ user.email|default:'' }}"></label><label class="fl"><span>Preferred travel date</span><input name="travel_date" type="date"></label></div>
+        <label class="fl"><span>Anything we should know?</span><textarea name="message" rows="2" placeholder="Special occasion, dietary needs, flexible dates…"></textarea></label>
+        <p class="err" id="enq-err" role="alert"></p>
+        <button class="btn btn-sun block" type="submit">Send inquiry</button>
+      </form>
+    </div>
+    <div id="enq-done" hidden><div class="done-ic">✓</div><h3>Inquiry sent</h3><p>Reference <b id="enq-ref"></b>. We've emailed and WhatsApped you the details. Our travel expert will call you shortly.</p><button class="btn btn-ghost" data-close>Keep browsing</button></div>
+  </div>
+</div>
+<div class="lightbox" id="lb" hidden><button class="x" data-close aria-label="Close">×</button><img alt=""><p></p></div>
+
+<section class="wrap sec">
+  {% if similar %}<div class="sec-head"><div><h2>More like this</h2><p>Similar trips travellers also love.</p></div></div><div class="grid four">{% for p in similar %}{% include "travel/_card.html" %}{% endfor %}</div>{% endif %}
+</section>
+{% if more_here %}<section class="wrap sec"><div class="sec-head"><div><h2>More of {{ pkg.destination.state_or_country|default:pkg.destination.name }}</h2><p>Other ways to explore the same region.</p></div></div><div class="grid four">{% for p in more_here %}{% include "travel/_card.html" %}{% endfor %}</div></section>{% endif %}
+{% if places %}<section class="wrap sec"><div class="sec-head"><div><h2>More places to explore</h2><p>Inspiration for your next holiday.</p></div></div>
+  <div class="places">{% for d in places %}<a class="place" style="background:{% if d.image %}url('{{ d.image.url }}') center/cover{% else %}{{ d.pk|gradient }}{% endif %}" href="{% url 'packages' %}?destination={{ d.slug }}"><b>{{ d.name }}</b><small>{{ d.n }} trip{{ d.n|pluralize }}</small></a>{% endfor %}</div></section>{% endif %}
+{{ config|json_script:"pkg-config" }}
+<script>window.PKG={title:"{{ pkg.title|escapejs }}",code:"{{ pkg.tour_code }}",wa:"{{ site.whatsapp_number }}",mail:"{{ site.email }}",url:"{{ request.build_absolute_uri }}"};</script>
+{% endblock %}
