@@ -4,14 +4,14 @@
 .hero.hero-slider::before,.hero.hero-slider::after{display:none}
 .hero-track{position:absolute;inset:0;display:flex;transition:transform 1s cubic-bezier(.22,.61,.36,1);will-change:transform}
 .hero-slide{position:relative;flex:0 0 100%;height:100%;overflow:hidden}
-.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transform:scale(1.04)}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transform:none}
 .hero-slide::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,22,29,.72),rgba(5,22,29,.12)),linear-gradient(0deg,rgba(5,22,29,.60),transparent 65%)}
 .hero-copy{position:relative;z-index:1;padding-top:clamp(65px,12vh,140px)}
 .hero-eyebrow{display:block;margin-bottom:20px;font-size:12px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:#fff}
 .hero-slider .hero-heading{font-size:clamp(2.6rem,5.6vw,5rem);line-height:1.08;letter-spacing:-.04em;max-width:15ch;margin:0 0 22px;color:#fff;text-wrap:balance}
 .hero-slider .hero-caption{max-width:44ch;color:#f0f3f3;font-size:clamp(1rem,1.6vw,1.2rem);line-height:1.7;margin:0}
-.hero-slide.is-active .hero-photo{animation:sshZoom 7s linear both}
-@keyframes sshZoom{from{transform:scale(1.04)}to{transform:scale(1.12)}}
+.hero-slide.is-active .hero-photo{animation:none}
+
 .hero-search{position:absolute;z-index:3;bottom:82px;left:0;right:0}
 .hero-slider .finder{margin:0;animation:none;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-radius:14px}
 .hero-slider .finder input:focus-visible,.hero-slider .finder select:focus-visible{outline:2px solid #355e63;outline-offset:3px}
@@ -32,15 +32,15 @@
   <h1 class="hero-sr">Explore with Sai Samarth Holidays Pvt. Ltd.</h1>
   <div class="hero-track">
     <article class="hero-slide is-active" aria-roledescription="slide" aria-label="1 of 5">
-      <img class="hero-photo" src="{% static 'img/hero/lake.png' %}" alt="" fetchpriority="high">
+      <img class="hero-photo" src="{% static 'img/hero/lake-v2.webp' %}" alt="" fetchpriority="high">
       <div class="wrap hero-copy">
         <span class="hero-eyebrow">Alpine escapes</span>
-        <h2 class="hero-heading">Find your calm beyond the mountains.</h2>
-        <p class="hero-caption">Pristine lakes, quiet trails and a little room to breathe.</p>
+        <h2 class="hero-heading">Find your calm in a winter wonderland.</h2>
+        <p class="hero-caption">Snow-covered forests, cosy retreats and a little room to breathe.</p>
       </div>
     </article>
     <article class="hero-slide" aria-roledescription="slide" aria-label="2 of 5" aria-hidden="true">
-      <img class="hero-photo" src="{% static 'img/hero/greece.png' %}" alt="" decoding="async">
+      <img class="hero-photo" src="{% static 'img/hero/greece-v2.webp' %}" alt="" decoding="async">
       <div class="wrap hero-copy">
         <span class="hero-eyebrow">Greece · Island stories</span>
         <h2 class="hero-heading">Where blue skies meet timeless beauty.</h2>
@@ -48,15 +48,15 @@
       </div>
     </article>
     <article class="hero-slide" aria-roledescription="slide" aria-label="3 of 5" aria-hidden="true">
-      <img class="hero-photo" src="{% static 'img/hero/switzerland.png' %}" alt="" decoding="async">
+      <img class="hero-photo" src="{% static 'img/hero/switzerland-v2.webp' %}" alt="" decoding="async">
       <div class="wrap hero-copy">
-        <span class="hero-eyebrow">Switzerland · Scenic journeys</span>
+        <span class="hero-eyebrow">Alpine countryside · Scenic journeys</span>
         <h2 class="hero-heading">Take the scenic route to extraordinary.</h2>
-        <p class="hero-caption">Rolling meadows, alpine trains and views worth slowing down for.</p>
+        <p class="hero-caption">Rolling meadows, mountain villages and views worth slowing down for.</p>
       </div>
     </article>
     <article class="hero-slide" aria-roledescription="slide" aria-label="4 of 5" aria-hidden="true">
-      <img class="hero-photo" src="{% static 'img/hero/kerala.png' %}" alt="" decoding="async">
+      <img class="hero-photo" src="{% static 'img/hero/kerala-v2.webp' %}" alt="" decoding="async">
       <div class="wrap hero-copy">
         <span class="hero-eyebrow">Kerala · Backwater moments</span>
         <h2 class="hero-heading">Let the backwaters set your pace.</h2>
@@ -64,7 +64,7 @@
       </div>
     </article>
     <article class="hero-slide" aria-roledescription="slide" aria-label="5 of 5" aria-hidden="true">
-      <img class="hero-photo" src="{% static 'img/hero/sunset.png' %}" alt="" decoding="async">
+      <img class="hero-photo" src="{% static 'img/hero/sunset-v2.webp' %}" alt="" decoding="async">
       <div class="wrap hero-copy">
         <span class="hero-eyebrow">Tropical escapes</span>
         <h2 class="hero-heading">Chase the sunset. Keep the memories.</h2>
@@ -78,7 +78,7 @@
       <div class="hero-dots" aria-label="Choose a slide">
         <button class="hero-dot" type="button" aria-label="Show alpine escapes" aria-pressed="true"></button>
         <button class="hero-dot" type="button" aria-label="Show Greece" aria-pressed="false"></button>
-        <button class="hero-dot" type="button" aria-label="Show Switzerland" aria-pressed="false"></button>
+        <button class="hero-dot" type="button" aria-label="Show alpine countryside" aria-pressed="false"></button>
         <button class="hero-dot" type="button" aria-label="Show Kerala" aria-pressed="false"></button>
         <button class="hero-dot" type="button" aria-label="Show tropical escapes" aria-pressed="false"></button>
       </div>
