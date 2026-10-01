@@ -2,7 +2,7 @@
 <style>
 .hero.hero-slider{position:relative;isolation:isolate;height:calc(100svh - 90px);min-height:740px;padding:0;background:#122b32;overflow:hidden}
 .hero.hero-slider::before,.hero.hero-slider::after{display:none}
-.hero-track{position:absolute;inset:0;display:flex;transition:transform 1s cubic-bezier(.22,.61,.36,1);will-change:transform}
+.hero-track{position:absolute;inset:0;display:flex;transition:transform .7s cubic-bezier(.22,.61,.36,1);will-change:transform}
 .hero-slide{position:relative;flex:0 0 100%;height:100%;overflow:hidden}
 .hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transform:none}
 .hero-slide::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,22,29,.72),rgba(5,22,29,.12)),linear-gradient(0deg,rgba(5,22,29,.60),transparent 65%)}
@@ -114,7 +114,7 @@
   function schedule() {
     clearTimeout(timer);
     if (!paused && !motion.matches && !document.hidden && !hero.contains(document.activeElement)) {
-      timer = setTimeout(() => show(index + 1), 6000);
+      timer = setTimeout(() => show(index + 1), 3000);
     }
   }
   function show(next) {
