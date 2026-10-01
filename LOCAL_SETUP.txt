@@ -1,0 +1,38 @@
+SAI SAMARTH HOLIDAYS - LOCAL SETUP
+
+1. Install Python 3.12 or 3.13. Select Add Python to PATH.
+2. Extract the ZIP completely; do not run it from inside the archive.
+3. Open the Sai_Samarth_Holidays folder and double-click START_LOCAL.bat.
+4. Open http://127.0.0.1:8000/ after setup completes.
+5. Keep the command window open. Ctrl+C stops the server.
+
+MANUAL SETUP (PowerShell)
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+Copy-Item .env.example .env
+.\.venv\Scripts\python.exe manage.py migrate
+.\.venv\Scripts\python.exe manage.py runserver
+
+OWNER ADMIN
+Create your own login if needed:
+.\.venv\Scripts\python.exe manage.py createsuperuser
+Admin: http://127.0.0.1:8000/manage-console/
+
+GOOGLE SIGN-IN
+The slideshow and email login work without Google credentials.
+The Google button becomes enabled after you add real GOOGLE_CLIENT_ID
+and GOOGLE_CLIENT_SECRET values to .env and restart the server.
+Create a Web application OAuth client in Google Cloud Console.
+Authorized redirect URI:
+http://127.0.0.1:8000/auth/google/login/callback/
+Configure the OAuth consent screen and add test users while in testing mode.
+For Render, add the same environment keys and a redirect URI using your
+actual HTTPS domain, ending in /auth/google/login/callback/.
+Never upload .env, your database, or customer data to GitHub.
+
+INCLUDED
+Five supplied travel photographs, a full-cover looping homepage slideshow,
+moving taglines, pause/dot controls, Google authentication integration,
+and the earlier package/gallery/sightseeing photo fallbacks.
+The supplied local database and media are included in this ZIP only.
+Package fallback photos need internet access; the five hero photos are local.

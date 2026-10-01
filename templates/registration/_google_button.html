@@ -1,0 +1,27 @@
+{% load socialaccount %}
+<style>
+.google-login{margin:24px 0}
+.google-button{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:13px 18px;border:1px solid #dadce0;border-radius:8px;background:#fff;color:#202124;font:600 14px Arial,sans-serif;cursor:pointer;transition:background .2s,box-shadow .2s}
+.google-button:hover{background:#f8faff;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.google-button:focus-visible{outline:2px solid #4285f4;outline-offset:3px}
+.google-button:disabled{opacity:.55;cursor:not-allowed}
+.auth-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#727b80;font-size:12px}
+.auth-divider::before,.auth-divider::after{content:"";flex:1;height:1px;background:#e5e7eb}
+</style>
+{% if google_login_enabled %}
+<form class="google-login" method="post" action="{% provider_login_url 'google' process='login' %}">
+  {% csrf_token %}
+  <button class="google-button" type="submit">
+    <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true">
+      <path fill="#4285F4" d="M43.6 24.5c0-1.4-.1-2.8-.4-4.1H24v7.8h11a9.5 9.5 0 0 1-4.1 6.2v5h6.6c3.9-3.6 6.1-8.8 6.1-14.9z"/>
+      <path fill="#34A853" d="M24 44c5.5 0 10.1-1.8 13.5-4.9l-6.6-5c-1.8 1.2-4.1 1.9-6.9 1.9-5.3 0-9.8-3.6-11.4-8.4H5.8v5.2A20 20 0 0 0 24 44z"/>
+      <path fill="#FBBC05" d="M12.6 27.6a12 12 0 0 1 0-7.2v-5.2H5.8a20 20 0 0 0 0 17.6z"/>
+      <path fill="#EA4335" d="M24 12c3 0 5.7 1 7.8 3l5.8-5.8A19.5 19.5 0 0 0 24 4 20 20 0 0 0 5.8 15.2l6.8 5.2C14.2 15.6 18.7 12 24 12z"/>
+    </svg>
+    Continue with Google
+  </button>
+</form>
+{% else %}
+<div class="google-login"><button class="google-button" type="button" disabled title="Google sign-in is currently unavailable">Continue with Google</button></div>
+{% endif %}
+<div class="auth-divider">or continue with email</div>

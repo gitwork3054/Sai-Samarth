@@ -24,7 +24,7 @@ class PhotoImportTests(TestCase):
         with TemporaryDirectory() as folder, override_settings(MEDIA_ROOT=folder), patch(
                 "travel.management.commands.add_photos.choose_photo", return_value=photo), patch(
                 "travel.management.commands.add_photos.save_photo", side_effect=lambda photo, path, credits: path):
-            call_command("add_photos", verbosity=0)
+            call_command("add_photos", search_new=True, verbosity=0)
             for package in packages:
                 package.refresh_from_db()
                 self.assertEqual(package.cover_image.name, "travel/destinations/test-coast.jpg")

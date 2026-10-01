@@ -1,65 +1,7 @@
 {% extends "base.html" %}{% load static travel_extras %}
 
 {% block content %}
-<section class="hero">
-  <div class="sun" aria-hidden="true"></div>
-  <div class="clouds" aria-hidden="true"><i></i><i></i><i></i></div>
-
-  <div class="wrap hero-in">
-    <h1>{{ site.hero_title }}</h1>
-    <p class="lead">{{ site.hero_subtitle }}</p>
-
-    <form class="finder" action="{% url 'packages' %}" method="get" role="search">
-      <label class="f-wide">
-        <span>Where to?</span>
-        <input name="q" list="dest-list" placeholder="Bali, Kerala, FTD-0012…" autocomplete="off">
-      </label>
-
-      <label>
-        <span>Trip type</span>
-        <select name="region">
-          <option value="">All trips</option>
-          <option value="domestic">Domestic</option>
-          <option value="international">International</option>
-        </select>
-      </label>
-
-      <label>
-        <span>Duration</span>
-        <select name="duration">
-          <option value="">Any</option>
-          {% for d in durations %}
-            <option value="{{ d }}">{{ d }} days</option>
-          {% endfor %}
-        </select>
-      </label>
-
-      <label>
-        <span>Budget</span>
-        <select name="budget">
-          <option value="">Any</option>
-          {% for k, v in budgets %}
-            <option value="{{ k }}">{{ v }}</option>
-          {% endfor %}
-        </select>
-      </label>
-
-      <button class="btn btn-sun" type="submit">Find trips</button>
-    </form>
-
-    <datalist id="dest-list">
-      {% for d in destinations %}
-        <option value="{{ d.name }}">
-      {% endfor %}
-    </datalist>
-  </div>
-
-  <svg class="waves" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
-    <path class="w1" d="M0 80 C 240 20 480 140 720 80 S 1200 20 1440 80 V160 H0Z"/>
-    <path class="w2" d="M0 100 C 300 60 520 150 780 100 S 1220 60 1440 110 V160 H0Z"/>
-    <path class="w3" d="M0 125 C 260 95 560 160 820 125 S 1240 100 1440 130 V160 H0Z"/>
-  </svg>
-</section>
+{% include "travel/_hero_slider.html" %}
 
 <section class="wrap tiles">
   <a class="tile t1" href="{% url 'domestic' %}">

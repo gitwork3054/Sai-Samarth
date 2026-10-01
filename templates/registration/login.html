@@ -3,6 +3,7 @@
 {% block content %}
 <section class="auth"><div class="auth-box">
   <h1>Welcome back</h1><p class="muted">Log in to see saved trips and your booking history.</p>
+  {% include "registration/_google_button.html" %}
   <form method="post" novalidate>{% csrf_token %}<input type="hidden" name="next" value="{{ request.GET.next }}">
     {{ form.non_field_errors }}
     <label class="fl"><span>Email</span>{{ form.username }}{{ form.username.errors }}</label>

@@ -3,6 +3,7 @@
 {% block content %}
 <section class="auth"><div class="auth-box">
   <h1>Create your account</h1><p class="muted">Save trips, track enquiries and re-book faster.</p>
+  {% include "registration/_google_button.html" %}
   <form method="post" novalidate>{% csrf_token %}
     {{ form.non_field_errors }}
     <label class="fl"><span>Full name</span>{{ form.first_name }}{{ form.first_name.errors }}</label>

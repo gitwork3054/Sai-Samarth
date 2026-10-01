@@ -1,3 +1,4 @@
+from django.conf import settings
 from .models import Audience, Package, SiteSettings, Theme
 
 
@@ -8,7 +9,8 @@ def site(request):
     if request.user.is_authenticated:
         saved = set(request.user.saved_packages.values_list("package_id", flat=True))
     packages = Package.objects.filter(is_active=True).select_related("destination")
-    return {"site": s, "logo_url": logo, "saved_ids": saved,
+    google = settings.SOCIALACCOUNT_PROVIDERS["google"]["APP"]
+    return {"google_login_enabled": bool(google["client_id"] and google["secret"]), "site": s, "logo_url": logo, "saved_ids": saved,
             "nav_audiences": Audience.objects.all(), "nav_themes": Theme.objects.all(),
             "nav_domestic_packages": packages.filter(destination__region="domestic").order_by("destination__name", "title"),
             "nav_international_packages": packages.filter(destination__region="international").order_by("destination__name", "title"),

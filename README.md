@@ -63,3 +63,11 @@ Demo packages contain placeholder text, prices and hotel names. Run `python mana
 to download freely licensed travel photos to `media/travel/`; the site links to their authors and licenses at `/photo-credits/`.
 The importer shares each image between packages for the same destination, can be rerun safely, and leaves owner uploads untouched.
 Review the automatically matched sightseeing photos before publishing; some landmarks have no suitable image and keep their placeholder.
+
+## October homepage and Google update
+
+Windows: extract the ZIP and run `START_LOCAL.bat`. See `LOCAL_SETUP.txt`.
+The homepage uses five bundled photographs in a looping horizontal slideshow.
+Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env` locally or Render environment settings to enable Google login.
+Local redirect URI: `http://127.0.0.1:8000/auth/google/login/callback/`.
+Production redirect URI: `https://YOUR-DOMAIN/auth/google/login/callback/`.
