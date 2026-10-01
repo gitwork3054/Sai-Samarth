@@ -114,7 +114,7 @@
   function schedule() {
     clearTimeout(timer);
     if (!paused && !motion.matches && !document.hidden && !hero.contains(document.activeElement)) {
-      timer = setTimeout(() => show(index + 1), 3000);
+      timer = setTimeout(() => show(index + 1), 1500);
     }
   }
   function show(next) {
