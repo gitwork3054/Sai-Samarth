@@ -36,3 +36,9 @@ moving taglines, pause/dot controls, Google authentication integration,
 and the earlier package/gallery/sightseeing photo fallbacks.
 The supplied local database and media are included in this ZIP only.
 Package fallback photos need internet access; the five hero photos are local.
+
+PHOTO UPDATE
+The five replacement photos are stored as lossless WebP files with their original pixel dimensions.
+Greece 1920x1285; alpine countryside 1920x1080; Kerala 2048x1152; beach 728x410; snow retreat 910x607.
+The beach and snow photos can still appear soft when enlarged beyond their native resolution.
+Additional image zoom is removed. Horizontal slideshow motion remains.
