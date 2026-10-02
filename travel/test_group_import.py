@@ -37,7 +37,8 @@ class GroupImportTests(TestCase):
             for day in expected:
                 from django.utils.html import escape
                 self.assertContains(html, escape(day['title']), html=False)
-            self.assertEqual(self.client.get(tour.get_absolute_url() + 'pdf/').status_code, 200)
+            with patch('travel.pdf._photo', return_value=None):
+                self.assertEqual(self.client.get(tour.get_absolute_url() + 'pdf/').status_code, 200)
 
     def test_missing_and_child_prices_require_quote(self):
         call_command('import_group_tours', verbosity=0)
