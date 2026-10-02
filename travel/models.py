@@ -119,6 +119,9 @@ class Package(models.Model):
     short_description = models.CharField(max_length=240)
     overview = models.TextField(blank=True)
 
+    source_details = models.JSONField(default=dict, blank=True, help_text="Original imported tour details, preserved verbatim")
+    price_on_request = models.BooleanField(default=False)
+
     # pricing (INR, per person)
     base_price = models.PositiveIntegerField(help_text="Adult price per person, Standard hotels, before discount")
     child_price = models.PositiveIntegerField(default=0, help_text="Child (2-11 yrs) price per person")
@@ -226,8 +229,14 @@ class Package(models.Model):
     def departure_list(self):
         return _fmt_lines(self.departure_dates)
 
+    @property
+    def duration_label(self):
+        return self.source_details.get("duration") or f"{self.days} days / {self.nights} nights"
+
     def pricing_config(self):
         return {
+            "price_on_request": self.price_on_request,
+            "child_price_on_request": bool(self.source_details) and not self.child_price,
             "base": self.base_price, "child": self.child_price or self.base_price,
             "discount": self.effective_discount,
             "tiers": {"standard": 0, "deluxe": self.deluxe_upgrade, "premium": self.premium_upgrade},
@@ -239,7 +248,7 @@ class Package(models.Model):
 class ItineraryDay(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name="itinerary")
     day_number = models.PositiveSmallIntegerField(default=1)
-    title = models.CharField(max_length=160)
+    title = models.CharField(max_length=500)
     description = models.TextField()
     meals = models.CharField(max_length=80, blank=True, help_text="e.g. Breakfast, Dinner")
     stay = models.CharField(max_length=120, blank=True, help_text="Overnight stay city / hotel")
@@ -390,7 +399,7 @@ class Enquiry(models.Model):
             lines.append("Optional experiences: " + ", ".join(acts))
         if self.travel_date:
             lines.append(f"Preferred date: {self.travel_date:%d %b %Y}")
-        lines.append(f"Estimated total: Rs. {self.total_price:,}")
+        lines.append("Estimated total: Price on request" if b.get("price_on_request") else f"Estimated total: Rs. {self.total_price:,}")
         return lines
 
 

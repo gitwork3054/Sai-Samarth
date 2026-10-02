@@ -67,7 +67,7 @@ def _filter(qs, p):
         qs = qs.filter(days__gte=lo, days__lte=hi)
     if p.get("budget") in BUDGETS:
         lo, hi = BUDGETS[p["budget"]]
-        qs = qs.filter(base_price__gte=lo, base_price__lt=hi)
+        qs = qs.filter(price_on_request=False, base_price__gte=lo, base_price__lt=hi)
     today = date.today()
     if p.get("offers"):
         qs = qs.filter(discount_percent__gt=0).filter(Q(offer_valid_till__isnull=True) | Q(offer_valid_till__gte=today))

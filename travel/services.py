@@ -32,8 +32,9 @@ def calculate_price(package, adults, children, tier="standard", departure_city="
             acts.append(a["name"])
             acts_total += a["adult"] * adults + a["child"] * children
     total = base + hotel - discount + surcharge + acts_total
-    return {"base": base, "hotel_upgrade": hotel, "discount": discount, "departure_surcharge": surcharge,
-            "activities_total": acts_total, "activities": acts, "total": max(total, 0), "adults": adults, "children": children}
+    quote_required = cfg["price_on_request"] or (children > 0 and cfg["child_price_on_request"])
+    return {"price_on_request": quote_required, "base": base, "hotel_upgrade": hotel, "discount": discount, "departure_surcharge": surcharge,
+            "activities_total": acts_total, "activities": acts, "total": 0 if quote_required else max(total, 0), "adults": adults, "children": children}
 
 
 # ------------------------------------------------------------------ notifications
@@ -86,7 +87,7 @@ def send_whatsapp(enquiry, phone, body, template=None, params=()):
 
 def _params(enq):
     return (enq.name, enq.package.title, enq.package.tour_code, enq.reference,
-            f"{enq.travel_date:%d %b %Y}" if enq.travel_date else "To be decided", f"Rs. {enq.total_price:,}")
+            f"{enq.travel_date:%d %b %Y}" if enq.travel_date else "To be decided", "Price on request" if enq.price_breakdown.get("price_on_request") else f"Rs. {enq.total_price:,}")
 
 
 def notify_enquiry_received(enq):

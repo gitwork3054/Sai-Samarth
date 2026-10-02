@@ -6,7 +6,7 @@
   <div class="wrap">
     <p class="crumbs"><a href="{% url 'home' %}">Home</a> / <a href="{% if pkg.region == 'domestic' %}{% url 'domestic' %}{% else %}{% url 'international' %}{% endif %}">{{ pkg.destination.get_region_display }}</a> / {{ pkg.destination.name }}</p>
     <h1>{{ pkg.title }}</h1>
-    <p class="d-meta"><span class="pill">Tour code {{ pkg.tour_code }}</span><span class="pill">{{ pkg.days }} days / {{ pkg.nights }} nights</span><span class="pill">{{ pkg.get_tour_type_display }}</span>
+    <p class="d-meta"><span class="pill">Tour code {{ pkg.tour_code }}</span><span class="pill">{{ pkg.duration_label }}</span><span class="pill">{{ pkg.get_tour_type_display }}</span>
       {% if pkg.offer_active %}<span class="pill hot">{{ pkg.discount_percent }}% off{% if pkg.offer_label %} · {{ pkg.offer_label }}{% endif %}{% if pkg.offer_valid_till %} · till {{ pkg.offer_valid_till|date:"d M" }}{% endif %}</span>{% endif %}
       {% if pkg.is_event %}<span class="pill hot">{{ pkg.event_name|default:"Festival tour" }}{% if pkg.event_date %} · {{ pkg.event_date|date:"M Y" }}{% endif %}</span>{% endif %}</p>
     <p class="chips light">{% for t in pkg.themes.all %}<span>{{ t.icon }} {{ t.name }}</span>{% endfor %}{% for a in pkg.audiences.all %}<span>{{ a.icon }} {{ a.name }}</span>{% endfor %}</p>
@@ -39,6 +39,7 @@
   <section id="gallery" class="blk"><h2>Gallery</h2>
     {% with photos=pkg.gallery.all %}
     <div class="gal" data-gal>
+      {% if pkg.source_details.image_url %}<button type="button" class="gal-i" data-full="{{ pkg.source_details.image_url }}" data-cap="{{ pkg.title }}" style="background:url('{{ pkg.source_details.image_url }}') center/cover" aria-label="Open tour photo"></button>{% endif %}
       {% for g in photos %}<button class="gal-i{% if forloop.counter > 6 %} extra{% endif %}" data-full="{{ g.image.url }}" data-cap="{{ g.caption }}" style="background:url('{{ g.image.url }}') center/cover" aria-label="Open photo {{ forloop.counter }}"></button>
       {% endfor %}{% for s in gallery_fallback %}{% curated_photo_url pkg.destination.name s.name as fallback_photo %}
         {% if fallback_photo %}<button type="button" class="gal-i" data-full="{{ fallback_photo }}" data-cap="{{ s.name }}" style="background:url('{{ fallback_photo }}') center/cover" aria-label="Open photo of {{ s.name }}"></button>
@@ -72,9 +73,9 @@
       <div class="stepper" data-step="adults"><span>Adults</span><div><button type="button" data-d="-1" aria-label="Fewer adults">−</button><output>2</output><button type="button" data-d="1" aria-label="More adults">+</button></div></div>
       <div class="stepper" data-step="children"><span>Children (2-11)</span><div><button type="button" data-d="-1" aria-label="Fewer children">−</button><output>0</output><button type="button" data-d="1" aria-label="More children">+</button></div></div>
     </div>
-    <fieldset class="tierpick"><legend>Hotel category</legend>
+    {% if not pkg.source_details %}<fieldset class="tierpick"><legend>Hotel category</legend>
       {% for key, label, up in tiers_available %}<label><input type="radio" name="tier" value="{{ key }}" {% if forloop.first %}checked{% endif %}><span>{{ label }}{% if up %}<small>+{{ up|inr }} pp</small>{% endif %}</span></label>{% endfor %}
-    </fieldset>
+    </fieldset>{% endif %}
     {% if config.departures %}<label class="fl"><span>Departure city</span><select id="dep-city"><option value="">Select city</option>{% for d in config.departures %}<option value="{{ d.city }}">{{ d.city }}{% if d.surcharge %} (+{{ d.surcharge|inr }} pp){% else %} (no extra){% endif %}</option>{% endfor %}</select></label>{% endif %}
     {% if config.activities %}<fieldset class="acts"><legend>Optional experiences</legend>{% for a in config.activities %}<label><input type="checkbox" value="{{ a.id }}" data-act><span>{{ a.name }}<small>{{ a.adult|inr }} / {{ a.child|inr }}</small></span></label>{% endfor %}</fieldset>{% endif %}
     <dl class="break" id="breakdown"></dl>

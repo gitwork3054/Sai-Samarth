@@ -15,7 +15,7 @@ if not exist .env copy /Y .env.example .env >nul
 if errorlevel 1 goto failed
 ".venv\Scripts\python.exe" manage.py migrate --noinput
 if errorlevel 1 goto failed
-".venv\Scripts\python.exe" manage.py shell -c "from travel.models import Package; from django.core.management import call_command; call_command('generate_demo') if not Package.objects.exists() else None"
+".venv\Scripts\python.exe" manage.py shell -c "from travel.models import Package; from django.core.management import call_command; call_command('generate_demo') if not Package.objects.filter(source_details={}).exists() else None"
 if errorlevel 1 goto failed
 echo.
 echo Open http://127.0.0.1:8000/ in your browser.

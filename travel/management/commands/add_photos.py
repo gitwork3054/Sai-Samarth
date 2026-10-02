@@ -201,11 +201,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         credit_file = Path(settings.MEDIA_ROOT) / "photo-credits.json"
         credits = json.loads(credit_file.read_text(encoding="utf-8")) if credit_file.exists() else {}
-        destinations = Destination.objects.filter(packages__isnull=False).distinct().order_by("name")
+        destinations = Destination.objects.filter(packages__source_details={}).distinct().order_by("name")
         if options["limit"]:
             destinations = destinations[:options["limit"]]
         for destination in destinations:
-            packages = list(destination.packages.prefetch_related("sightseeing", "gallery"))
+            packages = list(destination.packages.filter(source_details={}).prefetch_related("sightseeing", "gallery"))
             if options["links_only"]:
                 source = SOURCES.get(f"{destination.name}|")
                 if source:

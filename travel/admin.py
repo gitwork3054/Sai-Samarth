@@ -55,7 +55,7 @@ class PackageAdmin(admin.ModelAdmin):
     inlines = [ItineraryInline, SightseeingInline, GalleryInline, HotelInline, ActivityInline, DepartureInline]
     fieldsets = (
         ("Basics", {"fields": ("title", "slug", "tour_code", "destination", "tour_type", "themes", "audiences", ("days", "nights"), "short_description", "overview")}),
-        ("Pricing (₹ per person)", {"fields": (("base_price", "child_price"), ("deluxe_upgrade", "premium_upgrade"), ("discount_percent", "offer_label", "offer_valid_till"))}),
+        ("Pricing (₹ per person)", {"fields": (("base_price", "child_price", "price_on_request"), ("deluxe_upgrade", "premium_upgrade"), ("discount_percent", "offer_label", "offer_valid_till"))}),
         ("Events & group departures", {"classes": ["collapse"], "fields": ("is_event", "event_name", "event_date", "departure_dates")}),
         ("Media", {"fields": ("cover_image", "cover_url", "youtube_url")}),
         ("Inclusions, exclusions & tour information", {"fields": ("inclusions", "exclusions", "tour_info")}),

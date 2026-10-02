@@ -131,6 +131,8 @@ class Command(BaseCommand):
                 picks.append(6)  # corporate offsite for some
             for v in dict.fromkeys(picks):
                 label, ttype, aud_names, extra, mult, delta = VARIANTS[v]
+                if ttype == "group":
+                    continue  # Group catalogue comes from the supplied source data.
                 title = TITLES[label].format(d=name)
                 if m.Package.objects.filter(title=title).exists():
                     continue
@@ -177,5 +179,8 @@ class Command(BaseCommand):
                 for city, sc in CITIES:
                     m.DepartureCity.objects.create(package=pkg, city=city, surcharge=sc if reg == "d" else sc * 4)
                 created += 1
+        if o["reset"]:
+            from django.core.management import call_command
+            call_command("import_group_tours")
         total = m.Package.objects.count()
         self.stdout.write(self.style.SUCCESS(f"Created {created} packages. Total packages now: {total}."))

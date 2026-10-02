@@ -24,9 +24,9 @@ def build_itinerary_pdf(pkg, site):
     small = ParagraphStyle("s", parent=body, fontSize=8.5, textColor=colors.HexColor("#6b6480"))
     el = [Paragraph(_esc(site.brand_name), ParagraphStyle("brand", parent=body, textColor=CORAL, fontSize=11, fontName="Helvetica-Bold")),
           Paragraph(_esc(pkg.title), h1),
-          Paragraph(f"Tour code <b>{pkg.tour_code}</b> &nbsp;|&nbsp; {pkg.days} Days / {pkg.nights} Nights &nbsp;|&nbsp; {_esc(pkg.destination.name)} "
+          Paragraph(f"Tour code <b>{pkg.tour_code}</b> &nbsp;|&nbsp; {_esc(pkg.duration_label)} &nbsp;|&nbsp; {_esc(pkg.destination.name)} "
                     f"&nbsp;|&nbsp; {pkg.get_tour_type_display()}", small)]
-    price = f"From Rs. {pkg.price_from:,} per person"
+    price = "Price on request" if pkg.price_on_request else f"From Rs. {pkg.price_from:,} per person"
     if pkg.savings:
         price += f"  (was Rs. {pkg.base_price:,}, save {pkg.effective_discount}%)"
     el += [Spacer(1, 6), Paragraph(f"<b>{price}</b>", ParagraphStyle("p", parent=body, fontSize=12, textColor=DUSK)),
@@ -38,7 +38,7 @@ def build_itinerary_pdf(pkg, site):
         el.append(Paragraph("Day-wise itinerary", h2))
         for d in days:
             meta = " | ".join(x for x in [f"Meals: {d.meals}" if d.meals else "", f"Stay: {d.stay}" if d.stay else ""] if x)
-            el += [Paragraph(f"<b>Day {d.day_number}: {_esc(d.title)}</b>", body), Paragraph(_esc(d.description), body)]
+            el += [Paragraph(f"<b>Day {d.day_number}: {_esc(d.title)}</b>", body), Paragraph(_esc(d.description).replace("\n", "<br/>"), body)]
             if meta:
                 el.append(Paragraph(_esc(meta), small))
             el.append(Spacer(1, 5))

@@ -133,12 +133,14 @@
     });
     return { tier: tier, city: city, base: base, hotel: hotel, disc: disc, sur: sur, acts: acts, ids: ids, actTotal: actTotal, total: Math.max(base + hotel - disc + sur + actTotal, 0) };
   }
+  function quoted(c) { return cfg.price_on_request || (state.children > 0 && cfg.child_price_on_request); }
+  function totalLabel(c) { return quoted(c) ? "Price on request" : inr(c.total); }
   function label(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
   function summary(c) {
     var l = [P.title + " (" + P.code + ")", state.adults + " adult(s), " + state.children + " child(ren)", label(c.tier) + " hotels"];
     if (c.city) l.push("Departure: " + c.city);
     if (c.acts.length) l.push("Optional: " + c.acts.join(", "));
-    l.push("Estimated total: " + inr(c.total)); return l;
+    l.push("Estimated total: " + totalLabel(c)); return l;
   }
   function render() {
     var c = compute(), b = $("#breakdown");
@@ -148,8 +150,9 @@
     if (c.disc) rows.push(["Offer " + cfg.discount + "% off", "−" + inr(c.disc), "disc"]);
     if (c.sur) rows.push(["Departure from " + c.city, "+" + inr(c.sur)]);
     if (c.actTotal) rows.push(["Optional experiences", "+" + inr(c.actTotal)]);
+    if (quoted(c)) rows = [["Tour quote", "Price on request"]];
     b.innerHTML = rows.map(function (r) { return '<div class="' + (r[2] || "") + '"><dt>' + r[0] + "</dt><dd>" + r[1] + "</dd></div>"; }).join("");
-    ["#total", "#total-m"].forEach(function (s) { var t = $(s); if (t) { t.textContent = inr(c.total); } });
+    ["#total", "#total-m"].forEach(function (s) { var t = $(s); if (t) { t.textContent = totalLabel(c); } });
     var tt = $("#total"); tt.classList.remove("bump"); void tt.offsetWidth; tt.classList.add("bump");
     var text = "Hi, I'd like to enquire about:\n" + summary(c).join("\n") + "\n" + P.url;
     $("#wa-link").href = "https://wa.me/" + P.wa + "?text=" + encodeURIComponent(text);
@@ -173,7 +176,7 @@
     form.adults.value = state.adults; form.children.value = state.children; form.hotel_tier.value = c.tier;
     form.departure_city.value = c.city; form.activities.value = c.ids.join(",");
     $("#enq-sum-text").textContent = state.adults + "A" + (state.children ? " + " + state.children + "C" : "") + " · " + label(c.tier) + (c.city ? " · from " + c.city : "") + (c.acts.length ? " · " + c.acts.length + " add-on(s)" : "");
-    $("#enq-total").textContent = inr(c.total);
+    $("#enq-total").textContent = totalLabel(c);
     $("#enq-form-wrap").hidden = false; $("#enq-done").hidden = true; $("#enq-err").textContent = "";
     enq.hidden = false; setTimeout(function () { form.name.focus(); }, 50);
   }

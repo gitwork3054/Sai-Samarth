@@ -1,0 +1,18 @@
+GROUP TOURS UPDATE
+
+27 group tours and 212 itinerary days from the supplied AkhilBharat archive.
+Source text, duration, categories, image URLs and itinerary details are preserved.
+Blank prices display Price on request. Child prices require a quote.
+The archive does not include separate hotel, inclusions, exclusions or departure data.
+
+Windows: extract this ZIP and double-click START_LOCAL.bat.
+Existing installation: copy the updated source files into your project, then run:
+  python manage.py migrate
+  python manage.py runserver
+
+Render: the existing start.sh applies migrations automatically.
+To reapply the supplied catalogue manually:
+  python manage.py import_group_tours
+
+The catalogue replaces visible old group tours without deleting their records.
+The homepage design, slideshow speed and latest beach image are preserved.
