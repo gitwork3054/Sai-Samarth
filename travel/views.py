@@ -129,6 +129,9 @@ def package_list(request, preset=None):
         country_base = ACTIVE.filter(destination__region="international")
         if preset == "group":
             params["tour_type"] = "group"
+            external_links = m.InternationalGroupLink.objects.filter(is_active=True)
+            if not any(params.get(k) for k in ("q","destination","theme","audience","duration","budget","offers","events","country")):
+                return render(request, "travel/international_countries.html", {"countries": [], "external_links": external_links, "group_only": True, "title": "International group tours"})
             country_base = country_base.filter(tour_type="group")
         countries = international_groups(country_base)
         if params.get("country"):
