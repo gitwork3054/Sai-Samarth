@@ -197,6 +197,20 @@ class Package(models.Model):
     def get_absolute_url(self):
         return reverse("package_detail", args=[self.slug])
 
+    @property
+    def partner_url(self):
+        """Original package URL from Flamingo/import data, when available."""
+        details = self.source_details or {}
+        return (
+            self.source_url
+            or details.get("source_url")
+            or details.get("package_url")
+            or details.get("detail_url")
+            or details.get("flamingo_url")
+            or details.get("url")
+            or ""
+        )
+
     # ---- derived ----
     @property
     def region(self):
