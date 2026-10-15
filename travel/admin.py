@@ -42,9 +42,9 @@ class DepartureInline(admin.TabularInline):
 
 @admin.register(m.Package)
 class PackageAdmin(admin.ModelAdmin):
-    list_display = ("thumb", "tour_code", "title", "destination", "tour_type", "days", "base_price", "discount_percent", "is_event", "is_featured", "is_active")
+    list_display = ("thumb", "tour_code", "title", "destination", "tour_type", "days", "base_price", "discount_percent", "is_event", "display_order", "is_featured", "is_active")
     list_display_links = ("thumb", "tour_code", "title")
-    list_editable = ("base_price", "discount_percent", "is_featured", "is_active")
+    list_editable = ("base_price", "discount_percent", "display_order", "is_featured", "is_active")
     list_filter = ("is_active", "destination__region", "tour_type", "themes", "audiences", "is_featured", "is_event", "destination")
     search_fields = ("title", "tour_code", "destination__name", "short_description")
     prepopulated_fields = {"slug": ("title",)}
@@ -55,12 +55,12 @@ class PackageAdmin(admin.ModelAdmin):
     inlines = [ItineraryInline, SightseeingInline, GalleryInline, HotelInline, ActivityInline, DepartureInline]
     fieldsets = (
         ("Basics", {"fields": ("title", "slug", "tour_code", "destination", "tour_type", "themes", "audiences", ("days", "nights"), "short_description", "overview")}),
-        ("Pricing (₹ per person)", {"fields": (("base_price", "child_price", "price_on_request"), ("deluxe_upgrade", "premium_upgrade"), ("discount_percent", "offer_label", "offer_valid_till"))}),
+        ("Pricing (₹ per person)", {"fields": (("base_price", "child_price", "infant_price", "price_on_request"), ("deluxe_upgrade", "premium_upgrade"), ("discount_percent", "offer_label", "offer_valid_till"))}),
         ("Events & group departures", {"classes": ["collapse"], "fields": ("is_event", "event_name", "event_date", "departure_dates")}),
         ("Media & partner source", {"fields": ("cover_image", "cover_url", "youtube_url", "source_url")}),
         ("Recommended alternatives", {"classes":["collapse"], "fields":("related_packages",)}),
         ("Inclusions, exclusions & tour information", {"fields": ("inclusions", "exclusions", "tour_info")}),
-        ("Visibility", {"fields": ("is_featured", "is_active")}),
+        ("Visibility", {"fields": ("display_order", "is_featured", "is_active")}),
     )
 
     @admin.display(description="")
