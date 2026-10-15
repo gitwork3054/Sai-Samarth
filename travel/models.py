@@ -561,6 +561,21 @@ class VisitEvent(models.Model):
         indexes = [models.Index(fields=["package", "created"])]
 
 
+class InternationalGroupLink(models.Model):
+    name = models.CharField(max_length=120, help_text="Country, region or collection name shown on International Group Tours")
+    url = models.URLField(help_text="Flamingo Travels page opened directly when the visitor clicks this card")
+    order = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "name"]
+        verbose_name = "International group tour link"
+        verbose_name_plural = "International group tour links"
+
+    def __str__(self):
+        return self.name
+
+
 class CustomerReview(models.Model):
     customer_name = models.CharField(max_length=100)
     review = models.TextField()
