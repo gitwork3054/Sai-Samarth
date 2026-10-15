@@ -1,6 +1,6 @@
 {% load travel_extras %}
 <article class="card">
-  <a class="card-img" href="{{ p.get_absolute_url }}" style="background:{% if p.cover %}url('{{ p.cover }}') center/cover{% else %}{{ p.pk|gradient }}{% endif %}">
+  <a class="card-img" href="{% if p.region == 'international' and p.partner_url %}{{ p.partner_url }}{% else %}{{ p.get_absolute_url }}{% endif %}"{% if p.region == 'international' and p.partner_url %} target="_blank" rel="noopener"{% endif %} style="background:{% if p.cover %}url('{{ p.cover }}') center/cover{% else %}{{ p.pk|gradient }}{% endif %}">
     {% if not p.cover %}<span class="card-place">{{ p.destination.name }}</span>{% endif %}
     <span class="badges">
       {% if p.offer_active %}<b class="badge b-off">{{ p.discount_percent }}% off</b>{% endif %}
@@ -14,11 +14,11 @@
   </button>
   <div class="card-body">
     <p class="meta">{{ p.tour_code }} · {% if p.source_details %}{{ p.duration_label }}{% else %}{{ p.days }}D/{{ p.nights }}N{% endif %} · {{ p.destination.state_or_country|default:p.destination.get_region_display }}</p>
-    <h3><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></h3>
+    <h3><a href="{% if p.region == 'international' and p.partner_url %}{{ p.partner_url }}{% else %}{{ p.get_absolute_url }}{% endif %}"{% if p.region == 'international' and p.partner_url %} target="_blank" rel="noopener"{% endif %}>{{ p.title }}</a></h3>
     <p class="chips">{% for t in p.themes.all|slice:":2" %}<span>{{ t.icon }} {{ t.name }}</span>{% endfor %}{% for a in p.audiences.all|slice:":1" %}<span>{{ a.icon }} {{ a.name }}</span>{% endfor %}</p>
     <div class="card-foot">
       <div class="price">{% if p.savings %}<s>{{ p.base_price|inr }}</s>{% endif %}{% if p.price_on_request %}<strong>Price on request</strong>{% else %}<strong>{{ p.price_from|inr }}</strong><small>per person</small>{% endif %}</div>
-      <a class="btn btn-sun sm" href="{{ p.get_absolute_url }}">View trip</a>
+      <a class="btn btn-sun sm" href="{% if p.region == 'international' and p.partner_url %}{{ p.partner_url }}{% else %}{{ p.get_absolute_url }}{% endif %}"{% if p.region == 'international' and p.partner_url %} target="_blank" rel="noopener"{% endif %}>View trip{% if p.region == 'international' and p.partner_url %} ↗{% endif %}</a>
     </div>
   </div>
 </article>
