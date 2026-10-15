@@ -13,6 +13,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 
 from . import models as m
+from .domestic_states import domestic_groups
 from .curated_photos import SOURCES
 from .forms import EnquiryForm
 from .pdf import build_itinerary_pdf
@@ -54,6 +55,9 @@ def _filter(qs, p):
                        | Q(destination__state_or_country__icontains=q) | Q(short_description__icontains=q))
     if p.get("region") in ("domestic", "international"):
         qs = qs.filter(destination__region=p["region"])
+    if p.get("state"):
+        selected = next((g for g in domestic_groups(m.Package.objects.filter(is_active=True, destination__region="domestic").select_related("destination")) if g["slug"] == p["state"]), None)
+        qs = qs.filter(destination__region="domestic", destination_id__in=selected["destination_ids"] if selected else [])
     if p.get("destination"):
         qs = qs.filter(Q(destination__slug=p["destination"]) | Q(destination__state_or_country__iexact=p["destination"]))
     if p.get("tour_type") in ("individual", "group", "corporate"):
@@ -105,16 +109,26 @@ def package_list(request, preset=None):
         title, forced = PRESETS[preset]
         for k, v in forced.items():
             params.setdefault(k, v)
+    states = domestic_groups(ACTIVE.filter(destination__region="domestic")) if preset == "domestic" else []
+    selected_state = next((g for g in states if g["slug"] == params.get("state")), None)
+    if preset == "domestic":
+        params["region"] = "domestic"
+        if params.get("state") and not selected_state:
+            raise Http404("State not found")
+        if selected_state:
+            title = selected_state["name"] + " tour packages"
+        elif not any(params.get(k) for k in ("q", "destination", "theme", "audience", "duration", "budget", "tour_type", "offers", "events")):
+            return render(request, "travel/domestic_states.html", {"states": states, "title": "Domestic tour packages"})
     qs = _filter(ACTIVE, params)
     page = Paginator(qs, 12).get_page(request.GET.get("page"))
     keep = request.GET.copy()
     keep.pop("page", None)
     ctx = {
-        "page": page, "count": page.paginator.count, "title": title, "preset": preset, "params": params,
+        "selected_state": selected_state, "page": page, "count": page.paginator.count, "title": title, "preset": preset, "params": params,
         "themes": m.Theme.objects.all(), "audiences": m.Audience.objects.all(),
         "destinations": m.Destination.objects.annotate(n=Count("packages", filter=Q(packages__is_active=True))).filter(n__gt=0),
         "durations": DURATIONS.keys(), "budgets": BUDGET_LABELS.items(), "qs_keep": keep.urlencode(),
-        "active_filters": any(request.GET.get(k) for k in ("q", "destination", "theme", "audience", "duration", "budget", "region", "tour_type", "offers", "events")),
+        "active_filters": any(request.GET.get(k) for k in ("q", "destination", "theme", "audience", "duration", "budget", "region", "state", "tour_type", "offers", "events")),
     }
     return render(request, "travel/package_list.html", ctx)
 

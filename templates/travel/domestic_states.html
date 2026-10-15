@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Domestic tour packages · {{ site.brand_name }}{% endblock %}
+{% block content %}
+<section class="page-head"><div class="wrap"><h1>Domestic tour packages</h1><p>Choose a state or region to explore all its packages.</p></div></section>
+<section class="wrap state-directory" aria-label="Domestic states and regions">
+  <div class="state-directory-head"><h2>Where would you like to go?</h2><p>{{ states|length }} states & regions</p></div>
+  <div class="state-grid">{% for state in states %}
+    <a class="state-card" href="{% url 'domestic' %}?state={{ state.slug }}"><span class="state-card-name">{{ state.name }}</span><span class="state-card-count">{{ state.count }} package{{ state.count|pluralize }}</span><span class="state-card-arrow" aria-hidden="true">↗</span></a>
+  {% empty %}<p>No domestic tours available yet.</p>{% endfor %}</div>
+</section>
+{% endblock %}

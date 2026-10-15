@@ -1,0 +1,15 @@
+DOMESTIC STATE NAVIGATION UPDATE
+
+Run locally: extract this ZIP, open Sai_Samarth, then double-click START_LOCAL.bat.
+
+Domestic navigation now lists only states and regions, with no individual tour names.
+Click a state to see its complete package list, across all destinations in that state.
+Filters, sorting and pagination retain the selected state. Reset clears filters within that state.
+The domestic landing page also lets visitors choose a state or region first.
+Only active packages are included. International destinations are excluded.
+Multi-state circuits appear under every state explicitly recorded in their location.
+Regional circuits labelled South India remain under South India.
+For a new admin destination, set State or country to the appropriate state.
+
+All original tour data, itineraries, PDFs and other features are preserved.
+22 automated tests passed, including state grouping and pagination.

@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="{% static 'img/sai-samarth-logo.png' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'css/site.css' %}?v=7">
+<link rel="stylesheet" href="{% static 'css/site.css' %}?v=8">
 </head>
 <body data-auth="{% if user.is_authenticated %}1{% else %}0{% endif %}" data-login="{% url 'login' %}">
 <header class="top" id="top">
@@ -22,16 +22,12 @@
       <details class="menu travel-menu">
         <summary>Domestic</summary>
         <div class="menu-pop travel-pop">
-          <a class="travel-all" href="{% url 'domestic' %}">View all domestic trips ↗</a>
-          <input class="travel-search" type="search" placeholder="Find a place or trip" aria-label="Search domestic trips" autocomplete="off">
+          <a class="travel-all" href="{% url 'domestic' %}">Browse domestic states ↗</a>
+          <input class="travel-search" type="search" placeholder="Find a state or region" aria-label="Search domestic states" autocomplete="off">
           <div class="travel-options">
-            {% regroup nav_domestic_packages by destination as domestic_places %}
-            {% for place in domestic_places %}
-              <div class="travel-place" data-search="{{ place.grouper.name|lower }}">
-                <a class="travel-place-link" href="{% url 'packages' %}?destination={{ place.grouper.slug }}">{{ place.grouper.name }} <span aria-hidden="true">↗</span></a>
-                {% for p in place.list %}<a class="travel-trip" href="{{ p.get_absolute_url }}" data-search="{{ place.grouper.name|lower }} {{ p.title|lower }} {{ p.tour_code|default:''|lower }}">{{ p.title }}</a>{% endfor %}
-              </div>
-            {% endfor %}
+            {% for state in nav_domestic_states %}
+              <a class="travel-trip travel-state" href="{% url 'domestic' %}?state={{ state.slug }}" data-search="{{ state.name|lower }}">{{ state.name }} <span aria-hidden="true">↗</span></a>
+            {% empty %}<p class="muted">No domestic tours available yet.</p>{% endfor %}
           </div>
           <p class="travel-empty" hidden>No matching trips.</p>
         </div>

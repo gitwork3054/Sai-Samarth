@@ -1,5 +1,6 @@
 from django.conf import settings
 from .models import Audience, Package, SiteSettings, Theme
+from .domestic_states import domestic_groups
 
 
 def site(request):
@@ -12,6 +13,7 @@ def site(request):
     google = settings.SOCIALACCOUNT_PROVIDERS["google"]["APP"]
     return {"google_login_enabled": bool(google["client_id"] and google["secret"]), "site": s, "logo_url": logo, "saved_ids": saved,
             "nav_audiences": Audience.objects.all(), "nav_themes": Theme.objects.all(),
+            "nav_domestic_states": domestic_groups(packages.filter(destination__region="domestic")),
             "nav_domestic_packages": packages.filter(destination__region="domestic").order_by("destination__name", "title"),
             "nav_international_packages": packages.filter(destination__region="international").order_by("destination__name", "title"),
             "nav_group_packages": packages.filter(tour_type="group").order_by("title")}
