@@ -140,6 +140,7 @@ class Package(models.Model):
     # pricing (INR, per person)
     base_price = models.PositiveIntegerField(help_text="Adult price per person, Standard hotels, before discount")
     child_price = models.PositiveIntegerField(default=0, help_text="Child (2-11 yrs) price per person")
+    infant_price = models.PositiveIntegerField(default=0, help_text="Infant price per person (reference only; confirmed by travel team)")
     deluxe_upgrade = models.PositiveIntegerField(default=0, help_text="Extra per person for Deluxe hotels")
     premium_upgrade = models.PositiveIntegerField(default=0, help_text="Extra per person for Premium hotels")
     discount_percent = models.PositiveSmallIntegerField(default=0, help_text="0-90. Applied to base + hotel price")
@@ -165,13 +166,14 @@ class Package(models.Model):
     exclusions = models.TextField(blank=True, help_text="One per line")
     tour_info = models.TextField(blank=True, help_text="Important notes, one per line (Title: text)")
 
+    display_order = models.PositiveIntegerField(default=100, help_text="Lower numbers appear first in package lists")
     is_featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True, help_text="Untick to hide from the website")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["-is_featured", "-created"]
+        ordering = ["display_order", "-is_featured", "-created"]
 
     def __str__(self):
         return f"{self.tour_code or '—'} · {self.title}"
