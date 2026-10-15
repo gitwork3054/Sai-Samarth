@@ -42,6 +42,14 @@ class AudioUpdateTests(TestCase):
         self.assertContains(response,'name="country" value="thailand"')
         self.assertTemplateUsed(self.client.get(reverse('international')),'travel/international_countries.html')
 
+    def test_international_group_tours_use_external_directory(self):
+        m.InternationalGroupLink.objects.all().delete()
+        m.InternationalGroupLink.objects.create(name='Europe Group Tours', url='https://www.flamingotravels.co.in/international-tour-packages')
+        response=self.client.get(reverse('group_tours'), {'region':'international'})
+        self.assertContains(response, 'Europe Group Tours')
+        self.assertContains(response, 'https://www.flamingotravels.co.in/international-tour-packages')
+        self.assertContains(response, 'Open latest group tours on Flamingo Travels')
+
     def test_new_content_renders_safely_and_video_is_lazy(self):
         m.Sightseeing.objects.create(package=self.package,name='Visit',description='D '*500,visiting_hours='09:00 - 17:00',closed_days='Monday',admission='Confirm with venue',questions='When? | In the morning\nUnsafe? | </script><script>alert(1)</script>',youtube_url='https://youtu.be/abcdefghijk')
         m.Hotel.objects.create(package=self.package,name='Example Hotel',website='https://example.test/hotel',room_options='Garden room\nFamily suite',description='Hotel information')
