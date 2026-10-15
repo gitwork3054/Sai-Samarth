@@ -227,6 +227,14 @@ class CorporateServiceAdmin(admin.ModelAdmin):
     list_editable = ("order", "is_active")
 
 
+@admin.register(m.InternationalGroupLink)
+class InternationalGroupLinkAdmin(admin.ModelAdmin):
+    list_display = ("name", "url", "order", "is_active")
+    list_editable = ("order", "is_active")
+    search_fields = ("name", "url")
+    fields = ("name", "url", "order", "is_active")
+
+
 @admin.register(m.CustomerReview)
 class CustomerReviewAdmin(admin.ModelAdmin):
     list_display = ("customer_name", "rating", "order", "is_active")
