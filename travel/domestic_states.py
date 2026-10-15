@@ -74,6 +74,8 @@ def international_groups(packages):
         group["package_ids"].add(package.pk)
         if package.destination.source_url:
             group["source_urls"].add(package.destination.source_url)
+        if package.source_url:
+            group["source_urls"].add(package.source_url)
     priority = {name.strip().casefold(): i for i, name in enumerate(SiteSettings.get().international_country_order.splitlines()) if name.strip()}
     result = []
     for name in sorted(groups, key=lambda value: (priority.get(value.casefold(), 10000), value)):
