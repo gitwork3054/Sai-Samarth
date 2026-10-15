@@ -2,7 +2,7 @@ SAI SAMARTH HOLIDAYS - LOCAL SETUP
 
 1. Install Python 3.12 or 3.13. Select Add Python to PATH.
 2. Extract the ZIP completely; do not run it from inside the archive.
-3. Open the Sai_Samarth_Holidays folder and double-click START_LOCAL.bat.
+3. Open the Sai_Samarth folder and double-click START_LOCAL.bat.
 4. Open http://127.0.0.1:8000/ after setup completes.
 5. Keep the command window open. Ctrl+C stops the server.
 
@@ -34,7 +34,9 @@ INCLUDED
 Five supplied travel photographs, a full-cover looping homepage slideshow,
 moving taglines, pause/dot controls, Google authentication integration,
 and the earlier package/gallery/sightseeing photo fallbacks.
-The supplied local database and media are included in this ZIP only.
+The ZIP excludes the database and uploaded media. START_LOCAL.bat initializes demo data.
+Keep your existing database and media when updating an existing installation.
+See OWNER_UPDATE_GUIDE.md for new controls and update steps.
 Package fallback photos need internet access; the five hero photos are local.
 
 PHOTO UPDATE

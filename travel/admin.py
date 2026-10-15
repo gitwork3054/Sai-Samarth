@@ -10,7 +10,7 @@ class ItineraryInline(admin.StackedInline):
     classes = ["collapse"]
 
 
-class SightseeingInline(admin.TabularInline):
+class SightseeingInline(admin.StackedInline):
     model = m.Sightseeing
     extra = 1
     classes = ["collapse"]
@@ -22,13 +22,13 @@ class GalleryInline(admin.TabularInline):
     classes = ["collapse"]
 
 
-class HotelInline(admin.TabularInline):
+class HotelInline(admin.StackedInline):
     model = m.Hotel
     extra = 1
     classes = ["collapse"]
 
 
-class ActivityInline(admin.TabularInline):
+class ActivityInline(admin.StackedInline):
     model = m.OptionalActivity
     extra = 1
     classes = ["collapse"]
@@ -48,7 +48,7 @@ class PackageAdmin(admin.ModelAdmin):
     list_filter = ("is_active", "destination__region", "tour_type", "themes", "audiences", "is_featured", "is_event", "destination")
     search_fields = ("title", "tour_code", "destination__name", "short_description")
     prepopulated_fields = {"slug": ("title",)}
-    filter_horizontal = ("themes", "audiences")
+    filter_horizontal = ("themes", "audiences", "related_packages")
     list_per_page = 25
     save_on_top = True
     actions = ["duplicate", "activate", "deactivate"]
@@ -57,7 +57,8 @@ class PackageAdmin(admin.ModelAdmin):
         ("Basics", {"fields": ("title", "slug", "tour_code", "destination", "tour_type", "themes", "audiences", ("days", "nights"), "short_description", "overview")}),
         ("Pricing (₹ per person)", {"fields": (("base_price", "child_price", "price_on_request"), ("deluxe_upgrade", "premium_upgrade"), ("discount_percent", "offer_label", "offer_valid_till"))}),
         ("Events & group departures", {"classes": ["collapse"], "fields": ("is_event", "event_name", "event_date", "departure_dates")}),
-        ("Media", {"fields": ("cover_image", "cover_url", "youtube_url")}),
+        ("Media & partner source", {"fields": ("cover_image", "cover_url", "youtube_url", "source_url")}),
+        ("Recommended alternatives", {"classes":["collapse"], "fields":("related_packages",)}),
         ("Inclusions, exclusions & tour information", {"fields": ("inclusions", "exclusions", "tour_info")}),
         ("Visibility", {"fields": ("is_featured", "is_active")}),
     )
@@ -95,11 +96,11 @@ class PackageAdmin(admin.ModelAdmin):
 
 @admin.register(m.Destination)
 class DestinationAdmin(admin.ModelAdmin):
-    list_display = ("name", "region", "state_or_country", "is_popular")
+    list_display = ("name", "region", "state_or_country", "display_order", "is_popular")
     list_filter = ("region", "is_popular")
     search_fields = ("name", "state_or_country")
     prepopulated_fields = {"slug": ("name",)}
-    list_editable = ("is_popular",)
+    list_editable = ("display_order", "is_popular")
 
 
 @admin.register(m.Theme)
@@ -134,15 +135,35 @@ class EnquiryAdmin(admin.ModelAdmin):
     list_filter = ("status", "hotel_tier", "package__destination__region", "created")
     search_fields = ("reference", "name", "email", "phone", "package__tour_code", "package__title")
     date_hierarchy = "created"
-    readonly_fields = ("reference", "created", "updated", "price_breakdown")
+    readonly_fields = ("reference", "created", "updated", "price_breakdown", "quoted_price", "quote_breakdown", "quote_download", "terms_snapshot")
     inlines = [NotificationInline]
-    actions = ["mark_booked"]
+    actions = ["mark_booked", "generate_quote"]
     fieldsets = (
         ("Customer", {"fields": ("reference", "user", "name", "email", "phone")}),
         ("Trip", {"fields": ("package", "travel_date", ("adults", "children"), "hotel_tier", "departure_city", "activities", "message")}),
-        ("Price", {"fields": ("total_price", "price_breakdown")}),
+        ("Estimated price", {"fields": ("total_price", "price_breakdown")}),
+        ("Staff quotation", {"description":"Save your selected extras and any confirmed cost override, then use Generate quotation in the enquiry list.", "fields":("quote_base_override", "quote_margin_percent", "quote_notes", "quote_itinerary", "quoted_price", "quote_breakdown", "quote_download")}),
+        ("Booking terms", {"classes":["collapse"], "fields":("terms_accepted", "terms_snapshot")}),
         ("Status", {"description": "Setting status to 'Booked / Confirmed' instantly emails and WhatsApps the customer.", "fields": ("status", "admin_notes", "created", "updated")}),
     )
+
+    @admin.display(description="Download quotation")
+    def quote_download(self, obj):
+        from django.urls import reverse
+        return format_html('<a href="{}">Download prepared quotation PDF</a>', reverse('quotation_pdf', args=[obj.reference])) if obj.quote_breakdown else 'Generate the quotation first.'
+
+    @admin.action(description="Generate quotation with selected extras and margin")
+    def generate_quote(self, request, queryset):
+        from django.core.exceptions import ValidationError
+        from .services import prepare_quotation
+        count = 0
+        for enquiry in queryset:
+            try:
+                prepare_quotation(enquiry)
+                count += 1
+            except ValidationError as error:
+                self.message_user(request, f'{enquiry.reference}: {error.messages[0]}', messages.WARNING)
+        self.message_user(request, f'{count} quotation(s) prepared. Open an enquiry to download its PDF.', messages.SUCCESS)
 
     @admin.action(description="Mark as Booked and send confirmation (email + WhatsApp)")
     def mark_booked(self, request, queryset):
@@ -176,7 +197,59 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
 @admin.register(m.SavedPackage)
 class SavedAdmin(admin.ModelAdmin):
-    list_display = ("user", "package", "created")
+    list_display = ("user", "customer_email", "customer_phone", "package", "created")
+    search_fields = ("user__email", "user__first_name", "package__title")
+    list_select_related = ("user", "user__profile", "package")
+
+    @admin.display(description="Email")
+    def customer_email(self, obj):
+        return obj.user.email
+
+    @admin.display(description="Phone")
+    def customer_phone(self, obj):
+        return getattr(getattr(obj.user, 'profile', None), 'phone', '')
+
 
 
 admin.site.register(m.Profile)
+
+
+@admin.register(m.HomeSlide)
+class HomeSlideAdmin(admin.ModelAdmin):
+    list_display = ("title", "order", "is_active")
+    list_editable = ("order", "is_active")
+    fields = ("title", "eyebrow", "caption", "image", "image_url", "built_in_image", "order", "is_active")
+
+
+@admin.register(m.CorporateService)
+class CorporateServiceAdmin(admin.ModelAdmin):
+    list_display = ("title", "order", "is_active")
+    list_editable = ("order", "is_active")
+
+
+@admin.register(m.CustomerReview)
+class CustomerReviewAdmin(admin.ModelAdmin):
+    list_display = ("customer_name", "rating", "order", "is_active")
+    list_editable = ("order", "is_active")
+
+
+@admin.register(m.ContactRequest)
+class ContactRequestAdmin(admin.ModelAdmin):
+    list_display = ("created", "name", "email", "phone", "status")
+    list_editable = ("status",)
+    search_fields = ("name", "email", "phone", "message")
+    readonly_fields = ("created",)
+
+
+@admin.register(m.VisitEvent)
+class VisitEventAdmin(admin.ModelAdmin):
+    list_display = ("created", "package", "event", "user", "visitor")
+    list_filter = ("event", "created", "package__destination")
+    readonly_fields = ("created", "package", "event", "user", "visitor")
+    search_fields = ("package__title", "user__email")
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False

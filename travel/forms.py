@@ -14,8 +14,17 @@ class EnquiryForm(forms.Form):
     departure_city = forms.CharField(required=False, max_length=80)
     activities = forms.CharField(required=False)  # comma separated ids
     message = forms.CharField(required=False, max_length=1500)
+    terms_accepted = forms.BooleanField(required=False)
     website = forms.CharField(required=False)  # honeypot
 
     def clean_activities(self):
         raw = self.cleaned_data.get("activities", "")
         return [int(x) for x in raw.split(",") if x.strip().isdigit()]
+
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    phone = forms.RegexField(r"^[+\d][\d\s\-]{7,17}$")
+    message = forms.CharField(max_length=3000, widget=forms.Textarea)
+    website = forms.CharField(required=False, widget=forms.HiddenInput)

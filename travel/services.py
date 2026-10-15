@@ -117,3 +117,27 @@ def notify_booking_confirmed(enq):
     send_email(enq, enq.email, f"Booking confirmed {enq.reference} · {enq.package.title}", body, html)
     send_whatsapp(enq, enq.phone, f"🎉 Booking confirmed! Ref {enq.reference}\n{details}\nThank you for choosing {site.brand_name}.",
                   settings.WHATSAPP_TEMPLATE_BOOKING, _params(enq))
+
+
+def prepare_quotation(enquiry):
+    """Staff-confirmed quotation; snapshot selections, current costs and the margin."""
+    from decimal import Decimal, ROUND_HALF_UP
+    from django.core.exceptions import ValidationError
+    calc = calculate_price(enquiry.package, enquiry.adults, enquiry.children, enquiry.hotel_tier,
+                           enquiry.departure_city, enquiry.activities.values_list('pk', flat=True))
+    if enquiry.quote_base_override is None and calc.get('price_on_request'):
+        raise ValidationError('Enter a confirmed base cost before quoting a price-on-request trip.')
+    margin = Decimal(enquiry.quote_margin_percent)
+    if not Decimal('0') <= margin <= Decimal('100'):
+        raise ValidationError('Margin must be between 0 and 100 percent.')
+    base = enquiry.quote_base_override if enquiry.quote_base_override is not None else calc['total']
+    markup = int((Decimal(base) * margin / 100).quantize(Decimal('1'), rounding=ROUND_HALF_UP))
+    enquiry.quoted_price = base + markup
+    enquiry.quote_breakdown = {'base_cost':base, 'margin_percent':str(margin), 'margin_amount':markup,
+        'total':enquiry.quoted_price,'activities':calc['activities'],'hotel_tier':enquiry.hotel_tier,
+        'departure_city':enquiry.departure_city,'adults':enquiry.adults,'children':enquiry.children,
+        'package_title':enquiry.package.title,'tour_code':enquiry.package.tour_code,
+        'itinerary':enquiry.quote_itinerary or '\n\n'.join(f'Day {d.day_number}: {d.title}\n{d.description}' for d in enquiry.package.itinerary.all()),
+        'notes':enquiry.quote_notes}
+    enquiry.save(update_fields=['quoted_price','quote_breakdown','updated'])
+    return enquiry.quote_breakdown

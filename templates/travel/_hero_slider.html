@@ -28,67 +28,28 @@
 @media(prefers-reduced-motion:reduce){.hero-track{transition:none}.hero-slide.is-active .hero-photo{animation:none}.hero-dot::after{transition:none}}
 </style>
 
-<section class="hero hero-slider" id="home-slideshow" aria-label="Travel inspiration" aria-roledescription="carousel">
+<section class="hero hero-slider" id="home-slideshow" data-interval="{{ hero_interval }}" aria-label="Travel inspiration" aria-roledescription="carousel">
   <h1 class="hero-sr">Explore with Sai Samarth Holidays Pvt. Ltd.</h1>
   <div class="hero-track">
-    <article class="hero-slide is-active" aria-roledescription="slide" aria-label="1 of 5">
-      <img class="hero-photo" src="{% static 'img/hero/lake-v2.webp' %}" alt="" fetchpriority="high">
-      <div class="wrap hero-copy">
-        <span class="hero-eyebrow">Alpine escapes</span>
-        <h2 class="hero-heading">Find your calm in a winter wonderland.</h2>
-        <p class="hero-caption">Snow-covered forests, cosy retreats and a little room to breathe.</p>
-      </div>
-    </article>
-    <article class="hero-slide" aria-roledescription="slide" aria-label="2 of 5" aria-hidden="true">
-      <img class="hero-photo" src="{% static 'img/hero/greece-v2.webp' %}" alt="" decoding="async">
-      <div class="wrap hero-copy">
-        <span class="hero-eyebrow">Greece · Island stories</span>
-        <h2 class="hero-heading">Where blue skies meet timeless beauty.</h2>
-        <p class="hero-caption">Discover sunlit lanes and unforgettable Aegean views.</p>
-      </div>
-    </article>
-    <article class="hero-slide" aria-roledescription="slide" aria-label="3 of 5" aria-hidden="true">
-      <img class="hero-photo" src="{% static 'img/hero/switzerland-v2.webp' %}" alt="" decoding="async">
-      <div class="wrap hero-copy">
-        <span class="hero-eyebrow">Alpine countryside · Scenic journeys</span>
-        <h2 class="hero-heading">Take the scenic route to extraordinary.</h2>
-        <p class="hero-caption">Rolling meadows, mountain villages and views worth slowing down for.</p>
-      </div>
-    </article>
-    <article class="hero-slide" aria-roledescription="slide" aria-label="4 of 5" aria-hidden="true">
-      <img class="hero-photo" src="{% static 'img/hero/kerala-v2.webp' %}" alt="" decoding="async">
-      <div class="wrap hero-copy">
-        <span class="hero-eyebrow">Kerala · Backwater moments</span>
-        <h2 class="hero-heading">Let the backwaters set your pace.</h2>
-        <p class="hero-caption">Palm-lined waterways and peaceful days in God's Own Country.</p>
-      </div>
-    </article>
-    <article class="hero-slide" aria-roledescription="slide" aria-label="5 of 5" aria-hidden="true">
-      <img class="hero-photo" src="{% static 'img/hero/sunset-v2.jpg' %}" alt="" decoding="async">
-      <div class="wrap hero-copy">
-        <span class="hero-eyebrow">Tropical escapes</span>
-        <h2 class="hero-heading">Chase the sunset. Keep the memories.</h2>
-        <p class="hero-caption">Golden evenings and beautiful places, planned around you.</p>
-      </div>
-    </article>
+    {% for slide in hero_slides %}<article class="hero-slide{% if forloop.first %} is-active{% endif %}" aria-roledescription="slide" aria-label="{{ forloop.counter }} of {{ hero_slides|length }}"{% if not forloop.first %} aria-hidden="true"{% endif %}>
+      <img class="hero-photo" src="{{ slide.photo }}" alt="{{ slide.eyebrow }}"{% if forloop.first %} fetchpriority="high"{% else %} decoding="async"{% endif %}>
+      <div class="wrap hero-copy"><span class="hero-eyebrow">{{ slide.eyebrow }}</span><h2 class="hero-heading">{{ slide.title }}</h2><p class="hero-caption">{{ slide.caption }}</p></div>
+    </article>{% empty %}<article class="hero-slide is-active" aria-label="Travel inspiration"><img class="hero-photo" src="{% static 'img/home-beach.jpg' %}" alt="Sunset beach"><div class="wrap hero-copy"><h2 class="hero-heading">{{ site.hero_title }}</h2><p class="hero-caption">{{ site.hero_subtitle }}</p></div></article>{% endfor %}
   </div>
 
   <div class="wrap hero-search">
     <div class="hero-controls">
       <div class="hero-dots" aria-label="Choose a slide">
-        <button class="hero-dot" type="button" aria-label="Show alpine escapes" aria-pressed="true"></button>
-        <button class="hero-dot" type="button" aria-label="Show Greece" aria-pressed="false"></button>
-        <button class="hero-dot" type="button" aria-label="Show alpine countryside" aria-pressed="false"></button>
-        <button class="hero-dot" type="button" aria-label="Show Kerala" aria-pressed="false"></button>
-        <button class="hero-dot" type="button" aria-label="Show tropical escapes" aria-pressed="false"></button>
+        {% for slide in hero_slides %}<button class="hero-dot" type="button" aria-label="Show {{ slide.eyebrow|default:slide.title }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"></button>{% empty %}<button class="hero-dot" type="button" aria-label="Show travel inspiration" aria-pressed="true"></button>{% endfor %}
       </div>
       <button class="hero-pause" type="button" aria-pressed="false">Pause slideshow</button>
     </div>
     <form class="finder" action="{% url 'packages' %}" method="get" role="search">
-      <label class="f-wide"><span>Where to?</span><input name="q" list="dest-list" placeholder="Bali, Kerala, Switzerland…" autocomplete="off"></label>
+      <label class="f-wide"><span>Where to?</span><select name="destination"><option value="">All destinations</option>{% for d in destinations %}<option value="{{ d.slug }}">{{ d.name }} · {{ d.state_or_country }}</option>{% endfor %}</select></label>
       <label><span>Trip type</span><select name="region"><option value="">Domestic + international</option><option value="domestic">Domestic</option><option value="international">International</option></select></label>
       <label><span>Duration</span><select name="duration"><option value="">Any</option>{% for d in durations %}<option value="{{ d }}">{{ d }} days</option>{% endfor %}</select></label>
       <label><span>Budget</span><select name="budget"><option value="">Any</option>{% for k, v in budgets %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></label>
+      <label><span>Tour style</span><select name="tour_type"><option value="">All styles</option><option value="individual">Individual / Customised</option><option value="group">Group tours</option><option value="corporate">Corporate</option></select></label>
       <button class="btn btn-sun" type="submit">Find trips</button>
     </form>
     <datalist id="dest-list">{% for d in destinations %}<option value="{{ d.name }}">{% endfor %}</datalist>
@@ -114,7 +75,7 @@
   function schedule() {
     clearTimeout(timer);
     if (!paused && !motion.matches && !document.hidden && !hero.contains(document.activeElement)) {
-      timer = setTimeout(() => show(index + 1), 1500);
+      timer = setTimeout(() => show(index + 1), Number(hero.dataset.interval) || 1500);
     }
   }
   function show(next) {

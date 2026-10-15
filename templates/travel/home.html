@@ -144,6 +144,7 @@
     <a class="btn btn-ghost-l" href="mailto:{{ site.email }}">Email us</a>
   </div>
 </section>
+{% if customer_reviews or site.google_reviews_url %}<section class="wrap sec customer-reviews"><div class="sec-head"><div><h2>From our travellers</h2><p>Feedback shared by our customers.</p></div>{% if site.google_reviews_url %}<a class="more" href="{{ site.google_reviews_url }}" target="_blank" rel="noopener">Read our Google reviews ↗</a>{% endif %}</div><div class="review-grid">{% for review in customer_reviews %}<article class="review-card"><p class="stars" aria-label="{{ review.rating }} out of 5 stars">{% for i in "12345"|slice:review.rating %}★{% endfor %}</p><p data-readmore>{{ review.review|linebreaksbr }}</p><b>{{ review.customer_name }}</b>{% if review.source_url %}<a href="{{ review.source_url }}" target="_blank" rel="noopener">Original review ↗</a>{% endif %}</article>{% endfor %}</div></section>{% endif %}
 {% endblock %}
 
 {% block scripts %}

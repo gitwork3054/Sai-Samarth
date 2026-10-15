@@ -13,7 +13,8 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 
 from . import models as m
-from .domestic_states import domestic_groups
+from .domestic_states import domestic_groups, international_groups
+from .enhancements import record_event, relevant_tours, sightseeing_schema
 from .curated_photos import SOURCES
 from .forms import EnquiryForm
 from .pdf import build_itinerary_pdf
@@ -58,6 +59,9 @@ def _filter(qs, p):
     if p.get("state"):
         selected = next((g for g in domestic_groups(m.Package.objects.filter(is_active=True, destination__region="domestic").select_related("destination")) if g["slug"] == p["state"]), None)
         qs = qs.filter(destination__region="domestic", destination_id__in=selected["destination_ids"] if selected else [])
+    if p.get("country"):
+        selected = next((g for g in international_groups(m.Package.objects.filter(is_active=True, destination__region="international").select_related("destination")) if g["slug"] == p["country"]), None)
+        qs = qs.filter(destination__region="international", destination_id__in=selected["destination_ids"] if selected else [])
     if p.get("destination"):
         qs = qs.filter(Q(destination__slug=p["destination"]) | Q(destination__state_or_country__iexact=p["destination"]))
     if p.get("tour_type") in ("individual", "group", "corporate"):
@@ -89,7 +93,7 @@ def home(request):
     offers = base.filter(discount_percent__gt=0).filter(Q(offer_valid_till__isnull=True) | Q(offer_valid_till__gte=today)).order_by("-discount_percent")[:6]
     events = base.filter(is_event=True).order_by("event_date")[:6]
     ctx = {
-        "offers": offers, "events": events,
+        "offers": offers, "events": events, "customer_reviews": m.CustomerReview.objects.filter(is_active=True)[:12],
         "domestic": base.filter(destination__region="domestic", is_featured=True)[:6] or base.filter(destination__region="domestic")[:6],
         "international": base.filter(destination__region="international", is_featured=True)[:6] or base.filter(destination__region="international")[:6],
         "group_tours": base.filter(tour_type="group")[:3],
@@ -119,16 +123,33 @@ def package_list(request, preset=None):
             title = selected_state["name"] + " tour packages"
         elif not any(params.get(k) for k in ("q", "destination", "theme", "audience", "duration", "budget", "tour_type", "offers", "events")):
             return render(request, "travel/domestic_states.html", {"states": states, "title": "Domestic tour packages"})
+    selected_country = None
+    if preset in ("international", "group") and (preset == "international" or params.get("region") == "international"):
+        params["region"] = "international"
+        country_base = ACTIVE.filter(destination__region="international")
+        if preset == "group":
+            params["tour_type"] = "group"
+            country_base = country_base.filter(tour_type="group")
+        countries = international_groups(country_base)
+        if params.get("country"):
+            selected_country = next((g for g in countries if g["slug"] == params["country"]), None)
+            if not selected_country:
+                raise Http404("Country not found")
+            title = selected_country["name"] + (" group tours" if preset == "group" else " tour packages")
+        elif not any(params.get(k) for k in ("q","destination","theme","audience","duration","budget","offers","events")):
+            return render(request, "travel/international_countries.html", {"countries":countries,"group_only":preset=="group","title":title})
+    if preset == "group":
+        params["tour_type"] = "group"
     qs = _filter(ACTIVE, params)
     page = Paginator(qs, 12).get_page(request.GET.get("page"))
     keep = request.GET.copy()
     keep.pop("page", None)
     ctx = {
-        "selected_state": selected_state, "page": page, "count": page.paginator.count, "title": title, "preset": preset, "params": params,
+        "corporate_services": m.CorporateService.objects.filter(is_active=True) if preset == "corporate" else [], "selected_state": selected_state, "selected_country": selected_country, "page": page, "count": page.paginator.count, "title": title, "preset": preset, "params": params,
         "themes": m.Theme.objects.all(), "audiences": m.Audience.objects.all(),
         "destinations": m.Destination.objects.annotate(n=Count("packages", filter=Q(packages__is_active=True))).filter(n__gt=0),
         "durations": DURATIONS.keys(), "budgets": BUDGET_LABELS.items(), "qs_keep": keep.urlencode(),
-        "active_filters": any(request.GET.get(k) for k in ("q", "destination", "theme", "audience", "duration", "budget", "region", "state", "tour_type", "offers", "events")),
+        "active_filters": any(request.GET.get(k) for k in ("q", "destination", "theme", "audience", "duration", "budget", "region", "state", "country", "tour_type", "offers", "events")),
     }
     return render(request, "travel/package_list.html", ctx)
 
@@ -143,20 +164,15 @@ def package_detail(request, slug):
         if source and source not in used_sources and len(gallery) + len(gallery_fallback) < 6:
             gallery_fallback.append(spot)
             used_sources.add(source)
-    theme_ids = [t.id for t in pkg.themes.all()]
-    aud_ids = [a.id for a in pkg.audiences.all()]
-    similar = (ACTIVE.exclude(pk=pkg.pk)
-               .annotate(score=Count("themes", filter=Q(themes__in=theme_ids), distinct=True) * 2 + Count("audiences", filter=Q(audiences__in=aud_ids), distinct=True)
-                         + Count("pk", filter=Q(destination__region=pkg.region), distinct=True))
-               .order_by("-score", "?")[:4])
-    more_here = ACTIVE.filter(Q(destination=pkg.destination) | Q(destination__state_or_country=pkg.destination.state_or_country)).exclude(pk=pkg.pk)[:4]
+    similar, more_here = relevant_tours(pkg, ACTIVE)
+    record_event(request, pkg, "view")
     hotels_by_tier = {}
     for h in pkg.hotels.all():
         hotels_by_tier.setdefault(h.get_tier_display(), []).append(h)
     ctx = {
         "pkg": pkg, "similar": similar, "more_here": more_here, "hotels_by_tier": hotels_by_tier,
-        "gallery_fallback": gallery_fallback,
-        "places": m.Destination.objects.filter(region=pkg.region).exclude(pk=pkg.destination_id).annotate(n=Count("packages")).filter(n__gt=0).order_by("-is_popular", "?")[:8],
+        "gallery_fallback": gallery_fallback, "sightseeing_schema": sightseeing_schema(pkg),
+        "places": m.Destination.objects.filter(region=pkg.region).exclude(pk=pkg.destination_id).annotate(n=Count("packages")).filter(n__gt=0).order_by("-is_popular", "display_order", "name")[:8],
         "config": pkg.pricing_config(), "tiers_available": [("standard", "Standard", 0), ("deluxe", "Deluxe", pkg.deluxe_upgrade), ("premium", "Premium", pkg.premium_upgrade)],
         "is_saved": request.user.is_authenticated and pkg.saved_by.filter(user=request.user).exists(),
     }
@@ -165,6 +181,7 @@ def package_detail(request, slug):
 
 def package_pdf(request, slug):
     pkg = get_object_or_404(ACTIVE, slug=slug)
+    record_event(request, pkg, "pdf")
     resp = HttpResponse(build_itinerary_pdf(pkg, m.SiteSettings.get()), content_type="application/pdf")
     resp["Content-Disposition"] = f'attachment; filename="{pkg.tour_code}-{pkg.slug}.pdf"'
     return resp
@@ -188,6 +205,9 @@ def create_enquiry(request, slug):
     if not form.is_valid():
         return JsonResponse({"ok": False, "errors": {k: v[0] for k, v in form.errors.items()}}, status=400)
     d = form.cleaned_data
+    site_settings = m.SiteSettings.get()
+    if site_settings.booking_terms and not d["terms_accepted"]:
+        return JsonResponse({"ok":False,"errors":{"terms_accepted":"Please read and accept the booking terms."}}, status=400)
     if d["website"]:  # honeypot tripped: pretend success
         return JsonResponse({"ok": True, "reference": "—"})
     valid_ids = set(pkg.activities.values_list("id", flat=True))
@@ -198,7 +218,7 @@ def create_enquiry(request, slug):
     enq = m.Enquiry.objects.create(
         package=pkg, user=request.user if request.user.is_authenticated else None,
         name=d["name"], email=d["email"], phone=d["phone"], travel_date=d["travel_date"], adults=d["adults"], children=d["children"],
-        hotel_tier=d["hotel_tier"], departure_city=d["departure_city"], message=d["message"], total_price=calc["total"], price_breakdown=calc)
+        hotel_tier=d["hotel_tier"], departure_city=d["departure_city"], message=d["message"], total_price=calc["total"], price_breakdown=calc, terms_accepted=d["terms_accepted"], terms_snapshot=site_settings.booking_terms if d["terms_accepted"] else "")
     enq.activities.set(act_ids)
     notify_enquiry_received(enq)
     return JsonResponse({"ok": True, "reference": enq.reference, "total": calc["total"]})

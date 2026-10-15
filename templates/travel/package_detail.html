@@ -17,9 +17,9 @@
 
 <div class="wrap d-layout">
 <div class="d-main">
-  <section id="overview" class="blk"><h2>Overview</h2><p class="prose">{{ pkg.overview|default:pkg.short_description|linebreaksbr }}</p>
+  <section id="overview" class="blk"><h2>Overview</h2><p class="prose" data-readmore>{{ pkg.overview|default:pkg.short_description|linebreaksbr }}</p>
     {% if pkg.departure_list %}<div class="dep"><b>Fixed departures</b>{% for d in pkg.departure_list %}<span>{{ d }}</span>{% endfor %}</div>{% endif %}
-    <div class="actions-row">
+    <div class="actions-row">{% if pkg.source_url %}<a class="btn btn-ghost" href="{{ pkg.source_url }}" target="_blank" rel="noopener">Latest partner itinerary ↗</a>{% endif %}
       <a class="btn btn-ghost" href="{% url 'package_pdf' pkg.slug %}">Download itinerary PDF</a>
       <button class="btn btn-ghost heart-btn{% if is_saved %} on{% endif %}" data-save="{% url 'toggle_save' pkg.slug %}" aria-pressed="{% if is_saved %}true{% else %}false{% endif %}"><span class="t-off">♡ Save for later</span><span class="t-on">♥ Saved</span></button>
     </div>
@@ -28,12 +28,17 @@
   <section id="itinerary" class="blk"><h2>Day-wise itinerary</h2>
     <div class="days">{% for d in pkg.itinerary.all %}
       <details class="day" {% if forloop.first %}open{% endif %}><summary><span class="dn">Day {{ d.day_number }}</span><b>{{ d.title }}</b></summary>
-        <p>{{ d.description|linebreaksbr }}</p>{% if d.meals or d.stay %}<p class="day-meta">{% if d.meals %}<span>🍽 {{ d.meals }}</span>{% endif %}{% if d.stay %}<span>🛏 {{ d.stay }}</span>{% endif %}</p>{% endif %}</details>
+        <p data-readmore>{{ d.description|linebreaksbr }}</p>{% if d.meals or d.stay %}<p class="day-meta">{% if d.meals %}<span>🍽 {{ d.meals }}</span>{% endif %}{% if d.stay %}<span>🛏 {{ d.stay }}</span>{% endif %}</p>{% endif %}</details>
     {% empty %}<p class="muted">Itinerary coming soon. Send an inquiry and we'll share it.</p>{% endfor %}</div>
   </section>
 
   <section id="sightseeing" class="blk"><h2>Sightseeing</h2>
-    <div class="spots">{% for s in pkg.sightseeing.all %}{% curated_photo_url pkg.destination.name s.name as fallback_photo %}<div class="spot"><div class="spot-img" style="background:{% if s.image %}url('{{ s.image.url }}') center/cover{% elif fallback_photo %}url('{{ fallback_photo }}') center/cover{% else %}{{ forloop.counter|add:pkg.pk|gradient }}{% endif %}"></div><b>{{ s.name }}</b><small>{{ s.description }}</small></div>{% empty %}<p class="muted">Sightseeing details will be added soon.</p>{% endfor %}</div>
+    <div class="spots">{% for s in pkg.sightseeing.all %}{% curated_photo_url pkg.destination.name s.name as fallback_photo %}<article class="spot enriched-spot">
+      {% if s.image %}<button type="button" class="spot-photo" data-photo="{{ s.image.url }}" data-caption="{{ s.name }}"><img src="{{ s.image.url }}" alt="{{ s.name }}" loading="lazy"></button>{% elif s.image_url %}<button type="button" class="spot-photo" data-photo="{{ s.image_url }}" data-caption="{{ s.name }}"><img src="{{ s.image_url }}" alt="{{ s.name }}" loading="lazy"></button>{% elif fallback_photo %}<div class="spot-img" style="background:url('{{ fallback_photo }}') center/cover"></div>{% endif %}
+      <h3>{{ s.name }}</h3><p data-readmore>{{ s.description|linebreaksbr }}</p><dl class="spot-facts">{% if s.visiting_hours %}<dt>Visiting hours</dt><dd>{{ s.visiting_hours }}</dd>{% endif %}{% if s.closed_days %}<dt>Closed</dt><dd>{{ s.closed_days }}</dd>{% endif %}{% if s.admission %}<dt>Tickets</dt><dd>{{ s.admission }}</dd>{% endif %}{% if s.best_time %}<dt>Best time</dt><dd>{{ s.best_time }}</dd>{% endif %}</dl>
+      {% if s.website %}<a href="{{ s.website }}" target="_blank" rel="noopener">Official information ↗</a>{% endif %}{% if s.youtube_id %}<div class="lazy-video" data-youtube="{{ s.youtube_id }}"><button type="button">▶ Preview {{ s.name }} video</button></div>{% endif %}
+      {% for question, answer in s.faq_list %}<details class="spot-faq"><summary>{{ question }}</summary><p>{{ answer }}</p></details>{% endfor %}
+    </article>{% empty %}<p class="muted">Sightseeing details will be added soon.</p>{% endfor %}</div>
   </section>
 
   <section id="gallery" class="blk"><h2>Gallery</h2>
@@ -51,13 +56,13 @@
   </section>
 
   <section id="hotels" class="blk"><h2>Hotels & room categories</h2>
-    <div class="tiers">{% for tier, hs in hotels_by_tier.items %}<div class="tier"><h3>{{ tier }}</h3>{% for h in hs %}<div class="hotel"><b>{{ h.name }}</b><span class="stars" aria-label="{{ h.star_rating }} star">{% for i in "12345"|slice:h.star_rating %}★{% endfor %}</span><small>{{ h.room_category }}{% if h.city %} · {{ h.city }}{% endif %} · {{ h.nights }} night{{ h.nights|pluralize }}</small></div>{% endfor %}</div>{% empty %}<p class="muted">Hotel details will be shared with your quote.</p>{% endfor %}</div>
+    <div class="tiers">{% for tier, hs in hotels_by_tier.items %}<div class="tier"><h3>{{ tier }}</h3>{% for h in hs %}<article class="hotel hotel-detailed">{% if h.image %}<button class="hotel-photo" type="button" data-photo="{{ h.image.url }}" data-caption="{{ h.name }}"><img src="{{ h.image.url }}" alt="{{ h.name }}" loading="lazy"></button>{% elif h.image_url %}<button class="hotel-photo" type="button" data-photo="{{ h.image_url }}" data-caption="{{ h.name }}"><img src="{{ h.image_url }}" alt="{{ h.name }}" loading="lazy"></button>{% endif %}<b>{{ h.name }}</b><span class="stars" aria-label="{{ h.star_rating }} star">{% for i in "12345"|slice:h.star_rating %}★{% endfor %}</span><small>{{ h.room_category }}{% if h.city %} · {{ h.city }}{% endif %} · {{ h.nights }} night{{ h.nights|pluralize }}</small>{% if h.room_list %}<ul>{% for room in h.room_list %}<li>{{ room }}</li>{% endfor %}</ul>{% endif %}<p data-readmore>{{ h.description|linebreaksbr }}</p>{% if h.website %}<a href="{{ h.website }}" target="_blank" rel="noopener">Hotel website ↗</a>{% endif %}</article>{% endfor %}</div>{% empty %}<p class="muted">Hotel details will be shared with your quote.</p>{% endfor %}</div>
   </section>
 
   {% if pkg.activities.all %}<section id="optional" class="blk"><h2>Optional experiences</h2><p class="muted">Add these in the price calculator; prices update automatically.</p>
-    <div class="opts">{% for a in pkg.activities.all %}<div class="opt"><b>{{ a.name }}</b><small>{{ a.description }}</small><span>{{ a.adult_price|inr }} adult · {{ a.child_price|inr }} child</span></div>{% endfor %}</div></section>{% endif %}
+    <div class="opts">{% for a in pkg.activities.all %}<div class="opt">{% if a.image %}<button class="activity-photo" type="button" data-photo="{{ a.image.url }}" data-caption="{{ a.name }}"><img src="{{ a.image.url }}" alt="{{ a.name }}" loading="lazy"></button>{% elif a.image_url %}<button class="activity-photo" type="button" data-photo="{{ a.image_url }}" data-caption="{{ a.name }}"><img src="{{ a.image_url }}" alt="{{ a.name }}" loading="lazy"></button>{% endif %}<b>{{ a.name }}</b><small>{{ a.description }}</small><span>{{ a.adult_price|inr }} adult · {{ a.child_price|inr }} child</span></div>{% endfor %}</div></section>{% endif %}
 
-  {% if pkg.youtube_id %}<section id="video" class="blk"><h2>Tour video</h2><div class="video"><iframe src="https://www.youtube-nocookie.com/embed/{{ pkg.youtube_id }}" title="{{ pkg.title }} video" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div></section>{% endif %}
+  {% if pkg.youtube_id %}<section id="video" class="blk"><h2>Tour video</h2><div class="lazy-video" data-youtube="{{ pkg.youtube_id }}"><button type="button">▶ Preview tour video</button></div><p><a href="https://www.youtube.com/watch?v={{ pkg.youtube_id }}" target="_blank" rel="noopener">Watch full video on YouTube ↗</a></p></section>{% endif %}
 
   <section id="info" class="blk"><h2>Inclusions, exclusions & tour information</h2>
     <div class="ie"><div><h3 class="ok">Included</h3><ul class="ticks">{% for i in pkg.inclusion_list %}<li>{{ i }}</li>{% endfor %}</ul></div>
@@ -73,7 +78,7 @@
       <div class="stepper" data-step="adults"><span>Adults</span><div><button type="button" data-d="-1" aria-label="Fewer adults">−</button><output>2</output><button type="button" data-d="1" aria-label="More adults">+</button></div></div>
       <div class="stepper" data-step="children"><span>Children (2-11)</span><div><button type="button" data-d="-1" aria-label="Fewer children">−</button><output>0</output><button type="button" data-d="1" aria-label="More children">+</button></div></div>
     </div>
-    {% if not pkg.source_details %}<fieldset class="tierpick"><legend>Hotel category</legend>
+    {% if not pkg.source_details or hotels_by_tier %}<fieldset class="tierpick"><legend>Hotel category</legend>
       {% for key, label, up in tiers_available %}<label><input type="radio" name="tier" value="{{ key }}" {% if forloop.first %}checked{% endif %}><span>{{ label }}{% if up %}<small>+{{ up|inr }} pp</small>{% endif %}</span></label>{% endfor %}
     </fieldset>{% endif %}
     {% if config.departures %}<label class="fl"><span>Departure city</span><select id="dep-city"><option value="">Select city</option>{% for d in config.departures %}<option value="{{ d.city }}">{{ d.city }}{% if d.surcharge %} (+{{ d.surcharge|inr }} pp){% else %} (no extra){% endif %}</option>{% endfor %}</select></label>{% endif %}
@@ -101,7 +106,7 @@
         <div class="row-2"><label class="fl"><span>Full name</span><input name="name" required value="{{ user.get_full_name|default:'' }}"></label><label class="fl"><span>Phone / WhatsApp</span><input name="phone" required inputmode="tel" value="{{ user.profile.phone|default:'' }}"></label></div>
         <div class="row-2"><label class="fl"><span>Email</span><input name="email" type="email" required value="{{ user.email|default:'' }}"></label><label class="fl"><span>Preferred travel date</span><input name="travel_date" type="date"></label></div>
         <label class="fl"><span>Anything we should know?</span><textarea name="message" rows="2" placeholder="Special occasion, dietary needs, flexible dates…"></textarea></label>
-        <p class="err" id="enq-err" role="alert"></p>
+        {% if site.booking_terms %}<details class="booking-terms"><summary>Read booking terms</summary><p>{{ site.booking_terms|linebreaksbr }}</p></details><label class="check"><input type="checkbox" name="terms_accepted" value="1" required> I have read and accept the booking terms.</label>{% endif %}<p class="err" id="enq-err" role="alert"></p>
         <button class="btn btn-sun block" type="submit">Send inquiry</button>
       </form>
     </div>
@@ -116,6 +121,7 @@
 {% if more_here %}<section class="wrap sec"><div class="sec-head"><div><h2>More of {{ pkg.destination.state_or_country|default:pkg.destination.name }}</h2><p>Other ways to explore the same region.</p></div></div><div class="grid four">{% for p in more_here %}{% include "travel/_card.html" %}{% endfor %}</div></section>{% endif %}
 {% if places %}<section class="wrap sec"><div class="sec-head"><div><h2>More places to explore</h2><p>Inspiration for your next holiday.</p></div></div>
   <div class="places">{% for d in places %}{% curated_photo_url d.name as place_photo %}<a class="place" style="background:{% if d.image %}url('{{ d.image.url }}') center/cover{% elif place_photo %}url('{{ place_photo }}') center/cover{% else %}{{ d.pk|gradient }}{% endif %}" href="{% url 'packages' %}?destination={{ d.slug }}"><b>{{ d.name }}</b><small>{{ d.n }} trip{{ d.n|pluralize }}</small></a>{% endfor %}</div></section>{% endif %}
+{% if sightseeing_schema %}<script type="application/ld+json">{{ sightseeing_schema|safe }}</script>{% endif %}
 {{ config|json_script:"pkg-config" }}
 <script>window.PKG={title:"{{ pkg.title|escapejs }}",code:"{{ pkg.tour_code }}",wa:"{{ site.whatsapp_number }}",mail:"{{ site.email }}",url:"{{ request.build_absolute_uri }}"};</script>
 {% endblock %}

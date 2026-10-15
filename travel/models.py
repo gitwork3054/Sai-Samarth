@@ -3,6 +3,7 @@ from decimal import Decimal
 
 from django.conf import settings
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
@@ -23,6 +24,17 @@ class SiteSettings(models.Model):
     youtube = models.URLField(blank=True)
     hero_title = models.CharField(max_length=140, default="Chase the sunset, anywhere in the world")
     hero_subtitle = models.CharField(max_length=240, default="100+ handcrafted domestic and international holidays with transparent pricing.")
+
+    domestic_state_order = models.TextField(blank=True, help_text="Optional custom state order: one state or region name per line. Unlisted states follow alphabetically.")
+    international_country_order = models.TextField(blank=True, help_text="Optional country order: one country per line.")
+    slideshow_interval = models.PositiveIntegerField(default=1500, help_text="Pause between homepage slides, in milliseconds (minimum 1000).")
+    preview_characters = models.PositiveSmallIntegerField(default=300, help_text="Overview and itinerary preview length before Read more (minimum 100).")
+    corporate_intro = models.TextField(blank=True, help_text="Your corporate travel services introduction.")
+    contact_intro = models.TextField(blank=True)
+    google_reviews_url = models.URLField(blank=True, help_text="Your own Google Business reviews URL.")
+    assistant_enabled = models.BooleanField(default=True, help_text="Enable the guided tour-search helper (not an AI adviser).")
+    booking_terms = models.TextField(blank=True, help_text="Paste your approved booking terms. Leave blank until supplied.")
+    analytics_enabled = models.BooleanField(default=True, help_text="Offer optional first-party visit analytics. Tracking starts only after the visitor accepts.")
 
     class Meta:
         verbose_name = "Site settings"
@@ -88,9 +100,12 @@ class Destination(models.Model):
     tagline = models.CharField(max_length=160, blank=True)
     image = models.ImageField(upload_to="destinations/", blank=True)
     is_popular = models.BooleanField(default=False, help_text="Show in 'Popular places' on the home page")
+    display_order = models.PositiveSmallIntegerField(default=0)
+    youtube_url = models.URLField(blank=True)
+    source_url = models.URLField(blank=True, help_text="Optional latest partner collection URL; opens separately from your own packages.")
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["display_order", "name"]
 
     def __str__(self):
         return self.name
@@ -141,6 +156,9 @@ class Package(models.Model):
     cover_image = models.ImageField(upload_to="packages/", blank=True)
     cover_url = models.URLField(blank=True, help_text="Optional: link to an image instead of uploading")
     youtube_url = models.URLField(blank=True, help_text="Any YouTube link (watch, youtu.be or shorts)")
+
+    source_url = models.URLField(blank=True, help_text="Optional partner itinerary URL. Local details and your enquiry remain available.")
+    related_packages = models.ManyToManyField("self", symmetrical=False, blank=True, help_text="Optional hand-picked alternatives; otherwise use relevant destinations and prices.")
 
     # info blocks (one item per line)
     inclusions = models.TextField(blank=True, help_text="One per line")
@@ -264,7 +282,15 @@ class ItineraryDay(models.Model):
 class Sightseeing(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name="sightseeing")
     name = models.CharField(max_length=120)
-    description = models.CharField(max_length=300, blank=True)
+    description = models.TextField(blank=True)
+    visiting_hours = models.CharField(max_length=200, blank=True)
+    closed_days = models.CharField(max_length=120, blank=True)
+    admission = models.CharField(max_length=200, blank=True, help_text="Entry fee or ticket information; leave blank if not confirmed.")
+    best_time = models.CharField(max_length=200, blank=True)
+    website = models.URLField(blank=True)
+    youtube_url = models.URLField(blank=True)
+    questions = models.TextField(blank=True, help_text="Optional FAQs: one Question | Answer pair per line.")
+    image_url = models.URLField(blank=True)
     image = models.ImageField(upload_to="sightseeing/", blank=True)
     order = models.PositiveSmallIntegerField(default=0)
 
@@ -274,6 +300,16 @@ class Sightseeing(models.Model):
 
     def __str__(self):
         return self.name
+
+
+    @property
+    def youtube_id(self):
+        match = re.search(r"(?:v=|youtu\.be/|embed/|shorts/)([A-Za-z0-9_-]{11})", self.youtube_url or "")
+        return match.group(1) if match else ""
+
+    @property
+    def faq_list(self):
+        return [tuple(part.strip() for part in line.split("|", 1)) for line in self.questions.splitlines() if "|" in line and all(part.strip() for part in line.split("|", 1))]
 
 
 class PackageImage(models.Model):
@@ -300,6 +336,14 @@ class Hotel(models.Model):
     room_category = models.CharField(max_length=120, blank=True, help_text="e.g. Deluxe Sea-view Room")
     nights = models.PositiveSmallIntegerField(default=1)
     image = models.ImageField(upload_to="hotels/", blank=True)
+    image_url = models.URLField(blank=True)
+    website = models.URLField(blank=True)
+    description = models.TextField(blank=True)
+    room_options = models.TextField(blank=True, help_text="Additional room categories: one room name per line.")
+
+    @property
+    def room_list(self):
+        return _fmt_lines(self.room_options)
 
     class Meta:
         ordering = ["tier", "id"]
@@ -314,6 +358,8 @@ class OptionalActivity(models.Model):
     description = models.CharField(max_length=300, blank=True)
     adult_price = models.PositiveIntegerField(default=0)
     child_price = models.PositiveIntegerField(default=0)
+    image = models.ImageField(upload_to="activities/", blank=True)
+    image_url = models.URLField(blank=True)
 
     class Meta:
         verbose_name = "Optional experience"
@@ -354,6 +400,14 @@ class Enquiry(models.Model):
     total_price = models.PositiveIntegerField(default=0)
     price_breakdown = models.JSONField(default=dict, blank=True, help_text="Snapshot of the calculator at enquiry time")
     status = models.CharField(max_length=10, choices=STATUS, default="new")
+    quote_base_override = models.PositiveIntegerField(null=True, blank=True, help_text="Optional confirmed cost override for a staff quotation.")
+    quote_margin_percent = models.DecimalField(max_digits=5, decimal_places=2, default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    quoted_price = models.PositiveIntegerField(default=0, editable=False)
+    quote_breakdown = models.JSONField(default=dict, blank=True, editable=False)
+    quote_notes = models.TextField(blank=True)
+    quote_itinerary = models.TextField(blank=True, help_text="Optional tailored itinerary for the quotation. The public package stays unchanged.")
+    terms_accepted = models.BooleanField(default=False)
+    terms_snapshot = models.TextField(blank=True)
     admin_notes = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -439,3 +493,82 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"Profile of {self.user}"
+
+
+class HomeSlide(models.Model):
+    title = models.CharField(max_length=180)
+    eyebrow = models.CharField(max_length=120, blank=True)
+    caption = models.CharField(max_length=300, blank=True)
+    image = models.ImageField(upload_to="homepage/", blank=True)
+    image_url = models.URLField(blank=True)
+    built_in_image = models.CharField(max_length=200, blank=True, help_text="Bundled image path; leave unchanged when using an uploaded photo.")
+    order = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def photo(self):
+        from django.templatetags.static import static
+        return self.image.url if self.image else self.image_url or (static(self.built_in_image) if self.built_in_image else "")
+
+
+class CorporateService(models.Model):
+    title = models.CharField(max_length=150)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to="corporate/", blank=True)
+    order = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return self.title
+
+
+class ContactRequest(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    message = models.TextField()
+    status = models.CharField(max_length=20, choices=[("new", "New"), ("contacted", "Contacted"), ("closed", "Closed")], default="new")
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created"]
+
+    def __str__(self):
+        return self.name
+
+
+class VisitEvent(models.Model):
+    EVENTS = [("view", "Tour viewed"), ("pdf", "Itinerary downloaded")]
+    package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name="visit_events")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
+    event = models.CharField(max_length=10, choices=EVENTS)
+    visitor = models.CharField(max_length=36, blank=True, help_text="Random consented visitor ID, never an email or phone number.")
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created"]
+        indexes = [models.Index(fields=["package", "created"])]
+
+
+class CustomerReview(models.Model):
+    customer_name = models.CharField(max_length=100)
+    review = models.TextField()
+    rating = models.PositiveSmallIntegerField(default=5, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    source_url = models.URLField(blank=True, help_text="Link to the genuine review, if available.")
+    order = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return self.customer_name

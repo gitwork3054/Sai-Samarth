@@ -52,8 +52,33 @@ def domestic_groups(packages):
             group['destination_ids'].add(package.destination_id)
             group['package_ids'].add(package.pk)
     result = []
-    for name in sorted(groups):
+    from .models import SiteSettings
+    priority = {name.strip().casefold(): i for i, name in enumerate(SiteSettings.get().domestic_state_order.splitlines()) if name.strip()}
+    for name in sorted(groups, key=lambda value: (priority.get(value.casefold(), 10000), value)):
+
         group = groups[name]
         group['count'] = len(group.pop('package_ids'))
+        result.append(group)
+    return result
+
+
+def international_groups(packages):
+    from .models import SiteSettings
+    groups = {}
+    for package in packages:
+        if package.destination.region != "international":
+            continue
+        name = package.destination.state_or_country.strip() or package.destination.name
+        group = groups.setdefault(name, {"name": name, "slug": slugify(name), "destination_ids": set(), "package_ids": set(), "source_urls": set()})
+        group["destination_ids"].add(package.destination_id)
+        group["package_ids"].add(package.pk)
+        if package.destination.source_url:
+            group["source_urls"].add(package.destination.source_url)
+    priority = {name.strip().casefold(): i for i, name in enumerate(SiteSettings.get().international_country_order.splitlines()) if name.strip()}
+    result = []
+    for name in sorted(groups, key=lambda value: (priority.get(value.casefold(), 10000), value)):
+        group = groups[name]
+        group["count"] = len(group.pop("package_ids"))
+        group["source_urls"] = sorted(group["source_urls"])
         result.append(group)
     return result

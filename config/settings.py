@@ -149,3 +149,6 @@ SOCIALACCOUNT_PROVIDERS = {
         "OAUTH_PKCE_ENABLED": True,
     }
 }
+
+# Optional server-to-server CRM read access. Never expose this token in JavaScript.
+CRM_API_TOKEN = env("CRM_API_TOKEN")

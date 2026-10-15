@@ -1,8 +1,15 @@
 from django.urls import path
 
-from . import views
+from . import views, integration_views
 
 urlpatterns = [
+    path("sitemap.xml", integration_views.sitemap, name="sitemap"),
+    path("robots.txt", integration_views.robots, name="robots"),
+    path("contact/", integration_views.contact, name="contact"),
+    path("contact/thanks/", integration_views.contact, name="contact_thanks"),
+    path("api/journeys/", integration_views.journey_search, name="journey_search"),
+    path("api/crm/v1/<str:resource>/", integration_views.crm_export, name="crm_export"),
+    path("staff/quotation/<str:reference>/pdf/", integration_views.quotation_pdf, name="quotation_pdf"),
     path("", views.home, name="home"),
     path("packages/", views.package_list, name="packages"),
     path("domestic/", views.package_list, {"preset": "domestic"}, name="domestic"),

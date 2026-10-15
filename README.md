@@ -71,3 +71,7 @@ The homepage uses five bundled photographs in a looping horizontal slideshow.
 Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env` locally or Render environment settings to enable Google login.
 Local redirect URI: `http://127.0.0.1:8000/auth/google/login/callback/`.
 Production redirect URI: `https://YOUR-DOMAIN/auth/google/login/callback/`.
+
+## State-wise project feature update
+
+See [OWNER_UPDATE_GUIDE.md](OWNER_UPDATE_GUIDE.md) for new owner controls, country browsing, rich package information, staff quotations and integration setup.

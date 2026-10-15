@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Contact · {{ site.brand_name }}{% endblock %}
+{% block content %}
+<section class="page-head"><div class="wrap"><h1>Let’s plan your journey</h1><p>Speak to the Sai Samarth travel team.</p></div></section>
+<div class="wrap contact-layout"><section class="blk"><h2>Talk to us</h2>{% if site.contact_intro %}<p>{{ site.contact_intro|linebreaksbr }}</p>{% endif %}<p><a href="tel:{{ site.phone }}">{{ site.phone }}</a></p><p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>{% if site.address %}<p>{{ site.address|linebreaksbr }}</p>{% endif %}<a class="btn btn-ghost" href="https://wa.me/{{ site.whatsapp_number }}" target="_blank" rel="noopener">WhatsApp our team ↗</a></section><section class="blk">{% if sent %}<h2>Message received</h2><p>Our team has received your enquiry.</p><a class="btn btn-sun" href="{% url 'packages' %}">Explore journeys</a>{% else %}<h2>Send a message</h2><form method="post" action="{% url 'contact' %}">{% csrf_token %}{{ contact_form.website }}{% for field in contact_form.visible_fields %}<label class="fl"><span>{{ field.label }}</span>{{ field }}{{ field.errors }}</label>{% endfor %}<p class="fine">We use these details to respond to your travel request.</p><button type="submit" class="btn btn-sun">Send enquiry</button></form>{% endif %}</section></div>
+{% endblock %}
