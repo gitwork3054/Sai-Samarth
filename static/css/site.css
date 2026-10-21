@@ -502,13 +502,13 @@ body{background:var(--paper)}
 @media(max-width:650px){.contact-layout{grid-template-columns:1fr;gap:15px}.hero.hero-slider{min-height:1060px}.hero-slider .finder{grid-template-columns:1fr 1fr}.hero-slider .finder .f-wide{grid-column:1/-1}.hero-slider .finder label{min-width:0;padding:9px}.hero-slider .finder select{font-size:.75rem}.spots,.review-grid{grid-template-columns:1fr}.consent-notice{bottom:18px}.hero-search{bottom:70px}.spot-photo img,.hotel-photo img,.activity-photo img{height:190px}.journey-helper{bottom:132px}.state-directory{padding-bottom:50px}}
 
 
-/* Static full-page homepage background requested 2026-10-21. */
+/* Homepage static beach background + responsive homepage-only layout. */
 body.home-static-bg{
   background:
-    linear-gradient(rgba(251,250,247,.80),rgba(251,250,247,.80)),
+    linear-gradient(rgba(8,22,27,.30),rgba(8,22,27,.34)),
     url('../img/home-beach.jpg') center center / cover fixed no-repeat;
 }
-body.home-static-bg .top{background:rgba(251,250,247,.86)}
+body.home-static-bg .top{background:rgba(251,250,247,.90)}
 body.home-static-bg .hero,
 body.home-static-bg .band,
 body.home-static-bg .band-dusk,
@@ -519,28 +519,13 @@ body.home-static-bg .tile,
 body.home-static-bg .card,
 body.home-static-bg .aud-card,
 body.home-static-bg .review-card{
-  background:rgba(255,255,255,.88);
+  background:rgba(255,255,255,.90);
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
 }
 body.home-static-bg .cta-band{background:rgba(27,52,59,.88)}
 body.home-static-bg .foot{background:rgba(24,44,50,.95)}
-@media(max-width:800px){
-  body.home-static-bg{
-    background-attachment:scroll;
-    background-position:center top;
-  }
-}
 
-
-/* Homepage background only — soft dark overlay with light section text. */
-body.home-static-bg{
-  background:
-    linear-gradient(rgba(8,22,27,.30),rgba(8,22,27,.34)),
-    url('../img/home-beach.jpg') center center / cover fixed no-repeat;
-}
-
-/* Keep the normal light UI, only make text placed directly over the photo light. */
 body.home-static-bg .hero-heading,
 body.home-static-bg .hero-eyebrow,
 body.home-static-bg .hero-caption,
@@ -550,8 +535,6 @@ body.home-static-bg .sec-head .more{
   color:#fff;
   text-shadow:0 2px 14px rgba(0,0,0,.28);
 }
-
-/* Cards and other light surfaces keep their original dark text. */
 body.home-static-bg .card,
 body.home-static-bg .tile,
 body.home-static-bg .aud-card,
@@ -561,9 +544,163 @@ body.home-static-bg .finder{
   text-shadow:none;
 }
 
-@media(max-width:800px){
+/* Desktop and tablet */
+@media(max-width:1100px){
+  body.home-static-bg .wrap{width:min(100% - 40px,var(--wrap))}
+  body.home-static-bg .hero.hero-slider{min-height:820px}
+  body.home-static-bg .hero-copy{padding-top:70px}
+  body.home-static-bg .hero-slider .finder{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  body.home-static-bg .hero-slider .finder .f-wide,
+  body.home-static-bg .hero-slider .finder .btn{grid-column:1/-1}
+  body.home-static-bg .grid.auto-rail>.card,
+  body.home-static-bg .aud.auto-rail>.aud-card,
+  body.home-static-bg .places.auto-rail>.place{
+    flex-basis:calc((100% - 28px)/3);
+  }
+}
+
+/* Mobile */
+@media(max-width:650px){
   body.home-static-bg{
     background-attachment:scroll;
     background-position:center top;
+  }
+  body.home-static-bg .wrap{width:calc(100% - 28px)}
+  body.home-static-bg .hero.hero-slider{
+    min-height:0;
+    height:auto;
+    padding:0 0 28px;
+  }
+  body.home-static-bg .hero-copy{
+    padding-top:48px;
+    padding-bottom:28px;
+  }
+  body.home-static-bg .hero-slider .hero-heading{
+    font-size:clamp(2.15rem,10vw,2.8rem);
+    max-width:12ch;
+  }
+  body.home-static-bg .hero-slider .hero-caption{
+    font-size:.98rem;
+    max-width:34ch;
+  }
+  body.home-static-bg .hero-search{
+    position:relative;
+    inset:auto;
+    bottom:auto;
+    margin-top:18px;
+  }
+  body.home-static-bg .hero-slider .finder{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    padding:10px;
+  }
+  body.home-static-bg .hero-slider .finder .f-wide,
+  body.home-static-bg .hero-slider .finder .btn{grid-column:auto}
+  body.home-static-bg .hero-slider .finder label{
+    min-width:0;
+    padding:10px 12px;
+  }
+  body.home-static-bg .hero-slider .finder select{
+    width:100%;
+    font-size:.84rem;
+  }
+  body.home-static-bg .hero-slider .finder .btn{width:100%}
+
+  body.home-static-bg .tiles{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+    margin-top:10px;
+  }
+  body.home-static-bg .tile{
+    min-width:0;
+    min-height:98px;
+    padding:17px 15px;
+  }
+
+  body.home-static-bg .sec{padding-top:48px}
+  body.home-static-bg .band{margin-top:48px}
+  body.home-static-bg .band .sec{padding:48px 0}
+  body.home-static-bg .sec-head{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+  body.home-static-bg .sec-head h2{
+    font-size:clamp(1.75rem,8vw,2.2rem);
+    line-height:1.08;
+  }
+  body.home-static-bg .sec-head p{
+    font-size:.95rem;
+    line-height:1.55;
+  }
+
+  body.home-static-bg .grid.auto-rail,
+  body.home-static-bg .aud.auto-rail,
+  body.home-static-bg .places.auto-rail{
+    gap:12px;
+    padding:4px 14px 18px 0;
+    margin-right:-14px;
+    scroll-snap-type:x proximity;
+  }
+  body.home-static-bg .grid.auto-rail>.card,
+  body.home-static-bg .aud.auto-rail>.aud-card,
+  body.home-static-bg .places.auto-rail>.place{
+    flex:0 0 min(82vw,310px);
+    min-width:0;
+    scroll-snap-align:start;
+  }
+  body.home-static-bg .card-foot{
+    gap:8px;
+    align-items:flex-end;
+  }
+  body.home-static-bg .card-foot .btn{
+    white-space:nowrap;
+    flex:0 0 auto;
+  }
+  body.home-static-bg .card h3{
+    overflow-wrap:anywhere;
+  }
+  body.home-static-bg .aud-card{
+    min-height:160px;
+  }
+  body.home-static-bg .cta-band{
+    display:grid;
+    gap:18px;
+    padding:26px 20px;
+  }
+  body.home-static-bg .cta-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  body.home-static-bg .cta-actions .btn{flex:1 1 150px}
+}
+
+/* Small phones */
+@media(max-width:430px){
+  body.home-static-bg .wrap{width:calc(100% - 22px)}
+  body.home-static-bg .hero-copy{padding-top:38px}
+  body.home-static-bg .hero-slider .hero-heading{font-size:2.12rem}
+  body.home-static-bg .tiles{grid-template-columns:1fr}
+  body.home-static-bg .tile{min-height:88px}
+  body.home-static-bg .grid.auto-rail>.card,
+  body.home-static-bg .aud.auto-rail>.aud-card,
+  body.home-static-bg .places.auto-rail>.place{
+    flex-basis:calc(100vw - 44px);
+  }
+  body.home-static-bg .journey-helper-button{
+    right:12px;
+    bottom:74px;
+    max-width:calc(100vw - 24px);
+  }
+  body.home-static-bg .journey-helper{
+    right:12px;
+    width:calc(100vw - 24px);
   }
 }
