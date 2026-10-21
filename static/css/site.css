@@ -531,3 +531,172 @@ body.home-static-bg .foot{background:rgba(24,44,50,.95)}
     background-position:center top;
   }
 }
+
+
+/* Dark responsive homepage background refinement — 2026-10-21 */
+body.home-static-bg{
+  color:#f4f6f5;
+  background:
+    linear-gradient(rgba(8,22,27,.72),rgba(8,22,27,.78)),
+    url('../img/home-beach.jpg') center center / cover fixed no-repeat;
+}
+
+body.home-static-bg .top{
+  background:rgba(10,24,29,.88);
+  border-bottom-color:rgba(255,255,255,.08);
+}
+body.home-static-bg .top.scrolled{background:rgba(10,24,29,.96)}
+body.home-static-bg .brand-name,
+body.home-static-bg .nav>a,
+body.home-static-bg .menu>summary{color:#f5f7f6}
+body.home-static-bg .burger span{background:#eef4f2}
+
+body.home-static-bg .hero-heading,
+body.home-static-bg .hero-eyebrow,
+body.home-static-bg .sec-head h2,
+body.home-static-bg .cta-band h2{color:#fff}
+body.home-static-bg .hero-caption,
+body.home-static-bg .sec-head p,
+body.home-static-bg .cta-band p{color:rgba(240,246,244,.82)}
+body.home-static-bg .more{color:#d7eee8}
+
+body.home-static-bg .hero,
+body.home-static-bg .band,
+body.home-static-bg .band-dusk,
+body.home-static-bg .band-sand{background:transparent}
+
+body.home-static-bg .tile,
+body.home-static-bg .card,
+body.home-static-bg .aud-card,
+body.home-static-bg .review-card{
+  background:rgba(15,31,36,.86);
+  border-color:rgba(255,255,255,.12);
+  color:#f5f7f6;
+  box-shadow:0 18px 45px rgba(0,0,0,.20);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+body.home-static-bg .tile b,
+body.home-static-bg .card h3,
+body.home-static-bg .card h3 a,
+body.home-static-bg .aud-card b,
+body.home-static-bg .review-card b,
+body.home-static-bg .price strong{color:#fff}
+body.home-static-bg .tile span,
+body.home-static-bg .card .meta,
+body.home-static-bg .card small,
+body.home-static-bg .aud-card small,
+body.home-static-bg .aud-card em,
+body.home-static-bg .review-card p{color:rgba(235,242,240,.72)}
+
+body.home-static-bg .chips span{
+  background:rgba(255,255,255,.10);
+  color:#eef5f2;
+}
+body.home-static-bg .finder{
+  background:rgba(12,28,33,.88);
+  border-color:rgba(255,255,255,.10);
+}
+body.home-static-bg .finder label{background:rgba(255,255,255,.08)}
+body.home-static-bg .finder label>span{color:rgba(237,244,242,.7)}
+body.home-static-bg .finder select,
+body.home-static-bg .finder input{color:#fff}
+body.home-static-bg .finder select option{color:#17262b;background:#fff}
+
+body.home-static-bg .cta-band{
+  background:rgba(9,25,30,.90);
+  border:1px solid rgba(255,255,255,.1);
+}
+body.home-static-bg .foot{background:rgba(7,20,25,.97)}
+
+@media(max-width:900px){
+  body.home-static-bg{
+    background-attachment:fixed;
+    background-position:center center;
+  }
+  body.home-static-bg .wrap{
+    width:min(100% - 28px,var(--wrap));
+  }
+  body.home-static-bg .hero.hero-slider{
+    min-height:820px;
+  }
+  body.home-static-bg .hero-copy{
+    padding-top:72px;
+  }
+}
+
+@media(max-width:650px){
+  body.home-static-bg .wrap{
+    width:calc(100% - 24px);
+  }
+  body.home-static-bg .hero.hero-slider{
+    min-height:780px;
+  }
+  body.home-static-bg .hero-search{
+    bottom:46px;
+  }
+  body.home-static-bg .hero-slider .finder{
+    grid-template-columns:1fr;
+    padding:12px;
+  }
+  body.home-static-bg .hero-slider .finder .f-wide,
+  body.home-static-bg .hero-slider .finder .btn{
+    grid-column:1;
+  }
+  body.home-static-bg .tiles{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:-18px;
+  }
+  body.home-static-bg .tile{
+    min-width:0;
+    min-height:96px;
+    padding:18px 16px;
+  }
+  body.home-static-bg .grid.auto-rail,
+  body.home-static-bg .aud.auto-rail,
+  body.home-static-bg .places.auto-rail{
+    gap:12px;
+    padding-right:14px;
+    scroll-padding-left:0;
+  }
+  body.home-static-bg .grid.auto-rail>.card,
+  body.home-static-bg .aud.auto-rail>.aud-card,
+  body.home-static-bg .places.auto-rail>.place{
+    flex-basis:min(82vw,320px);
+  }
+  body.home-static-bg .sec{
+    padding-top:48px;
+  }
+  body.home-static-bg .sec-head{
+    align-items:flex-start;
+    gap:10px;
+  }
+  body.home-static-bg .sec-head h2{
+    font-size:clamp(1.8rem,8vw,2.25rem);
+  }
+}
+
+@media(max-width:430px){
+  body.home-static-bg .hero.hero-slider{
+    min-height:840px;
+  }
+  body.home-static-bg .hero-copy{
+    padding-top:52px;
+  }
+  body.home-static-bg .hero-slider .hero-heading{
+    font-size:2.35rem;
+  }
+  body.home-static-bg .tiles{
+    grid-template-columns:1fr;
+  }
+  body.home-static-bg .grid.auto-rail>.card,
+  body.home-static-bg .aud.auto-rail>.aud-card,
+  body.home-static-bg .places.auto-rail>.place{
+    flex-basis:calc(100vw - 48px);
+  }
+  body.home-static-bg .card-body{
+    padding:14px;
+  }
+}
