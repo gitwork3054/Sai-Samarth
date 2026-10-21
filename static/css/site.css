@@ -533,12 +533,34 @@ body.home-static-bg .foot{background:rgba(24,44,50,.95)}
 }
 
 
-/* Homepage background only — darkened static beach image. */
+/* Homepage background only — soft dark overlay with light section text. */
 body.home-static-bg{
   background:
-    linear-gradient(rgba(8,22,27,.58),rgba(8,22,27,.62)),
+    linear-gradient(rgba(8,22,27,.30),rgba(8,22,27,.34)),
     url('../img/home-beach.jpg') center center / cover fixed no-repeat;
 }
+
+/* Keep the normal light UI, only make text placed directly over the photo light. */
+body.home-static-bg .hero-heading,
+body.home-static-bg .hero-eyebrow,
+body.home-static-bg .hero-caption,
+body.home-static-bg .sec-head h2,
+body.home-static-bg .sec-head p,
+body.home-static-bg .sec-head .more{
+  color:#fff;
+  text-shadow:0 2px 14px rgba(0,0,0,.28);
+}
+
+/* Cards and other light surfaces keep their original dark text. */
+body.home-static-bg .card,
+body.home-static-bg .tile,
+body.home-static-bg .aud-card,
+body.home-static-bg .review-card,
+body.home-static-bg .finder{
+  color:var(--ink);
+  text-shadow:none;
+}
+
 @media(max-width:800px){
   body.home-static-bg{
     background-attachment:scroll;
