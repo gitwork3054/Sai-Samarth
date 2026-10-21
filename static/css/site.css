@@ -565,6 +565,9 @@ body.home-static-bg .finder{
 /* Mobile */
 @media(max-width:650px){
   body.home-static-bg{
+    background:
+      linear-gradient(rgba(8,22,27,.24),rgba(8,22,27,.30)),
+      url('../img/home-beach-mobile.jpg') center top / cover no-repeat;
     background-attachment:scroll;
     background-position:center top;
   }
