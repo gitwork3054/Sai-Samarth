@@ -692,21 +692,17 @@ body.home-static-bg .finder{
   body.home-static-bg .places.auto-rail{
     -webkit-mask-image:linear-gradient(
       90deg,
-      transparent 0,
-      rgba(0,0,0,.25) 2.5%,
-      #000 8%,
-      #000 92%,
-      rgba(0,0,0,.25) 97.5%,
-      transparent 100%
+      rgba(0,0,0,.55) 0,
+      #000 4%,
+      #000 96%,
+      rgba(0,0,0,.55) 100%
     );
     mask-image:linear-gradient(
       90deg,
-      transparent 0,
-      rgba(0,0,0,.25) 2.5%,
-      #000 8%,
-      #000 92%,
-      rgba(0,0,0,.25) 97.5%,
-      transparent 100%
+      rgba(0,0,0,.55) 0,
+      #000 4%,
+      #000 96%,
+      rgba(0,0,0,.55) 100%
     );
     padding-left:18px;
     padding-right:18px;
