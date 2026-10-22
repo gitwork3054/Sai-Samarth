@@ -685,6 +685,34 @@ body.home-static-bg .finder{
   body.home-static-bg .cta-actions .btn{flex:1 1 150px}
 }
 
+/* Desktop/tablet carousel edge treatment: fade both sides so moving cards never look chopped. */
+@media(min-width:651px){
+  body.home-static-bg .grid.auto-rail,
+  body.home-static-bg .aud.auto-rail,
+  body.home-static-bg .places.auto-rail{
+    -webkit-mask-image:linear-gradient(
+      90deg,
+      transparent 0,
+      rgba(0,0,0,.25) 2.5%,
+      #000 8%,
+      #000 92%,
+      rgba(0,0,0,.25) 97.5%,
+      transparent 100%
+    );
+    mask-image:linear-gradient(
+      90deg,
+      transparent 0,
+      rgba(0,0,0,.25) 2.5%,
+      #000 8%,
+      #000 92%,
+      rgba(0,0,0,.25) 97.5%,
+      transparent 100%
+    );
+    padding-left:18px;
+    padding-right:18px;
+  }
+}
+
 /* Mobile carousel edge treatment: show the next card intentionally instead of a hard cut. */
 @media(max-width:650px){
   body.home-static-bg .grid.auto-rail,
