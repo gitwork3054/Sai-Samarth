@@ -685,6 +685,42 @@ body.home-static-bg .finder{
   body.home-static-bg .cta-actions .btn{flex:1 1 150px}
 }
 
+/* Mobile carousel edge treatment: show the next card intentionally instead of a hard cut. */
+@media(max-width:650px){
+  body.home-static-bg .grid.auto-rail,
+  body.home-static-bg .aud.auto-rail,
+  body.home-static-bg .places.auto-rail{
+    position:relative;
+    overflow-x:auto;
+    overflow-y:visible;
+    padding-right:48px;
+    margin-right:-28px;
+    -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 86%,rgba(0,0,0,.82) 92%,transparent 100%);
+    mask-image:linear-gradient(90deg,#000 0%,#000 86%,rgba(0,0,0,.82) 92%,transparent 100%);
+  }
+
+  body.home-static-bg .grid.auto-rail>.card,
+  body.home-static-bg .aud.auto-rail>.aud-card,
+  body.home-static-bg .places.auto-rail>.place{
+    flex-basis:min(76vw,292px);
+    transform-origin:center;
+    transition:transform .25s ease,opacity .25s ease,filter .25s ease;
+  }
+
+  body.home-static-bg .grid.auto-rail>.card:not(:first-child),
+  body.home-static-bg .aud.auto-rail>.aud-card:not(:first-child),
+  body.home-static-bg .places.auto-rail>.place:not(:first-child){
+    opacity:.96;
+  }
+
+  body.home-static-bg .grid.auto-rail::after,
+  body.home-static-bg .aud.auto-rail::after,
+  body.home-static-bg .places.auto-rail::after{
+    content:"";
+    flex:0 0 22px;
+  }
+}
+
 /* Small phones */
 @media(max-width:430px){
   body.home-static-bg .wrap{width:calc(100% - 22px)}
