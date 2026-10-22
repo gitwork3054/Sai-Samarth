@@ -767,3 +767,18 @@ body.home-static-bg .finder{
     width:calc(100vw - 24px);
   }
 }
+
+
+/* Swipe-style card motion polish */
+body.home-static-bg .auto-rail{
+  scroll-behavior:smooth;
+}
+body.home-static-bg .auto-rail > *{
+  transition:transform .55s cubic-bezier(.22,.61,.36,1), opacity .55s ease, box-shadow .55s ease;
+}
+body.home-static-bg .auto-rail.is-swiping > *{
+  transform:translateX(-2px) scale(.992);
+}
+body.home-static-bg .auto-rail.is-swiping > *:hover{
+  transform:translateX(-2px) scale(.992);
+}
