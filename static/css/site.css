@@ -787,19 +787,14 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
 /* S-curve swipe animation for homepage rails */
 body.home-static-bg .auto-rail > *{
   transform-origin:center;
+  transform:translateY(0);
   transition:
     transform .65s cubic-bezier(.22,.61,.36,1),
     opacity .55s ease,
     box-shadow .55s ease;
 }
 
-/* Resting S-shape across visible cards */
-body.home-static-bg .auto-rail > *:nth-child(4n+1){ transform:translateY(0); }
-body.home-static-bg .auto-rail > *:nth-child(4n+2){ transform:translateY(-10px); }
-body.home-static-bg .auto-rail > *:nth-child(4n+3){ transform:translateY(10px); }
-body.home-static-bg .auto-rail > *:nth-child(4n+4){ transform:translateY(0); }
-
-/* During each swipe the whole row flows through the curve */
+/* S-shape exists only while the row is actively swiping */
 body.home-static-bg .auto-rail.is-swiping > *:nth-child(4n+1){
   transform:translate(-4px,-6px) scale(.992);
 }
@@ -820,9 +815,6 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
 
 /* Softer amplitude on phones */
 @media(max-width:650px){
-  body.home-static-bg .auto-rail > *:nth-child(4n+2){ transform:translateY(-6px); }
-  body.home-static-bg .auto-rail > *:nth-child(4n+3){ transform:translateY(6px); }
-
   body.home-static-bg .auto-rail.is-swiping > *:nth-child(4n+1){
     transform:translate(-3px,-4px) scale(.994);
   }
