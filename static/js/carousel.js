@@ -5,13 +5,9 @@
     var rails = Array.from(document.querySelectorAll(".auto-rail"));
     if (!rails.length) return;
 
-    // Prevent duplicate animation if the newest site.js already handles rails.
     if (document.querySelector(".auto-rail [data-rail-copy]")) return;
 
-    var reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
+    var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) return;
 
     var states = rails.map(function (rail) {
@@ -19,10 +15,13 @@
       var state = {
         rail: rail,
         originals: originals,
-        width: 0,
+        loopWidth: 0,
+        step: 0,
         visible: true,
         paused: false,
-        touchUntil: 0
+        touchUntil: 0,
+        nextAt: performance.now() + 1800,
+        moving: false
       };
 
       function addCopy(item) {
@@ -31,10 +30,7 @@
         copy.setAttribute("aria-hidden", "true");
         copy.classList.add("is-visible");
 
-        if (copy.matches("a, button")) {
-          copy.setAttribute("tabindex", "-1");
-        }
-
+        if (copy.matches("a, button")) copy.setAttribute("tabindex", "-1");
         copy.querySelectorAll("a, button, input, [tabindex]").forEach(function (node) {
           node.setAttribute("tabindex", "-1");
         });
@@ -52,18 +48,26 @@
         if (!originals.length) return;
 
         var firstCopy = addCopy(originals[0]);
-        state.width = firstCopy.offsetLeft - originals[0].offsetLeft;
+        state.loopWidth = firstCopy.offsetLeft - originals[0].offsetLeft;
+
+        if (originals.length > 1) {
+          state.step = originals[1].offsetLeft - originals[0].offsetLeft;
+        } else {
+          state.step = originals[0].getBoundingClientRect().width + 14;
+        }
 
         originals.slice(1).forEach(addCopy);
 
         var groups = 1;
         while (
-          rail.scrollWidth - rail.clientWidth < state.width + 2 &&
-          groups < 20
+          rail.scrollWidth - rail.clientWidth < state.loopWidth + state.step &&
+          groups < 10
         ) {
           originals.forEach(addCopy);
           groups++;
         }
+
+        state.nextAt = performance.now() + 1800;
       }
 
       build();
@@ -75,6 +79,7 @@
 
       rail.addEventListener("mouseleave", function () {
         state.paused = false;
+        state.nextAt = performance.now() + 900;
       });
 
       rail.addEventListener("focusin", function () {
@@ -84,11 +89,12 @@
       rail.addEventListener("focusout", function (event) {
         if (!rail.contains(event.relatedTarget)) {
           state.paused = false;
+          state.nextAt = performance.now() + 900;
         }
       });
 
       rail.addEventListener("pointerdown", function () {
-        state.touchUntil = performance.now() + 2500;
+        state.touchUntil = performance.now() + 3000;
       });
 
       return state;
@@ -109,26 +115,41 @@
       });
     }
 
-    var lastFrame = performance.now();
+    function swipe(state, now) {
+      if (state.moving || !state.step || !state.loopWidth) return;
+
+      state.moving = true;
+      state.rail.classList.add("is-swiping");
+
+      var target = state.rail.scrollLeft + state.step;
+      state.rail.scrollTo({ left: target, behavior: "smooth" });
+
+      window.setTimeout(function () {
+        if (state.rail.scrollLeft >= state.loopWidth - 2) {
+          state.rail.style.scrollBehavior = "auto";
+          state.rail.scrollLeft -= state.loopWidth;
+          void state.rail.offsetWidth;
+          state.rail.style.scrollBehavior = "";
+        }
+
+        state.rail.classList.remove("is-swiping");
+        state.moving = false;
+        state.nextAt = now + 2200;
+      }, 620);
+    }
 
     function animate(now) {
-      var elapsed = Math.min(now - lastFrame, 50);
-      lastFrame = now;
-
       if (!document.hidden) {
         states.forEach(function (state) {
           if (
             !state.visible ||
             state.paused ||
+            state.moving ||
             now < state.touchUntil ||
-            !state.width
+            now < state.nextAt
           ) return;
 
-          state.rail.scrollLeft += elapsed * 0.037;
-
-          if (state.rail.scrollLeft >= state.width) {
-            state.rail.scrollLeft -= state.width;
-          }
+          swipe(state, now);
         });
       }
 
