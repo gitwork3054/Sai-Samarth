@@ -6,7 +6,6 @@ import requests
 from bs4 import BeautifulSoup
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
-from django.utils.text import slugify
 
 from travel import models as m
 
@@ -207,7 +206,6 @@ class Command(BaseCommand):
 
                 pkg.destination = dest
                 pkg.title = data["title"][:160]
-                pkg.slug = slugify(f"flamingo-{data['title']}")[:170] or pkg.slug
                 pkg.tour_type = data["tour_type"]
                 pkg.days = data["days"] or max(pkg.days or 1, 1)
                 pkg.nights = data["nights"] or max((pkg.days or 1) - 1, 0)
