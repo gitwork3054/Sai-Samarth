@@ -6,3 +6,5 @@ whitenoise>=6.8
 dj-database-url>=2.3
 psycopg[binary]>=3.2
 django-allauth[socialaccount]==65.19.6
+requests>=2.32
+beautifulsoup4>=4.12
