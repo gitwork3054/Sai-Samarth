@@ -98,6 +98,36 @@
     });
   }
 
+  // Homepage finder: filter destinations by selected trip type
+  var heroRegion = $("#hero-region");
+  var heroDestination = $("#hero-destination");
+  if (heroRegion && heroDestination) {
+    var heroOptions = $("option[data-region]", heroDestination);
+
+    function filterHeroDestinations() {
+      var region = heroRegion.value;
+      var selected = heroDestination.options[heroDestination.selectedIndex];
+
+      heroOptions.forEach(function (option) {
+        var show = !region || option.dataset.region === region;
+        option.hidden = !show;
+        option.disabled = !show;
+      });
+
+      if (selected && selected.dataset.region && region && selected.dataset.region !== region) {
+        heroDestination.value = "";
+      }
+
+      heroDestination.options[0].textContent =
+        region === "international" ? "All international destinations" :
+        region === "domestic" ? "All domestic destinations" :
+        "All destinations";
+    }
+
+    heroRegion.addEventListener("change", filterHeroDestinations);
+    filterHeroDestinations();
+  }
+
   // mobile nav + filter toggle
   var burger = $(".burger"), nav = $("#nav");
   if (burger) burger.addEventListener("click", function () {
