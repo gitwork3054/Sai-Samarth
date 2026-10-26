@@ -71,6 +71,33 @@
     travelMenus.forEach(function (menu) { if (menu.open && !menu.contains(e.target)) menu.open = false; });
   });
 
+  // International country directory search
+  var intlSearch = $("#international-country-search");
+  if (intlSearch) {
+    var intlCards = $("[data-country-card]");
+    var intlEmpty = $("#international-search-empty");
+    intlSearch.addEventListener("input", function () {
+      var q = intlSearch.value.toLocaleLowerCase().trim();
+      var shown = 0;
+      intlCards.forEach(function (card) {
+        var match = !q || (card.dataset.search || "").includes(q);
+        card.hidden = !match;
+        if (match) shown++;
+      });
+      if (intlEmpty) intlEmpty.hidden = shown > 0;
+    });
+    intlSearch.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        var first = intlCards.find(function (card) { return !card.hidden; });
+        var link = first && $("a", first);
+        if (link) {
+          e.preventDefault();
+          window.open(link.href, "_blank", "noopener");
+        }
+      }
+    });
+  }
+
   // mobile nav + filter toggle
   var burger = $(".burger"), nav = $("#nav");
   if (burger) burger.addEventListener("click", function () {
