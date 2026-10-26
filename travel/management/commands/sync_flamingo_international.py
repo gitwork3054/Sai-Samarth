@@ -21,21 +21,72 @@ PRICE_RE = re.compile(r"₹\s*([\d,]+)")
 
 # Flamingo renders much of its destination menu client-side, so crawl
 # destination landing pages directly rather than relying only on root-page links.
-DESTINATION_SLUGS = [
-    "taiwan","vietnam","china","hong-kong","japan","macau","philippines","bali",
-    "south-korea","maldives","sri-lanka","singapore","malaysia","thailand",
-    "singapore-malaysia","singapore-bali","finland","france","germany","iceland",
-    "italy","norway","portugal","spain","switzerland","uk-scotland","netherlands",
-    "ireland","scandinavia","austria","all-of-europe","switzerland-paris",
-    "croatia","czech-republic","greece","hungary","poland","russia","turkey",
-    "greece-turkey","baltic","all-of-east-europe","kazakhstan","georgia","armenia",
-    "israel-jordan","oman-muscat","uae-dubai","baku-azerbaijan","uzbekistan",
-    "saudi-arabia","central-america","usa-united-states","canada","alaska",
-    "south-america","mexico","hawaii","australia","new-zealand","fiji-bora-bora",
-    "australia-new-zealand","botswana","egypt","mauritius","seychelles","zambia",
-    "zimbabwe","south-africa","kenya","tanzania","uganda","morocco","madagascar",
-]
-
+DESTINATION_PAGES = {
+    "Taiwan": "/international-tour-packages/taiwan-holiday-tour-packages",
+    "Vietnam": "/international-tour-packages/vietnam-holiday-tour-packages",
+    "China": "/international-tour-packages/china-holiday-tour-packages",
+    "Hong Kong": "/international-tour-packages/hong-kong-holiday-tour-packages",
+    "Japan": "/international-tour-packages/japan-holiday-tour-packages",
+    "Macau": "/international-tour-packages/macau-holiday-tour-packages",
+    "Philippines": "/international-tour-packages/philippines-holiday-tour-packages",
+    "Bali": "/international-tour-packages/bali-holiday-tour-packages",
+    "South Korea": "/international-tour-packages/south-korea-holiday-tour-packages",
+    "Maldives": "/international-tour-packages/maldives-holiday-tour-packages",
+    "Sri Lanka": "/international-tour-packages/sri-lanka-holiday-tour-packages",
+    "Singapore": "/international-tour-packages/singapore-holiday-tour-packages",
+    "Malaysia": "/international-tour-packages/malaysia-holiday-tour-packages",
+    "Thailand": "/international-tour-packages/thailand-holiday-tour-packages",
+    "Finland": "/international-tour-packages/finland-holiday-tour-packages",
+    "France": "/international-tour-packages/france-holiday-tour-packages",
+    "Germany": "/international-tour-packages/germany-holiday-tour-packages",
+    "Iceland": "/international-tour-packages/iceland-holiday-tour-packages",
+    "Italy": "/international-tour-packages/italy-holiday-tour-packages",
+    "Norway": "/international-tour-packages/norway-holiday-tour-packages",
+    "Portugal": "/international-tour-packages/portugal-holiday-tour-packages",
+    "Spain": "/international-tour-packages/spain-holiday-tour-packages",
+    "Switzerland": "/international-tour-packages/switzerland-holiday-tour-packages",
+    "Netherlands": "/international-tour-packages/netherlands-holiday-tour-packages",
+    "Ireland": "/international-tour-packages/ireland-holiday-tour-packages",
+    "Austria": "/international-tour-packages/austria-holiday-tour-packages",
+    "Croatia": "/international-tour-packages/croatia-holiday-tour-packages",
+    "Czech Republic": "/international-tour-packages/czech-republic-holiday-tour-packages",
+    "Greece": "/international-tour-packages/greece-holiday-tour-packages",
+    "Hungary": "/international-tour-packages/hungary-holiday-tour-packages",
+    "Poland": "/international-tour-packages/poland-holiday-tour-packages",
+    "Russia": "/international-tour-packages/russia-holiday-tour-packages",
+    "Turkey": "/international-tour-packages/turkey-holiday-tour-packages",
+    "Kazakhstan": "/international-tour-packages/kazakhstan-holiday-tour-packages",
+    "Georgia": "/international-tour-packages/georgia-holiday-tour-packages",
+    "Armenia": "/international-tour-packages/armenia-holiday-tour-packages",
+    "Israel - Jordan": "/international-tour-packages/israel-jordan-holiday-tour-packages",
+    "Oman Muscat": "/international-tour-packages/oman-holiday-tour-packages",
+    "Dubai": "/international-tour-packages/dubai-holiday-tour-packages",
+    "Baku - Azerbaijan": "/international-tour-packages/azerbaijan-holiday-tour-packages",
+    "Uzbekistan": "/international-tour-packages/uzbekistan-holiday-tour-packages",
+    "Saudi Arabia": "/international-tour-packages/saudi-arabia-holiday-tour-packages",
+    "Central America": "/international-tour-packages/central-america-holiday-tour-packages",
+    "USA": "/international-tour-packages/usa-holiday-tour-packages",
+    "Canada": "/international-tour-packages/canada-holiday-tour-packages",
+    "Alaska": "/international-tour-packages/alaska-holiday-tour-packages",
+    "South America": "/international-tour-packages/south-america-holiday-tour-packages",
+    "Mexico": "/international-tour-packages/mexico-holiday-tour-packages",
+    "Hawaii": "/international-tour-packages/hawaii-holiday-tour-packages",
+    "Australia": "/international-tour-packages/australia-holiday-tour-packages",
+    "New Zealand": "/international-tour-packages/new-zealand-holiday-tour-packages",
+    "Australia - New Zealand": "/international-tour-packages/australia-newzealand-tour-packages",
+    "Botswana": "/international-tour-packages/botswana-holiday-tour-packages",
+    "Egypt": "/international-tour-packages/egypt-holiday-tour-packages",
+    "Mauritius": "/international-tour-packages/mauritius-holiday-tour-packages",
+    "Seychelles": "/international-tour-packages/seychelles-holiday-tour-packages",
+    "Zambia": "/international-tour-packages/zambia-holiday-tour-packages",
+    "Zimbabwe": "/international-tour-packages/zimbabwe-holiday-tour-packages",
+    "South Africa": "/international-tour-packages/south-africa-holiday-tour-packages",
+    "Kenya": "/international-tour-packages/kenya-holiday-tour-packages",
+    "Tanzania": "/international-tour-packages/tanzania-holiday-tour-packages",
+    "Uganda": "/international-tour-packages/uganda-holiday-tour-packages",
+    "Morocco": "/international-tour-packages/morocco-holiday-tour-packages",
+    "Madagascar": "/international-tour-packages/madagascar-holiday-tour-packages",
+}
 
 
 def sitemap_urls(session, url, timeout, depth=0):
@@ -200,13 +251,9 @@ class Command(BaseCommand):
                     clean(a.get_text(" ", strip=True)) or country_from_path(path),
                 )
 
-        # Last-resort fallback for any destination omitted from the sitemap.
-        for slug in DESTINATION_SLUGS:
-            path = f"/international-tour-packages/{slug}-holiday-tour-packages"
-            destination_links.setdefault(
-                absolute(path),
-                " ".join(word.capitalize() for word in slug.replace("uae-dubai", "dubai").split("-")),
-            )
+        # Use verified Flamingo destination routes; never guess slugs.
+        for name, path in DESTINATION_PAGES.items():
+            destination_links.setdefault(absolute(path), name)
 
         pages = list(destination_links.items())
         if opts["max_destinations"]:
@@ -218,7 +265,7 @@ class Command(BaseCommand):
                 response = session.get(page_url, timeout=timeout)
                 response.raise_for_status()
             except Exception as exc:
-                self.stderr.write(f"Skipping {page_url}: {exc}")
+                self.stderr.write(f"Skipping unavailable Flamingo destination {page_country}: {page_url} ({exc})")
                 continue
 
             page = BeautifulSoup(response.text, "html.parser")
@@ -258,9 +305,9 @@ class Command(BaseCommand):
                 "tour_type": "group" if urlparse(url).path.rstrip("/").split("/")[-1].lower().startswith("g") else "individual",
             }
 
-        if len(packages) < 5:
+        if len(packages) < 20:
             raise CommandError(
-                f"Only {len(packages)} Flamingo packages were discovered; existing international catalogue was left unchanged."
+                f"Only {len(packages)} Flamingo packages were discovered; refusing to replace the catalogue with an incomplete sync."
             )
 
         ordered = sorted(packages.values(), key=lambda p: (p["country"], p["title"]))
