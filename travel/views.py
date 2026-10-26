@@ -16,6 +16,7 @@ from . import models as m
 from .domestic_states import domestic_groups, international_groups
 from .enhancements import record_event, relevant_tours, sightseeing_schema
 from .curated_photos import SOURCES
+from .flamingo_catalog import FLAMINGO_COUNTRIES
 from .forms import EnquiryForm
 from .pdf import build_itinerary_pdf
 from .services import calculate_price, notify_enquiry_received
@@ -124,6 +125,16 @@ def package_list(request, preset=None):
         elif not any(params.get(k) for k in ("q", "destination", "theme", "audience", "duration", "budget", "tour_type", "offers", "events")):
             return render(request, "travel/domestic_states.html", {"states": states, "title": "Domestic tour packages"})
     selected_country = None
+    if preset == "international":
+        # International catalogue is intentionally external. No local package maintenance.
+        # Show the full Flamingo directory and send visitors straight to Flamingo.
+        return render(request, "travel/international_countries.html", {
+            "countries": FLAMINGO_COUNTRIES,
+            "group_only": False,
+            "title": "International tour packages",
+            "external_directory": True,
+        })
+
     if preset in ("international", "group") and (preset == "international" or params.get("region") == "international"):
         params["region"] = "international"
         country_base = ACTIVE.filter(destination__region="international")
