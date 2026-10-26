@@ -1,6 +1,7 @@
 from django.conf import settings
 from .models import Audience, Package, SiteSettings, Theme, HomeSlide
 from .domestic_states import domestic_groups, international_groups
+from .flamingo_catalog import FLAMINGO_COUNTRIES
 
 
 def site(request):
@@ -17,7 +18,7 @@ def site(request):
             "nav_domestic_packages": packages.filter(destination__region="domestic").order_by("destination__name", "title"),
             "nav_international_packages": packages.filter(destination__region="international").order_by("destination__name", "title"),
             "nav_group_packages": packages.filter(tour_type="group").order_by("title"),
-            "nav_international_countries": international_groups(packages.filter(destination__region="international")),
+            "nav_international_countries": FLAMINGO_COUNTRIES,
             "nav_international_groups": international_groups(packages.filter(tour_type="group", destination__region="international")),
             "hero_slides": HomeSlide.objects.filter(is_active=True), "preview_characters": max(100, s.preview_characters),
             "hero_interval": max(1000, min(30000, s.slideshow_interval))}
