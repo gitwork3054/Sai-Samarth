@@ -59,7 +59,7 @@ FLAMINGO_COUNTRIES = [
     {"name":"Hawaii","slug":"hawaii","url":"https://www.flamingotravels.co.in/international-tour-packages/hawaii-holiday-tour-packages"},
     {"name":"Australia","slug":"australia","url":"https://www.flamingotravels.co.in/international-tour-packages/australia-holiday-tour-packages"},
     {"name":"New Zealand","slug":"new-zealand","url":"https://www.flamingotravels.co.in/international-tour-packages/new-zealand-holiday-tour-packages"},
-    {"name":"Fiji & Bora Bora","slug":"fiji-bora-bora","url":"https://www.flamingotravels.co.in/international-tour-packages/fiji-bora-bora-tour-packages"},
+    {"name":"Fiji & Bora Bora","slug":"fiji-bora-bora","url":"https://www.flamingotravels.co.in/international-tour-packages/fiji-bora-bora-holiday-tour-packages"},
     {"name":"Australia - New Zealand","slug":"australia-new-zealand","url":"https://www.flamingotravels.co.in/international-tour-packages/australia-newzealand-tour-packages"},
     {"name":"Egypt","slug":"egypt","url":"https://www.flamingotravels.co.in/international-tour-packages/egypt-holiday-tour-packages"},
     {"name":"Mauritius","slug":"mauritius","url":"https://www.flamingotravels.co.in/international-tour-packages/mauritius-holiday-tour-packages"},
