@@ -123,6 +123,9 @@ class Command(BaseCommand):
         today = date.today()
         created = 0
         for i, (name, reg, place, tag, ppd, spots, th, event) in enumerate(D):
+            # International packages are synced from Flamingo; never recreate local demo versions.
+            if reg == "i":
+                continue
             dest, _ = m.Destination.objects.get_or_create(name=name, defaults={
                 "region": "domestic" if reg == "d" else "international", "state_or_country": place, "tagline": tag, "is_popular": i % 3 == 0})
             base_days = 4 if reg == "d" else 5
