@@ -17,6 +17,23 @@ DETAIL_RE = re.compile(r"^/international-tour-packages/[^/]+-holiday-tour-packag
 DURATION_RE = re.compile(r"(\d+)\s*Nights?\s*/\s*(\d+)\s*Days?", re.I)
 PRICE_RE = re.compile(r"₹\s*([\d,]+)")
 
+# Flamingo renders much of its destination menu client-side, so crawl
+# destination landing pages directly rather than relying only on root-page links.
+DESTINATION_SLUGS = [
+    "taiwan","vietnam","china","hong-kong","japan","macau","philippines","bali",
+    "south-korea","maldives","sri-lanka","singapore","malaysia","thailand",
+    "singapore-malaysia","singapore-bali","finland","france","germany","iceland",
+    "italy","norway","portugal","spain","switzerland","uk-scotland","netherlands",
+    "ireland","scandinavia","austria","all-of-europe","switzerland-paris",
+    "croatia","czech-republic","greece","hungary","poland","russia","turkey",
+    "greece-turkey","baltic","all-of-east-europe","kazakhstan","georgia","armenia",
+    "israel-jordan","oman-muscat","uae-dubai","baku-azerbaijan","uzbekistan",
+    "saudi-arabia","central-america","usa-united-states","canada","alaska",
+    "south-america","mexico","hawaii","australia","new-zealand","fiji-bora-bora",
+    "australia-new-zealand","botswana","egypt","mauritius","seychelles","zambia",
+    "zimbabwe","south-africa","kenya","tanzania","uganda","morocco","madagascar",
+]
+
 
 def clean(text):
     return " ".join((text or "").split()).strip()
@@ -88,6 +105,8 @@ def package_from_card(anchor, page_country):
         image = (
             img.get("data-src")
             or img.get("data-lazy-src")
+            or img.get("data-original")
+            or img.get("data-lazy")
             or img.get("src")
             or ""
         )
@@ -97,10 +116,13 @@ def package_from_card(anchor, page_country):
         slug = [p for p in urlparse(url).path.split("/") if p][-2]
         title = " ".join(word.capitalize() for word in slug.split("-"))
 
+    title = re.sub(r"\\s*\\d+\\s*nights?.*$", "", title, flags=re.I).strip()
+    title = re.sub(r"\\s*\\d+\\s*days?.*$", "", title, flags=re.I).strip()
+
     return {
         "url": url,
         "title": clean(title),
-        "country": page_country or country_from_path(urlparse(url).path),
+        "country": country_from_path(urlparse(url).path) if page_country == "International" else (page_country or country_from_path(urlparse(url).path)),
         "duration": duration,
         "nights": nights,
         "days": days,
@@ -137,6 +159,13 @@ class Command(BaseCommand):
             if DEST_RE.match(path):
                 name = clean(a.get_text(" ", strip=True)) or country_from_path(path)
                 destination_links[absolute(path)] = name
+
+        for slug in DESTINATION_SLUGS:
+            path = f"/international-tour-packages/{slug}-holiday-tour-packages"
+            destination_links.setdefault(
+                absolute(path),
+                " ".join(word.capitalize() for word in slug.replace("uae-dubai", "dubai").split("-")),
+            )
 
         pages = [(ROOT, "International")]
         items = list(destination_links.items())
