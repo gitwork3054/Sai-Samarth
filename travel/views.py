@@ -129,7 +129,7 @@ def package_list(request, preset=None):
         # International catalogue is intentionally external. No local package maintenance.
         # Show the full Flamingo directory and send visitors straight to Flamingo.
         return render(request, "travel/international_countries.html", {
-            "countries": FLAMINGO_COUNTRIES,
+            "countries": sorted(FLAMINGO_COUNTRIES, key=lambda item: item["name"].lower()),
             "group_only": False,
             "title": "International tour packages",
             "external_directory": True,
