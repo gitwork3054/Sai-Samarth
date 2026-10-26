@@ -1,6 +1,7 @@
 import re
 from datetime import datetime, timezone
 from urllib.parse import urljoin, urlparse
+from xml.etree import ElementTree as ET
 
 import requests
 from bs4 import BeautifulSoup
@@ -12,6 +13,7 @@ from travel import models as m
 
 BASE = "https://www.flamingotravels.co.in"
 ROOT = BASE + "/international-tour-packages"
+SITEMAP = BASE + "/sitemap_in/sitemap.xml"
 DEST_RE = re.compile(r"^/international-tour-packages/[^/?#]+-holiday-tour-packages/?$")
 DETAIL_RE = re.compile(r"^/international-tour-packages/[^/]+-holiday-tour-packages/[^/]+/g\d+/?$")
 DURATION_RE = re.compile(r"(\d+)\s*Nights?\s*/\s*(\d+)\s*Days?", re.I)
@@ -34,6 +36,31 @@ DESTINATION_SLUGS = [
     "zimbabwe","south-africa","kenya","tanzania","uganda","morocco","madagascar",
 ]
 
+
+
+def sitemap_urls(session, url, timeout, depth=0):
+    """Return URL entries from Flamingo's sitemap / sitemap indexes."""
+    if depth > 3:
+        return []
+    try:
+        response = session.get(url, timeout=timeout)
+        response.raise_for_status()
+        root = ET.fromstring(response.content)
+    except Exception:
+        return []
+
+    tag = root.tag.rsplit("}", 1)[-1]
+    locs = [
+        (node.text or "").strip()
+        for node in root.iter()
+        if node.tag.rsplit("}", 1)[-1] == "loc" and (node.text or "").strip()
+    ]
+    if tag == "sitemapindex":
+        out = []
+        for child in locs:
+            out.extend(sitemap_urls(session, child, timeout, depth + 1))
+        return out
+    return locs
 
 def clean(text):
     return " ".join((text or "").split()).strip()
@@ -154,12 +181,26 @@ class Command(BaseCommand):
 
         soup = BeautifulSoup(root.text, "html.parser")
         destination_links = {}
-        for a in soup.find_all("a", href=True):
-            path = urlparse(absolute(a["href"])).path
-            if DEST_RE.match(path):
-                name = clean(a.get_text(" ", strip=True)) or country_from_path(path)
-                destination_links[absolute(path)] = name
 
+        # Flamingo publishes the complete catalogue in its official sitemap.
+        # This is much more reliable than the client-rendered navigation menu.
+        indexed_urls = sitemap_urls(session, SITEMAP, timeout)
+        for indexed in indexed_urls:
+            path = urlparse(indexed).path
+            if DEST_RE.match(path):
+                destination_links[indexed] = country_from_path(path)
+
+        # Keep destination URLs visible in server-rendered HTML as a fallback.
+        for a in soup.find_all("a", href=True):
+            full = absolute(a["href"])
+            path = urlparse(full).path
+            if DEST_RE.match(path):
+                destination_links.setdefault(
+                    full,
+                    clean(a.get_text(" ", strip=True)) or country_from_path(path),
+                )
+
+        # Last-resort fallback for any destination omitted from the sitemap.
         for slug in DESTINATION_SLUGS:
             path = f"/international-tour-packages/{slug}-holiday-tour-packages"
             destination_links.setdefault(
@@ -167,11 +208,9 @@ class Command(BaseCommand):
                 " ".join(word.capitalize() for word in slug.replace("uae-dubai", "dubai").split("-")),
             )
 
-        pages = [(ROOT, "International")]
-        items = list(destination_links.items())
+        pages = list(destination_links.items())
         if opts["max_destinations"]:
-            items = items[: opts["max_destinations"]]
-        pages.extend(items)
+            pages = pages[: opts["max_destinations"]]
 
         packages = {}
         for page_url, page_country in pages:
@@ -191,6 +230,33 @@ class Command(BaseCommand):
                 current = packages.get(data["url"])
                 if not current or len(data["title"]) > len(current["title"]):
                     packages[data["url"]] = data
+
+        # Some Flamingo listing pages lazy-load cards. Add any package URLs
+        # present in the official sitemap even when the card was not rendered in HTML.
+        indexed_detail_urls = [
+            u for u in indexed_urls
+            if DETAIL_RE.match(urlparse(u).path)
+        ]
+        for url in indexed_detail_urls:
+            if url in packages:
+                continue
+            path = urlparse(url).path
+            country = country_from_path(path)
+            slug = [p for p in path.split("/") if p][-2]
+            title = " ".join(word.capitalize() for word in slug.split("-"))
+            title = re.sub(r"\\s*\\d+\\s*nights?.*$", "", title, flags=re.I).strip()
+            title = re.sub(r"\\s*\\d+\\s*days?.*$", "", title, flags=re.I).strip()
+            packages[url] = {
+                "url": url,
+                "title": title,
+                "country": country,
+                "duration": "",
+                "nights": 0,
+                "days": 0,
+                "price": 0,
+                "image": "",
+                "tour_type": "group" if urlparse(url).path.rstrip("/").split("/")[-1].lower().startswith("g") else "individual",
+            }
 
         if len(packages) < 5:
             raise CommandError(
@@ -260,7 +326,7 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                f"Synced {len(ordered)} Flamingo international packages. "
+                f"Synced {len(ordered)} Flamingo international packages from the official sitemap/catalogue. "
                 "Titles and View trip links now match Flamingo."
             )
         )
