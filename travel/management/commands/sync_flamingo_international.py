@@ -15,7 +15,7 @@ BASE = "https://www.flamingotravels.co.in"
 ROOT = BASE + "/international-tour-packages"
 SITEMAP = BASE + "/sitemap_in/sitemap.xml"
 DEST_RE = re.compile(r"^/international-tour-packages/[^/?#]+-holiday-tour-packages/?$")
-DETAIL_RE = re.compile(r"^/international-tour-packages/[^/]+-holiday-tour-packages/[^/]+/g\d+/?$")
+DETAIL_RE = re.compile(r"^/international-tour-packages/[^/]+-holiday-tour-packages/[^/]+/[a-z]\d+/?$", re.I)
 DURATION_RE = re.compile(r"(\d+)\s*Nights?\s*/\s*(\d+)\s*Days?", re.I)
 PRICE_RE = re.compile(r"₹\s*([\d,]+)")
 
