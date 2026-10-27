@@ -84,3 +84,59 @@ def international_groups(packages):
         group["source_urls"] = sorted(group["source_urls"])
         result.append(group)
     return result
+
+
+DOMESTIC_REGION_GROUPS = [
+    {
+        "name": "North India",
+        "members": [
+            "Delhi", "Chandigarh", "Haryana", "Himachal Pradesh", "Jammu & Kashmir",
+            "Ladakh", "Punjab", "Rajasthan", "Uttar Pradesh", "Uttarakhand"
+        ],
+    },
+    {
+        "name": "West India",
+        "members": ["Goa", "Gujarat", "Maharashtra"],
+    },
+    {
+        "name": "South India",
+        "members": [
+            "Andhra Pradesh", "Karnataka", "Kerala", "Tamil Nadu", "Telangana",
+            "Puducherry", "South India"
+        ],
+    },
+    {
+        "name": "East India",
+        "members": ["Bihar", "Jharkhand", "Odisha", "West Bengal"],
+    },
+    {
+        "name": "Northeast India",
+        "members": [
+            "Arunachal Pradesh", "Assam", "Manipur", "Meghalaya", "Mizoram",
+            "Nagaland", "Sikkim", "Tripura"
+        ],
+    },
+    {
+        "name": "Central India",
+        "members": ["Chhattisgarh", "Madhya Pradesh"],
+    },
+    {
+        "name": "Islands & UTs",
+        "members": ["Andaman & Nicobar", "Lakshadweep"],
+    },
+]
+
+
+def domestic_region_groups(groups):
+    by_name = {item["name"]: item for item in groups}
+    result = []
+    used = set()
+    for region in DOMESTIC_REGION_GROUPS:
+        items = [by_name[name] for name in region["members"] if name in by_name]
+        used.update(item["name"] for item in items)
+        if items:
+            result.append({"name": region["name"], "items": items})
+    other = [item for item in groups if item["name"] not in used]
+    if other:
+        result.append({"name": "Other", "items": sorted(other, key=lambda item: item["name"].lower())})
+    return result
