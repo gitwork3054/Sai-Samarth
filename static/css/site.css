@@ -1020,3 +1020,39 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
     max-height:calc(100vh - 64px) !important;
   }
 }
+
+
+/* JS-independent mobile navigation toggle */
+.nav-toggle{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+  width:1px;
+  height:1px;
+}
+
+@media(max-width:900px){
+  .burger{
+    display:block !important;
+    cursor:pointer;
+    user-select:none;
+  }
+
+  #nav-toggle:not(:checked) ~ #nav{
+    display:none !important;
+  }
+
+  #nav-toggle:checked ~ #nav{
+    display:flex !important;
+  }
+
+  #nav-toggle:checked + .burger span:nth-child(1){
+    transform:translateY(7.5px) rotate(45deg);
+  }
+  #nav-toggle:checked + .burger span:nth-child(2){
+    opacity:0;
+  }
+  #nav-toggle:checked + .burger span:nth-child(3){
+    transform:translateY(-7.5px) rotate(-45deg);
+  }
+}
