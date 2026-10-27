@@ -1239,3 +1239,19 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
     padding:8px 12px 8px 18px !important;
   }
 }
+
+
+/* Center domestic mega menu under the header */
+@media(min-width:901px){
+  .travel-menu:has(.domestic-mega){
+    position:static;
+  }
+
+  .travel-menu:has(.domestic-mega) .travel-pop{
+    left:50% !important;
+    right:auto !important;
+    transform:translateX(-50%) !important;
+    margin-left:0 !important;
+    width:min(1120px,calc(100vw - 80px)) !important;
+  }
+}
