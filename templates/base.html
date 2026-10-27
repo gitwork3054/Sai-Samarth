@@ -26,10 +26,17 @@
         <div class="menu-pop travel-pop">
           <a class="travel-all" href="{% url 'domestic' %}">Browse domestic states ↗</a>
           <input class="travel-search" type="search" placeholder="Find a state or region" aria-label="Search domestic states" autocomplete="off">
-          <div class="travel-options">
-            {% for state in nav_domestic_states %}
-              <a class="travel-trip travel-state" href="{% url 'domestic' %}?state={{ state.slug }}" data-search="{{ state.name|lower }}">{{ state.name }} <span aria-hidden="true">↗</span></a>
-            {% empty %}<p class="muted">No domestic tours available yet.</p>{% endfor %}
+          <div class="travel-options domestic-mega">
+            {% for group in nav_domestic_region_groups %}
+              <section class="travel-place domestic-region" data-search="{{ group.name|lower }}">
+                <h4>{{ group.name }}</h4>
+                {% for state in group.items %}
+                  <a class="travel-trip travel-state" href="{% url 'domestic' %}?state={{ state.slug }}" data-search="{{ state.name|lower }}">{{ state.name }} <span aria-hidden="true">↗</span></a>
+                {% endfor %}
+              </section>
+            {% empty %}
+              <p class="muted">No domestic tours available yet.</p>
+            {% endfor %}
           </div>
           <p class="travel-empty" hidden>No matching trips.</p>
         </div>
