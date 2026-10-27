@@ -71,3 +71,66 @@ FLAMINGO_COUNTRIES = [
     {"name":"Morocco","slug":"morocco","url":"https://www.flamingotravels.co.in/international-tour-packages/morocco-holiday-tour-packages"},
     {"name":"Madagascar","slug":"madagascar","url":"https://www.flamingotravels.co.in/international-tour-packages/madagascar-holiday-tour-packages"},
 ]
+
+
+FLAMINGO_GROUPS = [
+    {
+        "name": "Asia",
+        "members": [
+            "Taiwan","Vietnam","China","Hong Kong","Japan","Macau","Philippines","Bali",
+            "South Korea","Singapore Malaysia","Singapore Bali","Maldives","Sri Lanka",
+            "Singapore","Malaysia","Thailand"
+        ],
+    },
+    {
+        "name": "Central Europe",
+        "members": [
+            "Finland","France","Germany","Iceland","Italy","Norway","Portugal","Spain",
+            "Switzerland","UK - Scotland","Netherlands","Switzerland - Paris",
+            "All Of Europe","Ireland","Scandinavia","Austria"
+        ],
+    },
+    {
+        "name": "East Europe",
+        "members": [
+            "Croatia","Czech Republic","Greece","Hungary","Poland","Russia","Turkey",
+            "Greece - Turkey","All of East Europe","Baltic"
+        ],
+    },
+    {
+        "name": "Middle East",
+        "members": [
+            "Kazakhstan","Georgia","Armenia","Israel - Jordan","Oman Muscat","UAE - Dubai",
+            "Baku - Azerbaijan","Uzbekistan","Saudi Arabia"
+        ],
+    },
+    {
+        "name": "America",
+        "members": [
+            "Central America","USA - United States","Canada","Alaska","South America",
+            "Mexico","Hawaii"
+        ],
+    },
+    {
+        "name": "Australia & NZ",
+        "members": [
+            "Fiji & Bora Bora","Australia - New Zealand","Australia","New Zealand"
+        ],
+    },
+    {
+        "name": "Africa",
+        "members": [
+            "Seychelles","Zambia","Botswana","Egypt","Mauritius","Zimbabwe","South Africa",
+            "Kenya","Tanzania","Uganda","Morocco","Madagascar"
+        ],
+    },
+]
+
+
+def flamingo_grouped_countries():
+    by_name = {item["name"]: item for item in FLAMINGO_COUNTRIES}
+    grouped = []
+    for group in FLAMINGO_GROUPS:
+        items = [by_name[name] for name in group["members"] if name in by_name]
+        grouped.append({"name": group["name"], "items": items})
+    return grouped
