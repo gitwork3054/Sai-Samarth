@@ -39,8 +39,15 @@
         <div class="menu-pop travel-pop">
           <a class="travel-all" href="{% url 'international' %}">View all international trips ↗</a>
           <input class="travel-search" type="search" placeholder="Find a place or trip" aria-label="Search international trips" autocomplete="off">
-          <div class="travel-options">
-            {% for country in nav_international_countries %}<a class="travel-trip travel-state" href="{{ country.url }}" target="_blank" rel="noopener" data-search="{{ country.name|lower }}">{{ country.name }} <span aria-hidden="true">↗</span></a>{% endfor %}
+          <div class="travel-options international-mega">
+            {% for group in nav_international_region_groups %}
+              <section class="travel-place international-region" data-search="{{ group.name|lower }}">
+                <h4>{{ group.name }}</h4>
+                {% for country in group.items %}
+                  <a class="travel-trip travel-state" href="{{ country.url }}" target="_blank" rel="noopener" data-search="{{ country.name|lower }}">{{ country.name }} <span aria-hidden="true">↗</span></a>
+                {% endfor %}
+              </section>
+            {% endfor %}
           </div>
           <p class="travel-empty" hidden>No matching trips.</p>
         </div>
