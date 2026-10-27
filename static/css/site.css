@@ -1165,3 +1165,77 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
   .international-directory-groups{gap:28px}
   .international-directory-group-head h2{font-size:1.35rem}
 }
+
+
+/* Grouped domestic mega menu */
+@media(min-width:901px){
+  .travel-menu:has(.domestic-mega) .travel-pop{
+    width:min(1120px,calc(100vw - 80px));
+    left:50%;
+    transform:translateX(-50%);
+    padding:18px 20px 20px;
+  }
+
+  .domestic-mega{
+    display:grid;
+    grid-template-columns:repeat(7,minmax(120px,1fr));
+    gap:18px;
+    max-height:none;
+    overflow:visible;
+    padding-top:6px;
+  }
+
+  .domestic-region{
+    border-top:0;
+    padding:0;
+    min-width:0;
+  }
+
+  .domestic-region h4{
+    margin:0 0 8px;
+    padding-bottom:7px;
+    border-bottom:1px solid var(--line);
+    color:var(--lagoon);
+    font-size:.9rem;
+    line-height:1.2;
+  }
+
+  .domestic-region .travel-trip{
+    padding:5px 0 !important;
+    font-size:.78rem;
+    line-height:1.35;
+    color:var(--ink);
+    border-radius:6px;
+  }
+
+  .domestic-region .travel-trip span{
+    display:none;
+  }
+
+  .domestic-region .travel-trip:hover{
+    padding-left:5px !important;
+  }
+}
+
+@media(max-width:900px){
+  .domestic-mega{
+    display:block;
+    max-height:none !important;
+  }
+
+  .domestic-region{
+    padding:10px 0;
+    border-top:1px solid var(--line);
+  }
+
+  .domestic-region h4{
+    margin:0 0 6px;
+    padding:0 10px 6px;
+    color:var(--lagoon);
+    font-size:.9rem;
+  }
+
+  .domestic-region .travel-trip{
+    padding:8px 12px 8px 18px !important;
+  }
+}
