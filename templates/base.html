@@ -18,7 +18,8 @@
     <a class="brand" href="{% url 'home' %}" aria-label="{{ site.brand_name }} home">
       {% if logo_url %}<img src="{{ logo_url }}" alt="{{ site.brand_name }}" height="44">{% else %}<span class="brand-mark" aria-hidden="true"></span><span class="brand-name">{{ site.brand_name }}</span>{% endif %}
     </a>
-    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+    <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-hidden="true">
+    <label class="burger" for="nav-toggle" aria-label="Menu" aria-controls="nav"><span></span><span></span><span></span></label>
     <nav id="nav" class="nav">
       <details class="menu travel-menu">
         <summary>Domestic</summary>
