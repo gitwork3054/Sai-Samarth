@@ -1130,3 +1130,38 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
     padding:8px 12px 8px 18px !important;
   }
 }
+
+
+/* Grouped international directory page */
+.international-directory-groups{
+  display:grid;
+  gap:42px;
+}
+.international-directory-group{
+  display:grid;
+  gap:16px;
+}
+.international-directory-group-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--line);
+}
+.international-directory-group-head h2{
+  margin:0;
+  font-size:clamp(1.45rem,2vw,1.85rem);
+  color:var(--ink);
+}
+.international-directory-group .state-grid{
+  margin-top:0;
+}
+@media(max-width:800px){
+  .international-directory-groups{gap:34px}
+  .international-directory-group{gap:14px}
+}
+@media(max-width:450px){
+  .international-directory-groups{gap:28px}
+  .international-directory-group-head h2{font-size:1.35rem}
+}
