@@ -16,7 +16,7 @@ from . import models as m
 from .domestic_states import domestic_groups, international_groups
 from .enhancements import record_event, relevant_tours, sightseeing_schema
 from .curated_photos import SOURCES
-from .flamingo_catalog import FLAMINGO_COUNTRIES
+from .flamingo_catalog import FLAMINGO_COUNTRIES, flamingo_grouped_countries
 from .forms import EnquiryForm
 from .pdf import build_itinerary_pdf
 from .services import calculate_price, notify_enquiry_received
@@ -130,6 +130,7 @@ def package_list(request, preset=None):
         # Show the full Flamingo directory and send visitors straight to Flamingo.
         return render(request, "travel/international_countries.html", {
             "countries": sorted(FLAMINGO_COUNTRIES, key=lambda item: item["name"].lower()),
+            "country_groups": flamingo_grouped_countries(),
             "group_only": False,
             "title": "International tour packages",
             "external_directory": True,
