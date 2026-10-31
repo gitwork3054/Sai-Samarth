@@ -1255,3 +1255,19 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
     z-index:90 !important;
   }
 }
+
+
+/* Center international mega menu under the header */
+@media(min-width:901px){
+  .travel-menu:has(.international-mega) .travel-pop{
+    position:fixed !important;
+    top:68px !important;
+    left:50vw !important;
+    right:auto !important;
+    transform:translateX(-50%) !important;
+    margin:0 !important;
+    width:min(1120px,calc(100vw - 80px)) !important;
+    max-width:1120px !important;
+    z-index:90 !important;
+  }
+}
