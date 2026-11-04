@@ -2,15 +2,21 @@ from django.contrib.auth import get_user_model
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from urllib.parse import parse_qs, urlparse
+from unittest.mock import patch
 
 GOOGLE = {"google": {"APP": {"client_id": "test.apps.googleusercontent.com", "secret": "test-secret", "key": ""}, "SCOPE": ["profile", "email"], "OAUTH_PKCE_ENABLED": True}}
 
 class AuthenticationIntegrationTests(TestCase):
-    def test_email_signup_still_logs_in_and_rejects_external_redirect(self):
+    @patch("accounts.adapter.send_code")
+    def test_signup_requires_sms_and_rejects_external_redirect(self, sender):
         response = self.client.post(reverse("signup") + "?next=https://example.com/", {
-            "first_name": "Traveller", "email": "traveller@example.com", "phone": "",
+            "first_name": "Traveller", "email": "traveller@example.com", "phone": "+919876543210",
             "password1": "TravelTest-739!", "password2": "TravelTest-739!",
         })
+        self.assertRedirects(response, reverse("account_verify_phone"), fetch_redirect_response=False)
+        self.assertNotIn("_auth_user_id", self.client.session)
+        code = sender.call_args.args[1]
+        response = self.client.post(reverse("account_verify_phone"), {"code": code, "action": "verify"})
         self.assertRedirects(response, reverse("dashboard"), fetch_redirect_response=False)
         self.assertIn("_auth_user_id", self.client.session)
 
@@ -41,3 +47,4 @@ class AuthenticationIntegrationTests(TestCase):
         query = parse_qs(target.query)
         self.assertEqual(query["redirect_uri"], ["http://testserver/auth/google/login/callback/"])
         self.assertIn("code_challenge", query)
+

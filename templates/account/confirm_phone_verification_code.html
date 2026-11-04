@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Confirm SMS code · {{ site.brand_name }}{% endblock %}
+{% block content %}
+<section class="auth"><div class="auth-box">
+  <h1>Check your text messages</h1>
+  <p class="muted">Enter the six-digit code sent to <strong>{{ phone }}</strong>. The code expires after five minutes.</p>
+  <form method="post">{% csrf_token %}
+    <input type="hidden" name="action" value="verify">
+    {{ verify_form.non_field_errors }}
+    <label class="fl"><span>Verification code</span>{{ verify_form.code }}{{ verify_form.code.errors }}</label>
+    <button class="btn btn-sun block" type="submit">Verify and continue</button>
+  </form>
+  {% if can_resend %}<form method="post" class="center">{% csrf_token %}
+    <input type="hidden" name="action" value="resend">
+    <p class="muted">No text yet? Wait at least one minute before requesting another.</p>
+    <button class="btn btn-ghost block" type="submit">Resend text message</button>
+  </form>{% else %}<p class="muted">Resend limit reached. Please start again after a few minutes.</p>{% endif %}
+  <p class="muted center"><a href="{% url 'login' %}">Start again</a></p>
+</div></section>
+{% endblock %}
