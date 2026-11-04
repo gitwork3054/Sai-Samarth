@@ -1,0 +1,16 @@
+<aside class="updates-carousel" data-updates-carousel aria-label="Latest updates, events and offers" aria-roledescription="carousel">
+  <div class="updates-heading"><div><span class="updates-eyebrow">What's new</span><h2>Updates, events & offers</h2></div></div>
+  <div class="updates-stage">
+    {% for update in home_updates %}
+    <article class="update-slide" data-update-slide role="group" aria-roledescription="slide" aria-label="{{ forloop.counter }} of {{ home_updates|length }}"{% if not forloop.first %} hidden{% endif %}>
+      {% if update.link_url %}<a class="update-content" href="{{ update.link_url }}">{% else %}<div class="update-content">{% endif %}
+        {% if update.photo %}<div class="update-poster"><img src="{{ update.photo }}" alt="{{ update.title }}"{% if not forloop.first %} loading="lazy"{% endif %}></div>{% endif %}
+        <div class="update-copy"><span class="update-category">{{ update.category|title }}</span><h3>{{ update.title }}</h3>{% if update.description %}<p>{{ update.description }}</p>{% endif %}{% if update.link_url %}<span class="update-details">View details <span aria-hidden="true">↗</span></span>{% endif %}</div>
+      {% if update.link_url %}</a>{% else %}</div>{% endif %}
+    </article>
+    {% endfor %}
+    {% if home_updates|length > 1 %}<div class="updates-arrows" hidden><button type="button" data-update-prev aria-label="Previous update">‹</button><button type="button" data-update-next aria-label="Next update">›</button></div>{% endif %}
+  </div>
+  {% if home_updates|length > 1 %}<div class="updates-controls" hidden><div class="updates-dots" aria-label="Choose an update">{% for update in home_updates %}<button type="button" data-update-dot aria-label="Show update {{ forloop.counter }}: {{ update.title }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}"></button>{% endfor %}</div><button class="updates-pause" type="button" data-update-pause>Pause rotation</button></div>{% endif %}
+  <span class="hero-sr" data-update-status aria-live="polite" aria-atomic="true"></span>
+</aside>

@@ -15,7 +15,7 @@
 @media(max-width:600px){.hero.hero-slider{min-height:930px}.hero-copy{padding-top:62px}.hero-slider .hero-heading{font-size:2.8rem}.hero-slider .hero-caption{max-width:30ch}.hero-search{bottom:70px}.hero-slider .finder{gap:8px;padding:12px}.hero-slider .finder label{padding:10px 12px}}
 </style>
 
-<section class="hero hero-slider" aria-label="Travel inspiration">
+<section class="hero hero-slider{% if home_updates %} hero-with-updates{% endif %}" aria-label="Travel inspiration">
   <h1 class="hero-sr">Explore with Sai Samarth Holidays Pvt. Ltd.</h1>
   <div class="wrap hero-static">
     <div class="hero-copy">
@@ -23,6 +23,7 @@
       <h2 class="hero-heading">{{ site.hero_title }}</h2>
       <p class="hero-caption">{{ site.hero_subtitle }}</p>
     </div>
+    {% if home_updates %}{% include "travel/_updates_carousel.html" %}{% endif %}
   </div>
 
   <div class="wrap hero-search">
@@ -36,3 +37,4 @@
     </form>
   </div>
 </section>
+

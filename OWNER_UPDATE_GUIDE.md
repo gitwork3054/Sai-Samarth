@@ -68,3 +68,18 @@ Acceptance and the exact wording are saved with the enquiry.
 32 automated tests cover existing flows and new filters, quotations, terms,
 consented events, contacts, SEO and protected CRM exports. Desktop and 390px mobile
 checks found no JavaScript errors or horizontal overflow. Quotation PDF inspected.
+
+
+
+## Home page updates, events and offers carousel
+
+Open **Home page updates** in the admin console. Add a title and category, upload
+an announcement poster (or provide an image URL), and optionally add a short
+description and full details/booking URL. Portrait posters work best; images are
+shown in full without cropping. Set order (lower first), Active, and optional
+start/end dates to control publishing. Dates are inclusive. Without a published
+announcement, the carousel uses current offers, upcoming events and recent active
+tours. The card appears beside the home page heading on desktop and stacks below
+it on mobile. It includes arrows, slide selectors and a pause control.
+
+Deploy this change with `python manage.py migrate` and `python manage.py collectstatic --noinput`.
