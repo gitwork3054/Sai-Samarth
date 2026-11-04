@@ -1,25 +1,57 @@
-from django.contrib.auth import login
+from allauth.account.adapter import get_adapter
+from allauth.account.internal.decorators import login_stage_required
+from allauth.account.internal.flows.phone_verification import PhoneVerificationStageProcess
+from allauth.account.stages import PhoneVerificationStage
+from allauth.account.views import LoginView, SignupView, verify_phone
+from allauth.core.exceptions import RateLimited
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from django.utils.http import url_has_allowed_host_and_scheme
+from django.views.decorators.cache import never_cache
 
 from travel.models import Enquiry, Profile, SavedPackage
+from .forms import EnrollmentForm
+from .sms import SMSDeliveryError
 
-from .forms import SignUpForm
+
+class SMSLoginView(LoginView):
+    template_name = "registration/login.html"
 
 
-def signup(request):
-    if request.user.is_authenticated:
-        return redirect("dashboard")
-    form = SignUpForm(request.POST or None)
+class SMSSignupView(SignupView):
+    template_name = "registration/signup.html"
+
+
+@login_stage_required(stage=PhoneVerificationStage.key, redirect_urlname="login")
+def enroll_mobile(request):
+    stage = request._login_stage
+    user = stage.login.user
+    if not user:
+        return stage.abort()
+    adapter = get_adapter()
+    existing = adapter.get_phone(user)
+    # A verified second factor cannot be replaced using only a password.
+    if existing and existing[1]:
+        return redirect("account_verify_phone")
+    form = EnrollmentForm(request.POST or None, user=user)
     if request.method == "POST" and form.is_valid():
-        user = form.save()
-        login(request, user, backend="django.contrib.auth.backends.ModelBackend")
-        next_url = request.GET.get("next", "")
-        if not url_has_allowed_host_and_scheme(next_url, {request.get_host()}, require_https=request.is_secure()):
-            next_url = "dashboard"
-        return redirect(next_url or "dashboard")
-    return render(request, "registration/signup.html", {"form": form})
+        adapter.set_phone(user, form.cleaned_data["phone"], False)
+        try:
+            PhoneVerificationStageProcess.initiate(stage=stage, phone=form.cleaned_data["phone"])
+        except (SMSDeliveryError, RateLimited):
+            form.add_error(None, "We couldn’t send a text right now. Please wait a minute and try again.")
+        else:
+            return redirect("account_verify_phone")
+    return render(request, "registration/enroll_mobile.html", {"form": form})
+
+
+@never_cache
+def confirm_sms(request):
+    try:
+        return verify_phone(request)
+    except SMSDeliveryError:
+        messages.error(request, "We couldn’t send a text right now. Please wait a minute and try again.")
+        return redirect("account_verify_phone")
 
 
 @login_required

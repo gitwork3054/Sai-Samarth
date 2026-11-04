@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Verify your mobile · {{ site.brand_name }}{% endblock %}
+{% block content %}
+<section class="auth"><div class="auth-box">
+  <h1>Add your mobile number</h1>
+  <p class="muted">We’ll text you a verification code before signing you in. Include your country code, for example +91 for India.</p>
+  <form method="post">{% csrf_token %}
+    {{ form.non_field_errors }}
+    <label class="fl"><span>Mobile number</span>{{ form.phone }}{{ form.phone.errors }}</label>
+    <button class="btn btn-sun block" type="submit">Text me a code</button>
+  </form>
+  <p class="muted center"><a href="{% url 'login' %}">Back to login</a></p>
+</div></section>
+{% endblock %}

@@ -133,7 +133,7 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 ACCOUNT_LOGIN_METHODS = {"email"}
-ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+ACCOUNT_SIGNUP_FIELDS = ["email*", "phone*", "password1*", "password2*"]
 ACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_LOGIN_ON_GET = False
@@ -152,3 +152,19 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # Optional server-to-server CRM read access. Never expose this token in JavaScript.
 CRM_API_TOKEN = env("CRM_API_TOKEN")
+
+# SMS verification runs before any customer login session is created.
+ACCOUNT_ADAPTER = "accounts.adapter.SMSAccountAdapter"
+ACCOUNT_FORMS = {"signup": "accounts.forms.SignUpForm", "verify_phone": "accounts.forms.SMSCodeForm"}
+ACCOUNT_PHONE_VERIFICATION_ENABLED = True
+ACCOUNT_PHONE_VERIFICATION_TIMEOUT = 300
+ACCOUNT_PHONE_VERIFICATION_MAX_ATTEMPTS = 3
+ACCOUNT_PHONE_VERIFICATION_SUPPORTS_RESEND = 2
+ACCOUNT_PHONE_VERIFICATION_SUPPORTS_CHANGE = False
+ACCOUNT_PHONE_VERIFICATION_CODE_FORMAT = {"length": 6, "numeric": True, "dashed": False}
+ACCOUNT_RATE_LIMITS = {"verify_phone": "1/m/key,5/h/key,20/h/ip"}
+
+TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN")
+TWILIO_MESSAGING_SERVICE_SID = env("TWILIO_MESSAGING_SERVICE_SID")
+TWILIO_SMS_FROM = env("TWILIO_SMS_FROM")
