@@ -9,16 +9,24 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.decorators.cache import never_cache
 
-from travel.models import Enquiry, Profile, SavedPackage
+from travel.models import Enquiry, Profile, SavedPackage, SiteSettings
 from .forms import EnrollmentForm
 from .sms import SMSDeliveryError
 
 
-class SMSLoginView(LoginView):
+class BrandContextMixin:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # allauth's "site" is a Django RequestSite; our templates use SiteSettings.
+        context["site"] = SiteSettings.get()
+        return context
+
+
+class SMSLoginView(BrandContextMixin, LoginView):
     template_name = "registration/login.html"
 
 
-class SMSSignupView(SignupView):
+class SMSSignupView(BrandContextMixin, SignupView):
     template_name = "registration/signup.html"
 
 
@@ -48,7 +56,10 @@ def enroll_mobile(request):
 @never_cache
 def confirm_sms(request):
     try:
-        return verify_phone(request)
+        response = verify_phone(request)
+        if hasattr(response, "context_data") and response.context_data is not None:
+            response.context_data["site"] = SiteSettings.get()
+        return response
     except SMSDeliveryError:
         messages.error(request, "We couldn’t send a text right now. Please wait a minute and try again.")
         return redirect("account_verify_phone")

@@ -145,6 +145,21 @@ class SMSAuthenticationTests(TestCase):
         self.assertEqual(MobileField().clean("98765 43210"), "+919876543210")
         self.assertEqual(MobileField().clean("+44 7700 900123"), "+447700900123")
 
+    def test_brand_details_are_present_on_all_auth_pages(self):
+        from travel.models import SiteSettings
+        site = SiteSettings.get()
+        site.brand_name = "Sai Samarth Brand Check"
+        site.email = "brand@example.test"
+        site.save()
+        for name in ("login", "signup", "account_login", "account_signup"):
+            response = self.client.get(reverse(name))
+            self.assertContains(response, site.brand_name)
+            self.assertContains(response, site.email)
+        self.start_login()
+        response = self.client.get(reverse("account_verify_phone"))
+        self.assertContains(response, site.brand_name)
+        self.assertContains(response, site.email)
+
 
 @override_settings(TWILIO_ACCOUNT_SID="AC" + "1" * 32, TWILIO_AUTH_TOKEN="test-only",
                    TWILIO_MESSAGING_SERVICE_SID="MG" + "2" * 32, TWILIO_SMS_FROM="")
