@@ -5,10 +5,11 @@
       {% if update.link_url %}<a class="update-content{% if not update.photo %} update-content-text{% endif %}" href="{{ update.link_url }}">{% else %}<div class="update-content{% if not update.photo %} update-content-text{% endif %}">{% endif %}
         {% if update.photo %}<div class="update-poster"><img src="{{ update.photo }}" alt="{{ update.title }}" draggable="false"{% if not forloop.first %} loading="lazy"{% endif %}></div>{% endif %}
         <div class="update-copy">
+          <span class="update-brand">SAI SAMARTH <span aria-hidden="true">✦</span></span>
           <span class="update-category">{{ update.category|title }}</span>
           <h3>{{ update.title }}</h3>
           {% if update.description %}<p>{{ update.description }}</p>{% endif %}
-          {% if update.link_url %}<span class="update-details">Explore this journey <span aria-hidden="true">↗</span></span>{% endif %}
+          {% if update.link_url %}<span class="update-details">Let’s go <span aria-hidden="true">↗</span></span>{% endif %}
         </div>
       {% if update.link_url %}</a>{% else %}</div>{% endif %}
     </article>
