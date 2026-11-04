@@ -11,6 +11,7 @@ from django.db.models import Count, Q
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
+from django.utils import timezone
 
 from . import models as m
 from .domestic_states import domestic_groups, international_groups
@@ -89,11 +90,27 @@ def _filter(qs, p):
 
 
 def home(request):
-    today = date.today()
+    today = timezone.localdate()
     base = ACTIVE
     offers = base.filter(discount_percent__gt=0).filter(Q(offer_valid_till__isnull=True) | Q(offer_valid_till__gte=today)).order_by("-discount_percent")[:6]
     events = base.filter(is_event=True).order_by("event_date")[:6]
+    updates = list(m.HomeUpdate.objects.filter(is_active=True).filter(
+        Q(starts_on__isnull=True) | Q(starts_on__lte=today)
+    ).filter(Q(ends_on__isnull=True) | Q(ends_on__gte=today)))
+    # Keep the card useful before the owner uploads announcement posters.
+    if not updates:
+        seen = set()
+        for category, packages in (("offer", offers), ("event", base.filter(is_event=True).filter(Q(event_date__isnull=True) | Q(event_date__gte=today)).order_by("event_date")[:6]),
+                                   ("update", base.order_by("-created")[:4])):
+            for package in packages:
+                if package.pk in seen:
+                    continue
+                seen.add(package.pk)
+                updates.append({"title": package.title, "category": category,
+                                "description": package.short_description, "photo": package.cover,
+                                "link_url": package.get_absolute_url()})
     ctx = {
+        "home_updates": updates,
         "offers": offers, "events": events, "customer_reviews": m.CustomerReview.objects.filter(is_active=True)[:12],
         "domestic": base.filter(destination__region="domestic", is_featured=True)[:6] or base.filter(destination__region="domestic")[:6],
         "international": base.filter(destination__region="international", is_featured=True)[:6] or base.filter(destination__region="international")[:6],
@@ -237,3 +254,4 @@ def create_enquiry(request, slug):
     enq.activities.set(act_ids)
     notify_enquiry_received(enq)
     return JsonResponse({"ok": True, "reference": enq.reference, "total": calc["total"]})
+

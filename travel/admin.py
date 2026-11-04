@@ -261,3 +261,13 @@ class VisitEventAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return False
+
+
+
+@admin.register(m.HomeUpdate)
+class HomeUpdateAdmin(admin.ModelAdmin):
+    list_display = ("title", "category", "order", "is_active", "starts_on", "ends_on")
+    list_editable = ("order", "is_active")
+    list_filter = ("category", "is_active")
+    search_fields = ("title", "description")
+    fields = ("title", "category", "description", "image", "image_url", "link_url", "order", "is_active", "starts_on", "ends_on")

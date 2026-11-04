@@ -603,3 +603,35 @@ class CustomerReview(models.Model):
 
     def __str__(self):
         return self.customer_name
+
+
+
+class HomeUpdate(models.Model):
+    """Posters and announcements for the home page's right-hand carousel."""
+    title = models.CharField(max_length=180)
+    category = models.CharField(max_length=12, choices=[("update", "Update"), ("event", "Event"), ("offer", "Offer")], default="update")
+    description = models.CharField(max_length=300, blank=True)
+    image = models.ImageField(upload_to="updates/", blank=True, help_text="Upload a poster; the complete image is displayed without cropping.")
+    image_url = models.URLField(blank=True)
+    link_url = models.URLField(blank=True, help_text="Optional full URL for details or booking.")
+    order = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    starts_on = models.DateField(null=True, blank=True)
+    ends_on = models.DateField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["order", "-id"]
+        verbose_name = "Home page update"
+
+    def __str__(self):
+        return self.title
+
+    def clean(self):
+        super().clean()
+        if self.starts_on and self.ends_on and self.ends_on < self.starts_on:
+            from django.core.exceptions import ValidationError
+            raise ValidationError({"ends_on": "End date must be on or after the start date."})
+
+    @property
+    def photo(self):
+        return self.image.url if self.image else self.image_url
