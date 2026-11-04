@@ -75,11 +75,13 @@ checks found no JavaScript errors or horizontal overflow. Quotation PDF inspecte
 
 Open **Home page updates** in the admin console. Add a title and category, upload
 an announcement poster (or provide an image URL), and optionally add a short
-description and full details/booking URL. Portrait posters work best; images are
-shown in full without cropping. Set order (lower first), Active, and optional
+description and full details/booking URL. Use a clear, high-resolution photo with the subject near the centre; images fill
+the card and crop at the edges on different screens. Set order (lower first), Active, and optional
 start/end dates to control publishing. Dates are inclusive. Without a published
 announcement, the carousel uses current offers, upcoming events and recent active
 tours. The card appears beside the home page heading on desktop and stacks below
-it on mobile. It includes arrows, slide selectors and a pause control.
+it on mobile. It automatically advances every 4.5 seconds, with touch swiping, arrows and an
+integrated pause control. There are no dot indicators or heading above the card.
+Reduced-motion preferences disable automatic rotation until the user resumes it.
 
 Deploy this change with `python manage.py migrate` and `python manage.py collectstatic --noinput`.
