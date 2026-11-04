@@ -18,6 +18,7 @@ from .domestic_states import domestic_groups, international_groups
 from .enhancements import record_event, relevant_tours, sightseeing_schema
 from .curated_photos import SOURCES
 from .flamingo_catalog import FLAMINGO_COUNTRIES, flamingo_grouped_countries
+from .flamingo_cards import load_catalog
 from .forms import EnquiryForm
 from .pdf import build_itinerary_pdf
 from .services import calculate_price, notify_enquiry_received
@@ -124,6 +125,55 @@ def home(request):
     return render(request, "travel/home.html", ctx)
 
 
+
+def international_trip_list(request, params):
+    """Browse partner trips locally; only individual trip links leave the site."""
+    countries = sorted(FLAMINGO_COUNTRIES, key=lambda country: country["name"].lower())
+    country_slug = params.get("country", "")
+    selected = next((country for country in countries if country["slug"] == country_slug), None)
+    if country_slug and not selected:
+        raise Http404("Country not found")
+    if not country_slug and not request.GET:
+        return render(request, "travel/international_countries.html", {
+            "countries": countries, "country_groups": flamingo_grouped_countries(),
+            "group_only": False, "title": "International tour packages",
+        })
+    catalogue = load_catalog()
+    cards = []
+    for country in ([selected] if selected else countries):
+        for card in catalogue["countries"].get(country["slug"], []):
+            cards.append({**card, "country": country["name"]})
+    # A shared itinerary can appear under several destinations.
+    cards = list({card["url"]: card for card in cards}.values())
+    query = params.get("q", "").strip().casefold()
+    if query:
+        cards = [card for card in cards if query in " ".join(str(card.get(key, "")) for key in ("title", "code", "cities", "country")).casefold()]
+    if params.get("tour_type") in ("group", "individual"):
+        cards = [card for card in cards if card["style"] == params["tour_type"]]
+    if params.get("duration") in DURATIONS:
+        low, high = DURATIONS[params["duration"]]
+        cards = [card for card in cards if low <= card["days"] <= high]
+    if params.get("budget") in BUDGETS:
+        low, high = BUDGETS[params["budget"]]
+        cards = [card for card in cards if card["price"] > 0 and low <= card["price"] <= high]
+    if params.get("sort") == "price_low":
+        cards.sort(key=lambda card: (not card["price"], card["price"]))
+    elif params.get("sort") == "price_high":
+        cards.sort(key=lambda card: (not card["price"], -card["price"]))
+    elif params.get("sort") == "duration":
+        cards.sort(key=lambda card: (not card["days"], card["days"]))
+    page = Paginator(cards, 12).get_page(request.GET.get("page"))
+    keep = request.GET.copy()
+    keep.pop("page", None)
+    return render(request, "travel/international_trips.html", {
+        "title": (selected["name"] + " tour packages") if selected else "International tour packages",
+        "selected_country": selected, "countries": countries, "params": params,
+        "page": page, "count": page.paginator.count, "qs_keep": keep.urlencode(),
+        "durations": DURATIONS, "budgets": BUDGET_LABELS.items(),
+        "active_filters": any(params.get(key) for key in ("q", "tour_type", "duration", "budget", "sort")),
+    })
+
+
 def package_list(request, preset=None):
     params = request.GET.copy()
     title = "All tour packages"
@@ -143,15 +193,7 @@ def package_list(request, preset=None):
             return render(request, "travel/domestic_states.html", {"states": states, "title": "Domestic tour packages"})
     selected_country = None
     if preset == "international":
-        # International catalogue is intentionally external. No local package maintenance.
-        # Show the full Flamingo directory and send visitors straight to Flamingo.
-        return render(request, "travel/international_countries.html", {
-            "countries": sorted(FLAMINGO_COUNTRIES, key=lambda item: item["name"].lower()),
-            "country_groups": flamingo_grouped_countries(),
-            "group_only": False,
-            "title": "International tour packages",
-            "external_directory": True,
-        })
+        return international_trip_list(request, params)
 
     if preset in ("international", "group") and (preset == "international" or params.get("region") == "international"):
         params["region"] = "international"

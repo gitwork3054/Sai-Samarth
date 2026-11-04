@@ -1,0 +1,54 @@
+{% extends "base.html" %}{% load travel_extras %}
+{% block title %}{{ title }} · {{ site.brand_name }}{% endblock %}
+{% block content %}
+<section class="page-head"><div class="wrap">
+  <p><a class="state-back" href="{% url 'international' %}">← All countries & destinations</a></p>
+  <h1>{{ title }}</h1><p>{{ count }} trip{{ count|pluralize }} found</p>
+</div></section>
+<div class="wrap list-layout">
+  <button class="btn btn-ghost filter-toggle" type="button" data-toggle="#filters">Filters{% if active_filters %} · on{% endif %}</button>
+  <aside class="filters" id="filters">
+    <form method="get" id="filter-form">
+      <label class="fl"><span>Search</span><input type="search" name="q" value="{{ params.q|default:'' }}" placeholder="Place, keyword or tour code"></label>
+      <label class="fl"><span>Destination</span><select name="country"><option value="">All international destinations</option>{% for country in countries %}<option value="{{ country.slug }}" {% if params.country == country.slug %}selected{% endif %}>{{ country.name }}</option>{% endfor %}</select></label>
+      <label class="fl"><span>Tour style</span><select name="tour_type"><option value="">All styles</option><option value="individual" {% if params.tour_type == 'individual' %}selected{% endif %}>Individual / Private</option><option value="group" {% if params.tour_type == 'group' %}selected{% endif %}>Group tours</option></select></label>
+      <label class="fl"><span>Duration</span><select name="duration"><option value="">Any</option>{% for duration in durations %}<option value="{{ duration }}" {% if params.duration == duration %}selected{% endif %}>{{ duration }} days</option>{% endfor %}</select></label>
+      <label class="fl"><span>Budget per person</span><select name="budget"><option value="">Any</option>{% for key,label in budgets %}<option value="{{ key }}" {% if params.budget == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+      <label class="fl"><span>Sort by</span><select name="sort"><option value="">Featured</option><option value="price_low" {% if params.sort == 'price_low' %}selected{% endif %}>Price: low to high</option><option value="price_high" {% if params.sort == 'price_high' %}selected{% endif %}>Price: high to low</option><option value="duration" {% if params.sort == 'duration' %}selected{% endif %}>Shortest first</option></select></label>
+      <div class="f-actions"><button class="btn btn-sun" type="submit">Apply</button><a class="btn btn-link" href="{% url 'international' %}{% if selected_country %}?country={{ selected_country.slug|urlencode }}{% endif %}">Reset</a></div>
+    </form>
+  </aside>
+  <section class="results">
+    <p class="muted">Explore trips here. Each “View trip” opens that itinerary on Flamingo Travels. Prices and availability are confirmed there.</p>
+    {% if page.object_list %}
+    <div class="grid two-up">
+      {% for trip in page.object_list %}
+      <article class="card">
+        <a class="card-img" href="{{ trip.url }}" target="_blank" rel="noopener" aria-label="View {{ trip.title }} on Flamingo Travels" style="background:{% if trip.image %}url('{{ trip.image }}') center/cover{% else %}{{ forloop.counter|gradient }}{% endif %}">
+          {% if not trip.image %}<span class="card-place">{{ trip.country }}</span>{% endif %}
+          {% if trip.style_label %}<span class="badges"><b class="badge b-grp">{{ trip.style_label }}</b></span>{% endif %}
+        </a>
+        <div class="card-body">
+          <p class="meta">{% if trip.code %}{{ trip.code }} · {% endif %}{% if trip.duration %}{{ trip.duration }} · {% endif %}{{ trip.country }}</p>
+          <h3><a href="{{ trip.url }}" target="_blank" rel="noopener">{{ trip.title }}</a></h3>
+          {% if trip.cities %}<p class="meta">{{ trip.cities|truncatechars:100 }}</p>{% endif %}
+          {% if trip.flight %}<p class="chips"><span>{{ trip.flight }}</span></p>{% endif %}
+          <div class="card-foot">
+            <div class="price">{% if trip.price %}<small>From</small><strong>{{ trip.price|inr }}</strong><small>per person</small>{% else %}<strong>Price on request</strong>{% endif %}</div>
+            <a class="btn btn-sun sm" href="{{ trip.url }}" target="_blank" rel="noopener">View trip ↗</a>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% if page.paginator.num_pages > 1 %}<nav class="pager" aria-label="Pages">
+      {% if page.has_previous %}<a class="btn btn-ghost sm" href="?{{ qs_keep }}{% if qs_keep %}&amp;{% endif %}page={{ page.previous_page_number }}">Previous</a>{% endif %}
+      <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+      {% if page.has_next %}<a class="btn btn-ghost sm" href="?{{ qs_keep }}{% if qs_keep %}&amp;{% endif %}page={{ page.next_page_number }}">Next</a>{% endif %}
+    </nav>{% endif %}
+    {% else %}
+    <div class="empty"><h2>No trips match this selection</h2><p>Try another destination or wider filters. Our team can help with additional departures.</p><a class="btn btn-sun" href="{% url 'contact' %}">Ask our team</a></div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
