@@ -46,8 +46,10 @@ def enroll_mobile(request):
         adapter.set_phone(user, form.cleaned_data["phone"], False)
         try:
             PhoneVerificationStageProcess.initiate(stage=stage, phone=form.cleaned_data["phone"])
-        except (SMSDeliveryError, RateLimited):
-            form.add_error(None, "We couldn’t send a text right now. Please wait a minute and try again.")
+        except SMSDeliveryError as error:
+            form.add_error(None, str(error))
+        except RateLimited:
+            form.add_error(None, "Please wait a minute before requesting another text.")
         else:
             return redirect("account_verify_phone")
     return render(request, "registration/enroll_mobile.html", {"form": form})
@@ -55,13 +57,17 @@ def enroll_mobile(request):
 
 @never_cache
 def confirm_sms(request):
+    if request.method == "POST" and request.POST.get("action", "verify") == "verify" and request.session.get("sms_delivery_status") != "accepted":
+        messages.error(request, "No code has been sent yet. Please request a text message first.")
+        return redirect("account_verify_phone")
     try:
         response = verify_phone(request)
         if hasattr(response, "context_data") and response.context_data is not None:
             response.context_data["site"] = SiteSettings.get()
+            response.context_data["sms_sent"] = request.session.get("sms_delivery_status") == "accepted"
         return response
-    except SMSDeliveryError:
-        messages.error(request, "We couldn’t send a text right now. Please wait a minute and try again.")
+    except SMSDeliveryError as error:
+        messages.error(request, str(error))
         return redirect("account_verify_phone")
 
 

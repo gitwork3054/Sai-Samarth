@@ -16,9 +16,12 @@ class SMSVerificationStage(PhoneVerificationStage):
         mobile = get_adapter().get_phone(self.login.user)
         if not mobile:
             return redirect("enroll_mobile"), True
+        self.request.session["sms_delivery_status"] = "failed"
         try:
             PhoneVerificationStageProcess.initiate(stage=self, phone=mobile[0])
-        except (SMSDeliveryError, RateLimited):
+        except SMSDeliveryError as error:
             # Preserve the pending login; no authenticated session is created.
-            messages.error(self.request, "We couldn’t send a text right now. Please wait a minute and try again.")
+            messages.error(self.request, str(error))
+        except RateLimited:
+            messages.error(self.request, "Please wait a minute before requesting another text.")
         return redirect("account_verify_phone"), True

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -o errexit
 python manage.py migrate --noinput
+python manage.py check_sms_delivery
 python manage.py generate_demo
 exec gunicorn config.wsgi:application --bind "0.0.0.0:${PORT:-10000}"

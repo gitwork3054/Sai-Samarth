@@ -36,4 +36,6 @@ class SMSAccountAdapter(DefaultAccountAdapter):
             mobile.save(update_fields=["verified"])
 
     def send_verification_code_sms(self, user, phone, code, **kwargs):
+        self.request.session["sms_delivery_status"] = "failed"
         send_code(phone, code)
+        self.request.session["sms_delivery_status"] = "accepted"

@@ -110,11 +110,16 @@ class SMSAuthenticationTests(TestCase):
         self.assertIn("_auth_user_id", self.client.session)
 
     def test_delivery_failure_never_authenticates(self):
-        self.sender.side_effect = SMSDeliveryError("unavailable")
+        self.sender.side_effect = SMSDeliveryError()
         self.start_login()
         self.assertNotIn("_auth_user_id", self.client.session)
         response = self.client.get(reverse("account_verify_phone"))
-        self.assertContains(response, "couldn’t send a text")
+        self.assertContains(response, "Your code wasn’t sent")
+        self.assertNotContains(response, "Verify and continue")
+        self.assertNotContains(response, "Enter the six-digit code sent")
+        code = self.client.session["account_login"]["state"]["stages"]["verify_phone"]["data"].get("code", "")
+        self.verify(code)
+        self.assertNotIn("_auth_user_id", self.client.session)
 
     def test_alternate_allauth_login_url_also_requires_sms(self):
         self.start_login(reverse("account_login"))
@@ -166,6 +171,7 @@ class SMSAuthenticationTests(TestCase):
 class SMSTransportTests(TestCase):
     @patch("accounts.sms.requests.post")
     def test_sends_sms_with_fixed_https_endpoint_and_service(self, post):
+        post.return_value.status_code = 201
         post.return_value.json.return_value = {"status": "queued"}
         send_code("+919876543210", "123456")
         args, kwargs = post.call_args
@@ -185,4 +191,26 @@ class SMSTransportTests(TestCase):
     def test_missing_credentials_do_not_send(self, post):
         with self.assertRaises(SMSDeliveryError):
             send_code("+919876543210", "123456")
+        post.assert_not_called()
+
+    @patch("accounts.sms.requests.post")
+    def test_provider_rejection_is_diagnosable_without_logging_private_values(self, post):
+        post.return_value.status_code = 400
+        post.return_value.json.return_value = {"code": 21608, "message": "sensitive 123456 +919876543210"}
+        with self.assertLogs("accounts.sms", level="ERROR") as logs:
+            with self.assertRaises(SMSDeliveryError):
+                send_code("+919876543210", "123456")
+        output = " ".join(logs.output)
+        self.assertIn("21608", output)
+        self.assertNotIn("123456", output)
+        self.assertNotIn("+919876543210", output)
+        self.assertNotIn("test-only", output)
+
+    @patch("accounts.sms.requests.get")
+    @patch("accounts.sms.requests.post")
+    def test_read_only_health_check_never_sends_text(self, post, get):
+        from .sms import check_provider
+        get.return_value.status_code = 401
+        get.return_value.json.return_value = {"code": 20003, "message": "private"}
+        self.assertEqual(check_provider(), ("provider_rejected", ["401", "20003"]))
         post.assert_not_called()
