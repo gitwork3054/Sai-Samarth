@@ -1273,34 +1273,38 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
 }
 
 
-/* Right-hand home page announcement card: travel poster treatment. */
+/* A travel-journal card keeps the image and story distinct. */
 .hero-with-updates .hero-static{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,390px);gap:40px;align-items:start}
 .hero-with-updates .updates-carousel{margin-top:58px}
 .updates-carousel{min-width:0;text-align:left;isolation:isolate}
-.updates-stage{position:relative;border-radius:26px;overflow:hidden;background:#073d49;box-shadow:0 24px 60px #061e2855,0 0 0 1px #ffffff70;touch-action:pan-y}
-.update-slide{--poster-accent:#ff631c;--poster-sticker:#e3ff70}
-.update-slide:nth-child(3n + 2){--poster-accent:#ddff63;--poster-sticker:#9cf3f3}
-.update-slide:nth-child(3n){--poster-accent:#79e7ff;--poster-sticker:#ffce77}
-.update-content{position:relative;display:flex;height:510px;padding:25px 25px 78px;text-decoration:none;color:#fff;background:radial-gradient(ellipse at top right,#29a9a3,#08384a 75%);overflow:hidden}
-.update-poster{position:absolute;inset:0}
-.update-poster img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(1.22) contrast(1.06)}
-.update-poster::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#002f4140 0%,#002f4110 35%,#042c3dd9 72%,#062432 100%)}
-.update-copy{position:relative;width:100%;min-width:0;display:flex;flex-direction:column;align-items:flex-start}
-.update-brand{align-self:center;display:flex;gap:10px;align-items:center;padding:6px 14px;border-radius:0 0 13px 13px;margin-top:-25px;margin-bottom:20px;background:#fffdf0;color:#154741;font-size:.7rem;font-weight:800;letter-spacing:.12em;box-shadow:0 5px 20px #00354220}
-.update-brand span{color:#ff631c;font-size:1.1rem}
-.update-category{display:inline-block;flex-shrink:0;padding:5px 12px;margin-bottom:12px;border:1px solid #ffffffc0;border-radius:5px;background:var(--poster-sticker);color:#163c3e;font-size:.62rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;transform:rotate(-4deg);box-shadow:3px 3px 0 #092d3c55}
-.update-copy h3{font-size:clamp(1.8rem,2.8vw,2.8rem);font-weight:800;line-height:1.02;letter-spacing:-.045em;text-transform:uppercase;color:var(--poster-accent);-webkit-text-stroke:1px #fff9e8;paint-order:stroke fill;text-shadow:3px 4px 0 #143a45,0 5px 18px #002c4b70;margin:0 0 18px;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.update-copy p{font-size:.87rem;font-weight:500;line-height:1.55;color:#fffdf4;text-shadow:0 2px 6px #00232f;margin:auto 0 16px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.update-details{display:inline-flex;align-items:center;justify-content:space-between;gap:30px;padding:9px 10px 9px 17px;background:var(--poster-sticker);color:#123d3c;border-radius:9px;font-size:.85rem;font-weight:800;box-shadow:4px 4px 0 #061e2855;transform:rotate(-2deg)}
-.update-details span{display:grid;place-items:center;width:29px;height:29px;flex-shrink:0;border-radius:50%;background:#123d3c;color:#fff;font-size:1.15rem}
-.update-content-text .update-copy p{margin-top:auto}
-.updates-controls{position:absolute;bottom:18px;left:25px;right:25px;display:flex;justify-content:space-between;align-items:center;gap:12px;color:#fff}
-.updates-count{font-size:.7rem;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.16em}
-.updates-actions{display:flex;gap:8px}
-.updates-actions button{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid #ffffff90;border-radius:50%;background:#ffffff18;color:#fff;cursor:pointer;font:20px/1 system-ui;transition:background .2s,transform .2s}
-.updates-actions button:hover{background:#ffffff35;transform:translateY(-2px)}
-.updates-actions .updates-pause{font-size:14px}
-.updates-carousel :focus-visible{outline:3px solid #e3ff70;outline-offset:-4px}
+.updates-stage{position:relative;border-radius:28px;overflow:hidden;background:#f9f6ed;box-shadow:0 24px 60px #061e2845,0 0 0 1px #ffffff80;touch-action:pan-y}
+.update-slide{--poster-accent:#db6239}
+.update-slide:nth-child(3n + 2){--poster-accent:#2b776e}
+.update-slide:nth-child(3n){--poster-accent:#b77a36}
+.update-content{position:relative;display:block;height:530px;text-decoration:none;color:#19383b;background:#f9f6ed;overflow:hidden}
+.update-poster{position:absolute;inset:0 0 auto;height:59%;overflow:hidden;background:#2a5b5b}
+.update-poster img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.update-content:hover .update-poster img{transform:scale(1.035)}
+.update-poster::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#102e3b44,transparent 40%,#102e3b27)}
+.update-copy{position:absolute;inset:0;min-width:0;display:flex;flex-direction:column;align-items:flex-start;padding:22px 24px 72px;background:linear-gradient(180deg,transparent 48%,#f9f6ed 54%)}
+.update-brand{display:inline-flex;align-items:center;gap:7px;border-radius:99px;padding:8px 12px;background:#fffdf3ed;color:#183e40;font-size:.58rem;font-weight:800;letter-spacing:.12em;box-shadow:0 5px 18px #08282c20}
+.update-brand-mark{font-size:1rem;line-height:1;color:#e7784c}.update-brand-sub{border-left:1px solid #b7c6bd;padding-left:7px;color:#597b76;font-size:.5rem}
+.update-kicker{display:flex;align-items:center;gap:9px;width:100%;margin-top:auto;margin-bottom:9px;color:#69817b;font-size:.57rem;font-weight:800;letter-spacing:.13em}
+.update-category{color:var(--poster-accent);font-size:.67rem;letter-spacing:.12em;text-transform:uppercase}
+.update-kicker-line{width:22px;height:1px;background:var(--poster-accent)}
+.update-copy h3{color:#19383b;font-size:clamp(1.6rem,2.4vw,2.1rem);font-weight:800;line-height:1.05;letter-spacing:-.045em;margin:0 0 8px;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.update-copy p{color:#5e7774;font-size:.81rem;line-height:1.48;margin:0 0 13px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.update-details{display:inline-flex;align-items:center;gap:9px;color:#1b5953;font-size:.77rem;font-weight:800}
+.update-details span{display:grid;place-items:center;width:28px;height:28px;border:1px solid #c4d4cd;border-radius:50%;font-size:1rem;transition:background .2s,color .2s}
+.update-content:hover .update-details span{background:#1b5953;color:#fff}
+.update-content-text{background:linear-gradient(145deg,#183f45 0%,#2b6968 48%,#f9f6ed 48%)}
+.updates-controls{position:absolute;bottom:0;left:0;right:0;height:58px;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;color:#e8f1ed;background:#173f40}
+.updates-count{font-size:.67rem;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.16em}
+.updates-actions{display:flex;gap:7px}
+.updates-actions button{display:grid;place-items:center;width:33px;height:33px;padding:0;border:1px solid #9ebdb3;border-radius:50%;background:transparent;color:#fff;cursor:pointer;font:18px/1 system-ui;transition:background .2s,transform .2s}
+.updates-actions button:hover{background:#ffffff28;transform:translateY(-2px)}
+.updates-actions .updates-pause{font-size:13px}
+.updates-carousel :focus-visible{outline:3px solid #f2a676;outline-offset:-4px}
 .update-slide[hidden],.updates-controls[hidden]{display:none}
 @media(min-width:901px){body.home-static-bg .hero.hero-with-updates{min-height:850px}}
 @media(max-width:900px){
@@ -1310,5 +1314,5 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
   .hero-with-updates .updates-carousel{margin:0 auto;width:100%;max-width:420px}
   body.home-static-bg .hero-with-updates .hero-search{position:relative;bottom:auto;margin-top:32px}
 }
-@media(max-width:450px){.update-content{height:490px;padding:22px 22px 76px}.update-copy h3{font-size:clamp(1.7rem,8.5vw,2.6rem)}.update-brand{margin-top:-22px}.updates-stage{border-radius:24px}.updates-controls{left:22px;right:22px}}
-@media(prefers-reduced-motion:reduce){.updates-actions button{transition:none}}
+@media(max-width:450px){.update-content{height:500px}.update-copy{padding:20px 20px 70px}.update-copy h3{font-size:clamp(1.5rem,7vw,2rem)}.updates-stage{border-radius:24px}.updates-controls{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){.updates-actions button,.update-poster img,.update-details span{transition:none}}
