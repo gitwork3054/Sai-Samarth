@@ -5,6 +5,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
+from urllib.parse import urlencode
+from .flamingo_catalog import FLAMINGO_COUNTRIES
+from .flamingo_cards import load_catalog
 from django.views.decorators.http import require_GET
 from . import models as m
 from .forms import ContactForm
@@ -19,14 +23,42 @@ def contact(request):
     return render(request, 'travel/contact.html', {'contact_form':form, 'sent':request.resolver_match.url_name=='contact_thanks'})
 
 
+def _journey_matches(query):
+    from django.db.models import Q
+    packages = m.Package.objects.filter(is_active=True).select_related('destination').filter(
+        Q(title__icontains=query) | Q(tour_code__icontains=query) |
+        Q(destination__name__icontains=query) | Q(destination__state_or_country__icontains=query)
+    )
+    term = query.casefold()
+    countries = [c for c in FLAMINGO_COUNTRIES if term in c['name'].casefold()]
+    country_names = {country['slug']: country['name'] for country in FLAMINGO_COUNTRIES}
+    trips = {}
+    for slug, cards in load_catalog().get('countries', {}).items():
+        for card in cards:
+            if term in ' '.join(str(card.get(key, '')) for key in ('title', 'code', 'cities')).casefold() or term in country_names.get(slug, '').casefold():
+                trips.setdefault(card['url'], {**card, 'country': country_names.get(slug, '')})
+    return packages, countries, list(trips.values())
+
+
 @require_GET
 def journey_search(request):
     query = request.GET.get('q', '').strip()[:120]
     if len(query) < 2:
-        return JsonResponse({'results':[]})
-    from django.db.models import Q
-    packages = m.Package.objects.filter(is_active=True).filter(Q(title__icontains=query)|Q(destination__name__icontains=query)|Q(destination__state_or_country__icontains=query))[:6]
-    return JsonResponse({'results':[{'title':p.title,'url':p.get_absolute_url(),'duration':p.duration_label} for p in packages]})
+        return JsonResponse({'results': []})
+    packages, countries, trips = _journey_matches(query)
+    results = [{'title': c['name'], 'url': reverse('international') + '?' + urlencode({'country': c['slug']}), 'duration': 'International destination'} for c in countries[:3]]
+    results += [{'title': p.title, 'url': p.get_absolute_url(), 'duration': p.duration_label} for p in packages[:3]]
+    results += [{'title': t['title'], 'url': reverse('international') + '?' + urlencode({'q': t.get('code') or t['title']}), 'duration': t.get('duration') or 'International trip'} for t in trips[:3]]
+    return JsonResponse({'results': results[:9]})
+
+
+@require_GET
+def journey_results(request):
+    query = request.GET.get('q', '').strip()[:120]
+    packages, countries, trips = _journey_matches(query) if len(query) >= 2 else ([], [], [])
+    return render(request, 'travel/journey_results.html', {
+        'query': query, 'packages': packages[:12], 'countries': countries, 'trips': trips[:12],
+    })
 
 
 @staff_member_required
@@ -86,3 +118,4 @@ def sitemap(request):
 def robots(request):
     text = 'User-agent: *\nDisallow: /'+settings.ADMIN_URL+'\nDisallow: /staff/\nDisallow: /accounts/\nDisallow: /api/crm/\nSitemap: '+request.build_absolute_uri('/sitemap.xml')+'\n'
     return HttpResponse(text,content_type='text/plain')
+
