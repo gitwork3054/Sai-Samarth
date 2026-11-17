@@ -17,124 +17,31 @@ from .models import MobileNumber
 from .sms import SMSDeliveryError, send_code
 
 
-class SMSAuthenticationTests(TestCase):
+class LoginWithoutOTPTests(TestCase):
     def setUp(self):
         cache.clear()
         self.password = "TravelTest-739!"
         self.user = get_user_model().objects.create_user(
             username="traveller@example.com", email="traveller@example.com", password=self.password)
-        self.mobile = MobileNumber.objects.create(user=self.user, number="+919876543210", verified=True)
-        self.patcher = patch("accounts.adapter.send_code")
-        self.sender = self.patcher.start()
-        self.addCleanup(self.patcher.stop)
 
-    def start_login(self, path=None):
-        response = self.client.post(path or reverse("login"), {"login": self.user.email, "password": self.password})
-        self.assertEqual(response.status_code, 302)
-        self.assertNotIn("_auth_user_id", self.client.session)
-        return response
+    @patch("accounts.adapter.send_code")
+    def test_password_login_does_not_require_mobile_or_send_sms(self, sender):
+        for path in (reverse("login"), reverse("account_login")):
+            response = self.client.post(path, {"login": self.user.email, "password": self.password})
+            self.assertRedirects(response, reverse("dashboard"), fetch_redirect_response=False)
+            self.assertIn("_auth_user_id", self.client.session)
+            self.client.post(reverse("logout"))
+        sender.assert_not_called()
 
-    def code(self):
-        return self.sender.call_args.args[1]
-
-    def verify(self, code):
-        return self.client.post(reverse("account_verify_phone"), {"code": code, "action": "verify"})
-
-    def test_password_login_requires_sms_and_code_cannot_be_replayed(self):
-        self.assertEqual(self.start_login().url, reverse("account_verify_phone"))
-        self.assertRegex(self.code(), r"^[0-9]{6}$")
-        response = self.verify(self.code())
-        self.assertRedirects(response, reverse("dashboard"), fetch_redirect_response=False)
-        self.assertIn("_auth_user_id", self.client.session)
-        self.client.post(reverse("logout"))
-        self.assertEqual(self.verify(self.code()).status_code, 302)
-        self.assertNotIn("_auth_user_id", self.client.session)
-
-    def test_incorrect_codes_lock_pending_login_after_three_attempts(self):
-        self.start_login()
-        correct = self.code()
-        wrong = "000000" if correct != "000000" else "111111"
-        for _ in range(3):
-            self.verify(wrong)
-        self.verify(correct)
-        self.assertNotIn("_auth_user_id", self.client.session)
-
-    def test_expired_code_and_other_session_are_rejected(self):
-        self.start_login()
-        code = self.code()
-        other = Client()
-        other.post(reverse("account_verify_phone"), {"code": code})
-        self.assertNotIn("_auth_user_id", other.session)
-        future = time.time() + 301
-        with patch("allauth.account.internal.flows.code_verification.time.time", return_value=future):
-            self.verify(code)
-        self.assertNotIn("_auth_user_id", self.client.session)
-
-    def test_wrong_password_does_not_send_sms(self):
+    @patch("accounts.adapter.send_code")
+    def test_wrong_password_does_not_authenticate(self, sender):
         response = self.client.post(reverse("login"), {"login": self.user.email, "password": "wrong"})
         self.assertEqual(response.status_code, 200)
-        self.sender.assert_not_called()
         self.assertNotIn("_auth_user_id", self.client.session)
+        sender.assert_not_called()
 
-    def test_existing_account_enrols_phone_only_after_password(self):
-        self.mobile.delete()
-        self.assertEqual(self.start_login().url, reverse("enroll_mobile"))
-        response = self.client.post(reverse("enroll_mobile"), {"phone": "98765 43210"})
-        self.assertRedirects(response, reverse("account_verify_phone"), fetch_redirect_response=False)
-        self.assertNotIn("_auth_user_id", self.client.session)
-        self.verify(self.code())
-        self.assertTrue(MobileNumber.objects.get(user=self.user).verified)
-        self.assertIn("_auth_user_id", self.client.session)
-
-    def test_verified_second_factor_cannot_be_replaced_during_login(self):
-        self.start_login()
-        self.client.post(reverse("enroll_mobile"), {"phone": "+919999999999"})
-        self.mobile.refresh_from_db()
-        self.assertEqual(self.mobile.number, "+919876543210")
-        self.assertNotIn("_auth_user_id", self.client.session)
-
-    def test_resend_is_rate_limited(self):
-        self.start_login()
-        self.client.post(reverse("account_verify_phone"), {"action": "resend"})
-        self.assertEqual(self.sender.call_count, 1)
-        self.assertNotIn("_auth_user_id", self.client.session)
-
-    @override_settings(ACCOUNT_RATE_LIMITS={"verify_phone": None})
-    @patch("accounts.adapter.SMSAccountAdapter.generate_phone_verification_code", side_effect=["123456", "654321"])
-    def test_resend_replaces_old_code(self, generator):
-        self.start_login()
-        self.client.post(reverse("account_verify_phone"), {"action": "resend"})
-        self.verify("123456")
-        self.assertNotIn("_auth_user_id", self.client.session)
-        self.verify("654321")
-        self.assertIn("_auth_user_id", self.client.session)
-
-    def test_delivery_failure_never_authenticates(self):
-        self.sender.side_effect = SMSDeliveryError()
-        self.start_login()
-        self.assertNotIn("_auth_user_id", self.client.session)
-        response = self.client.get(reverse("account_verify_phone"))
-        self.assertContains(response, "Your code wasn’t sent")
-        self.assertNotContains(response, "Verify and continue")
-        self.assertNotContains(response, "Enter the six-digit code sent")
-        code = self.client.session["account_login"]["state"]["stages"]["verify_phone"]["data"].get("code", "")
-        self.verify(code)
-        self.assertNotIn("_auth_user_id", self.client.session)
-
-    def test_alternate_allauth_login_url_also_requires_sms(self):
-        self.start_login(reverse("account_login"))
-        self.assertNotIn("_auth_user_id", self.client.session)
-        self.assertEqual(self.sender.call_count, 1)
-
-    def test_mobile_is_not_optional_at_signup(self):
-        response = self.client.post(reverse("signup"), {
-            "first_name": "New User", "email": "new@example.com",
-            "password1": self.password, "password2": self.password,
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertFalse(get_user_model().objects.filter(email="new@example.com").exists())
-
-    def test_stage_requires_sms_even_for_verified_social_account(self):
+    @patch("accounts.adapter.send_code")
+    def test_social_login_stage_does_not_require_sms(self, sender):
         request = RequestFactory().get("/")
         request.user = self.user
         SessionMiddleware(lambda r: None).process_request(request)
@@ -143,27 +50,14 @@ class SMSAuthenticationTests(TestCase):
         login = Login(user=self.user, email_verification="none")
         with context.request_context(request):
             response = LoginStageController(request, login).handle()
-        self.assertEqual(response.url, reverse("account_verify_phone"))
-        self.assertEqual(self.sender.call_count, 1)
+        self.assertTrue(response is None or response.url not in (reverse("account_verify_phone"), reverse("enroll_mobile")))
+        sender.assert_not_called()
 
-    def test_phone_normalisation(self):
-        self.assertEqual(MobileField().clean("98765 43210"), "+919876543210")
-        self.assertEqual(MobileField().clean("+44 7700 900123"), "+447700900123")
-
-    def test_brand_details_are_present_on_all_auth_pages(self):
-        from travel.models import SiteSettings
-        site = SiteSettings.get()
-        site.brand_name = "Sai Samarth Brand Check"
-        site.email = "brand@example.test"
-        site.save()
+    def test_sign_in_and_signup_copy_does_not_mention_sms(self):
         for name in ("login", "signup", "account_login", "account_signup"):
             response = self.client.get(reverse(name))
-            self.assertContains(response, site.brand_name)
-            self.assertContains(response, site.email)
-        self.start_login()
-        response = self.client.get(reverse("account_verify_phone"))
-        self.assertContains(response, site.brand_name)
-        self.assertContains(response, site.email)
+            self.assertNotContains(response, "SMS verification")
+            self.assertNotContains(response, "verification code")
 
 
 @override_settings(TWILIO_ACCOUNT_SID="AC" + "1" * 32, TWILIO_AUTH_TOKEN="test-only",

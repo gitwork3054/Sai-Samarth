@@ -153,10 +153,10 @@ SOCIALACCOUNT_PROVIDERS = {
 # Optional server-to-server CRM read access. Never expose this token in JavaScript.
 CRM_API_TOKEN = env("CRM_API_TOKEN")
 
-# SMS verification runs before any customer login session is created.
+# Keep the mobile number as contact information without SMS verification.
 ACCOUNT_ADAPTER = "accounts.adapter.SMSAccountAdapter"
 ACCOUNT_FORMS = {"signup": "accounts.forms.SignUpForm", "verify_phone": "accounts.forms.SMSCodeForm"}
-ACCOUNT_PHONE_VERIFICATION_ENABLED = True
+ACCOUNT_PHONE_VERIFICATION_ENABLED = False
 ACCOUNT_PHONE_VERIFICATION_TIMEOUT = 300
 ACCOUNT_PHONE_VERIFICATION_MAX_ATTEMPTS = 3
 ACCOUNT_PHONE_VERIFICATION_SUPPORTS_RESEND = 2

@@ -8,10 +8,9 @@ from .sms import send_code
 
 class SMSAccountAdapter(DefaultAccountAdapter):
     def get_login_stages(self):
-        return [
-            "accounts.stages.SMSVerificationStage" if path == "allauth.account.stages.PhoneVerificationStage" else path
-            for path in super().get_login_stages()
-        ]
+        # Phone verification must not interrupt password or social sign-in.
+        return [path for path in super().get_login_stages()
+                if path != "allauth.account.stages.PhoneVerificationStage"]
 
     def phone_form_field(self, **kwargs):
         from .forms import MobileField

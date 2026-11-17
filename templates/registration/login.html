@@ -2,13 +2,13 @@
 {% block title %}Log in · {{ site.brand_name }}{% endblock %}
 {% block content %}
 <section class="auth"><div class="auth-box">
-  <h1>Welcome back</h1><p class="muted">Enter your email and password, then confirm the code sent by text message.</p>
+  <h1>Welcome back</h1><p class="muted">Enter your email and password to access your account.</p>
   {% include "registration/_google_button.html" %}
   <form method="post" novalidate>{% csrf_token %}<input type="hidden" name="next" value="{{ redirect_field_value|default:'' }}">
     {{ form.non_field_errors }}
     <label class="fl"><span>Email</span>{{ form.login }}{{ form.login.errors }}</label>
     <label class="fl"><span>Password</span>{{ form.password }}{{ form.password.errors }}</label>
-    <button class="btn btn-sun block" type="submit">Continue to SMS verification</button>
+    <button class="btn btn-sun block" type="submit">Log in</button>
   </form>
   <p class="muted center">New here? <a href="{% url 'signup' %}">Create an account</a></p>
 </div></section>
