@@ -4,6 +4,7 @@ from allauth.account.internal.flows.phone_verification import PhoneVerificationS
 from allauth.account.stages import PhoneVerificationStage
 from allauth.account.views import LoginView, SignupView, verify_phone
 from allauth.core.exceptions import RateLimited
+from allauth.socialaccount.views import SignupView as SocialSignupView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
@@ -20,6 +21,10 @@ class BrandContextMixin:
         # allauth's "site" is a Django RequestSite; our templates use SiteSettings.
         context["site"] = SiteSettings.get()
         return context
+
+
+class BrandedSocialSignupView(BrandContextMixin, SocialSignupView):
+    pass
 
 
 class SMSLoginView(BrandContextMixin, LoginView):

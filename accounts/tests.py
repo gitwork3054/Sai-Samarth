@@ -45,3 +45,18 @@ class AuthenticationIntegrationTests(TestCase):
         self.assertEqual(query["redirect_uri"], ["http://testserver/auth/google/login/callback/"])
         self.assertIn("code_challenge", query)
 
+
+    @patch("allauth.socialaccount.views.flows.signup.get_pending_signup")
+    def test_google_signup_page_uses_site_layout(self, pending):
+        from allauth.socialaccount.models import SocialAccount, SocialLogin
+        user = get_user_model()(email="google@example.com")
+        pending.return_value = SocialLogin(user=user, account=SocialAccount(provider="google", uid="test-google-id"))
+        response = self.client.get(reverse("socialaccount_signup"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "socialaccount/signup.html")
+        self.assertContains(response, "One more step")
+        self.assertContains(response, "auth-box")
+        from travel.models import SiteSettings
+        self.assertContains(response, SiteSettings.get().brand_name)
+        self.assertContains(response, 'name="phone"')
+        self.assertContains(response, 'name="csrfmiddlewaretoken"')
