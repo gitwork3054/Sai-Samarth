@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from urllib.parse import urlencode
 from .flamingo_catalog import FLAMINGO_COUNTRIES
-from .flamingo_cards import load_catalog
+from .flamingo_cards import load_catalog, trip_key
 from django.views.decorators.http import require_GET
 from . import models as m
 from .forms import ContactForm
@@ -36,7 +36,7 @@ def _journey_matches(query):
     for slug, cards in load_catalog().get('countries', {}).items():
         for card in cards:
             if term in ' '.join(str(card.get(key, '')) for key in ('title', 'code', 'cities')).casefold() or term in country_names.get(slug, '').casefold():
-                trips.setdefault(card['url'], {**card, 'country': country_names.get(slug, '')})
+                trips.setdefault(card['url'], {**card, 'country': country_names.get(slug, ''), 'save_key': trip_key(card['url'])})
     return packages, countries, list(trips.values())
 
 

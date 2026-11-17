@@ -502,6 +502,17 @@ class SavedPackage(models.Model):
         ordering = ["-created"]
 
 
+class SavedInternationalTrip(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="saved_international_trips")
+    trip_key = models.CharField(max_length=64)
+    trip = models.JSONField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "trip_key")
+        ordering = ["-created"]
+
+
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile")
     phone = models.CharField(max_length=20, blank=True)

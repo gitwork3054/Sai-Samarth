@@ -18,7 +18,7 @@ from .domestic_states import domestic_groups, international_groups
 from .enhancements import record_event, relevant_tours, sightseeing_schema
 from .curated_photos import SOURCES
 from .flamingo_catalog import FLAMINGO_COUNTRIES, flamingo_grouped_countries
-from .flamingo_cards import load_catalog
+from .flamingo_cards import load_catalog, trip_key, partner_trips
 from .forms import EnquiryForm
 from .pdf import build_itinerary_pdf
 from .services import calculate_price, notify_enquiry_received
@@ -142,7 +142,7 @@ def international_trip_list(request, params):
     cards = []
     for country in ([selected] if selected else countries):
         for card in catalogue["countries"].get(country["slug"], []):
-            cards.append({**card, "country": country["name"]})
+            cards.append({**card, "country": country["name"], "save_key": trip_key(card["url"])})
     # A shared itinerary can appear under several destinations.
     cards = list({card["url"]: card for card in cards}.values())
     query = params.get("q", "").strip().casefold()
@@ -270,6 +270,22 @@ def toggle_save(request, slug):
     if not created:
         obj.delete()
     return JsonResponse({"saved": created})
+
+
+@require_POST
+def toggle_international_save(request, key):
+    if not request.user.is_authenticated:
+        return JsonResponse({"login": True}, status=401)
+    saved = m.SavedInternationalTrip.objects.filter(user=request.user, trip_key=key).first()
+    if saved:
+        saved.delete()
+        return JsonResponse({"saved": False})
+    trip = partner_trips().get(key)
+    if not trip:
+        raise Http404("Trip not found")
+    _, created = m.SavedInternationalTrip.objects.get_or_create(
+        user=request.user, trip_key=key, defaults={"trip": trip})
+    return JsonResponse({"saved": True})
 
 
 @require_POST

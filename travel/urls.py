@@ -14,6 +14,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("packages/", views.package_list, name="packages"),
     path("domestic/", views.package_list, {"preset": "domestic"}, name="domestic"),
+    path("international/save/<str:key>/", views.toggle_international_save, name="toggle_international_save"),
     path("international/", views.package_list, {"preset": "international"}, name="international"),
     path("group-tours/", views.package_list, {"preset": "group"}, name="group_tours"),
     path("corporate-tours/", views.package_list, {"preset": "corporate"}, name="corporate_tours"),

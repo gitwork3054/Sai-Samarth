@@ -23,22 +23,7 @@
     {% if page.object_list %}
     <div class="grid two-up">
       {% for trip in page.object_list %}
-      <article class="card">
-        <a class="card-img" href="{{ trip.url }}" target="_blank" rel="noopener" aria-label="View {{ trip.title }} on Flamingo Travels" style="background:{% if trip.image %}url('{{ trip.image }}') center/cover{% else %}{{ forloop.counter|gradient }}{% endif %}">
-          {% if not trip.image %}<span class="card-place">{{ trip.country }}</span>{% endif %}
-          {% if trip.style_label %}<span class="badges"><b class="badge b-grp">{{ trip.style_label }}</b></span>{% endif %}
-        </a>
-        <div class="card-body">
-          <p class="meta">{% if trip.code %}{{ trip.code }} · {% endif %}{% if trip.duration %}{{ trip.duration }} · {% endif %}{{ trip.country }}</p>
-          <h3><a href="{{ trip.url }}" target="_blank" rel="noopener">{{ trip.title }}</a></h3>
-          {% if trip.cities %}<p class="meta">{{ trip.cities|truncatechars:100 }}</p>{% endif %}
-          {% if trip.flight %}<p class="chips"><span>{{ trip.flight }}</span></p>{% endif %}
-          <div class="card-foot">
-            <div class="price">{% if trip.price %}<small>From</small><strong>{{ trip.price|inr }}</strong><small>per person</small>{% else %}<strong>Price on request</strong>{% endif %}</div>
-            <a class="btn btn-sun sm" href="{{ trip.url }}" target="_blank" rel="noopener">View trip ↗</a>
-          </div>
-        </div>
-      </article>
+      {% include "travel/_international_card.html" %}
       {% endfor %}
     </div>
     {% if page.paginator.num_pages > 1 %}<nav class="pager" aria-label="Pages">

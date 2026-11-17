@@ -4,6 +4,7 @@ import re
 from decimal import Decimal, InvalidOperation
 from functools import lru_cache
 from html import unescape
+from hashlib import sha256
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import quote, urljoin, urlparse
@@ -78,3 +79,18 @@ def parse_cards(html):
 @lru_cache(maxsize=1)
 def load_catalog():
     return json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+
+
+def trip_key(url):
+    return sha256(url.encode("utf-8")).hexdigest()
+
+
+def partner_trips():
+    from .flamingo_catalog import FLAMINGO_COUNTRIES
+    names = {country["slug"]: country["name"] for country in FLAMINGO_COUNTRIES}
+    seen = {}
+    for country, cards in load_catalog().get("countries", {}).items():
+        for card in cards:
+            key = trip_key(card["url"])
+            seen.setdefault(key, {**card, "country": names.get(country, ""), "save_key": key})
+    return seen

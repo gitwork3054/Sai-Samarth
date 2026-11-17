@@ -82,5 +82,6 @@ def dashboard(request):
     return render(request, "registration/dashboard.html", {
         "enquiries": Enquiry.objects.filter(user=request.user).select_related("package", "package__destination"),
         "saved": SavedPackage.objects.filter(user=request.user).select_related("package", "package__destination"),
+        "saved_international": request.user.saved_international_trips.all(),
         "tab": request.GET.get("tab", "saved"),
     })

@@ -8,11 +8,13 @@ def site(request):
     s = SiteSettings.get()
     logo = s.logo.url if s.logo else "/static/img/sai-samarth-logo.png"
     saved = set()
+    saved_international = set()
     if request.user.is_authenticated:
         saved = set(request.user.saved_packages.values_list("package_id", flat=True))
+        saved_international = set(request.user.saved_international_trips.values_list("trip_key", flat=True))
     packages = Package.objects.filter(is_active=True).select_related("destination")
     google = settings.SOCIALACCOUNT_PROVIDERS["google"]["APP"]
-    return {"google_login_enabled": bool(google["client_id"] and google["secret"]), "site": s, "logo_url": logo, "saved_ids": saved,
+    return {"google_login_enabled": bool(google["client_id"] and google["secret"]), "site": s, "logo_url": logo, "saved_ids": saved, "saved_international_keys": saved_international,
             "nav_audiences": Audience.objects.all(), "nav_themes": Theme.objects.all(),
             "nav_domestic_states": domestic_groups(packages.filter(destination__region="domestic")),
             "nav_domestic_region_groups": domestic_region_groups(domestic_groups(packages.filter(destination__region="domestic"))),
@@ -24,3 +26,4 @@ def site(request):
             "nav_international_groups": international_groups(packages.filter(tour_type="group", destination__region="international")),
             "hero_slides": HomeSlide.objects.filter(is_active=True), "preview_characters": max(100, s.preview_characters),
             "hero_interval": max(1000, min(30000, s.slideshow_interval))}
+

@@ -1,0 +1,16 @@
+{% load travel_extras %}
+<article class="card">
+  <a class="card-img" href="{{ trip.url }}" target="_blank" rel="noopener" aria-label="View {{ trip.title }} on Flamingo Travels" style="background:{% if trip.image %}url('{{ trip.image }}') center/cover{% else %}{{ forloop.counter|gradient }}{% endif %}">
+    {% if not trip.image %}<span class="card-place">{{ trip.country }}</span>{% endif %}
+    {% if trip.style_label %}<span class="badges"><b class="badge b-grp">{{ trip.style_label }}</b></span>{% endif %}
+  </a>
+  <button class="heart{% if trip.save_key in saved_international_keys %} on{% endif %}" data-save="{% url 'toggle_international_save' trip.save_key %}" aria-pressed="{% if trip.save_key in saved_international_keys %}true{% else %}false{% endif %}" aria-label="Save {{ trip.title }} for later">
+    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8.3 3 4.5 6.7 4.5c2 0 3.6 1 5.3 3 1.7-2 3.3-3 5.3-3 3.7 0 5.8 3.8 4.3 7.2C19.5 16.4 12 21 12 21z"/></svg>
+  </button>
+  <div class="card-body"><p class="meta">{% if trip.code %}{{ trip.code }} · {% endif %}{% if trip.duration %}{{ trip.duration }} · {% endif %}{{ trip.country }}</p>
+    <h3><a href="{{ trip.url }}" target="_blank" rel="noopener">{{ trip.title }}</a></h3>
+    {% if trip.cities %}<p class="meta">{{ trip.cities|truncatechars:100 }}</p>{% endif %}
+    {% if trip.flight %}<p class="chips"><span>{{ trip.flight }}</span></p>{% endif %}
+    <div class="card-foot"><div class="price">{% if trip.price %}<small>From</small><strong>{{ trip.price|inr }}</strong><small>per person</small>{% else %}<strong>Price on request</strong>{% endif %}</div><a class="btn btn-sun sm" href="{{ trip.url }}" target="_blank" rel="noopener">View trip ↗</a></div>
+  </div>
+</article>
