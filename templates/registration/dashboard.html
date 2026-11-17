@@ -2,7 +2,7 @@
 {% block title %}My trips · {{ site.brand_name }}{% endblock %}
 {% block content %}
 <section class="page-head"><div class="wrap"><h1>Hi {{ user.first_name|default:"traveller" }}</h1><p>Your saved trips and booking history</p></div></section>
-<div class="wrap sec">
+<div class="wrap sec" style="padding-bottom:clamp(48px, 6vw, 80px)">
   <div class="tabs" role="tablist"><a href="?tab=saved" class="{% if tab != 'history' %}on{% endif %}">Saved trips ({{ saved|length }})</a><a href="?tab=history" class="{% if tab == 'history' %}on{% endif %}">Enquiries & bookings ({{ enquiries|length }})</a></div>
   {% if tab == 'history' %}
     {% for e in enquiries %}<div class="hist"><div><b>{{ e.package.title }}</b><small>{{ e.reference }} · {{ e.package.tour_code }} · {{ e.adults }} adult{{ e.adults|pluralize }}{% if e.children %}, {{ e.children }} child{{ e.children|pluralize:"ren" }}{% endif %} · {{ e.get_hotel_tier_display }} hotels{% if e.travel_date %} · {{ e.travel_date|date:"d M Y" }}{% endif %}</small></div>
