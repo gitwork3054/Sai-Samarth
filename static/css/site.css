@@ -1298,13 +1298,13 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
 .update-details span{display:grid;place-items:center;width:28px;height:28px;border:1px solid #d5e6df99;border-radius:50%;font-size:1rem;transition:background .2s,color .2s}
 .update-content:hover .update-details span{background:#fff8df;color:#173f40}
 .update-content-text{background:linear-gradient(145deg,#183f45,#49867e)}
-.updates-controls{position:absolute;bottom:0;left:0;right:0;height:58px;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;color:#e8f1ed;background:#173f40}
+.updates-controls{position:absolute;bottom:0;left:0;right:0;height:58px;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;color:#173f40;background:#f1e9da}
 .updates-count{font-size:.67rem;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.16em}
 .updates-actions{display:flex;gap:7px}
-.updates-actions button{display:grid;place-items:center;width:33px;height:33px;padding:0;border:1px solid #9ebdb3;border-radius:50%;background:transparent;color:#fff;cursor:pointer;font:18px/1 system-ui;transition:background .2s,transform .2s}
-.updates-actions button:hover{background:#ffffff28;transform:translateY(-2px)}
+.updates-actions button{display:grid;place-items:center;width:33px;height:33px;padding:0;border:1px solid #8a9c92;border-radius:50%;background:transparent;color:#173f40;cursor:pointer;font:18px/1 system-ui;transition:background .2s,transform .2s}
+.updates-actions button:hover{background:#dfd2bd;transform:translateY(-2px)}
 .updates-actions .updates-pause{font-size:13px}
-.updates-carousel :focus-visible{outline:3px solid #f2a676;outline-offset:-4px}
+.updates-carousel :focus-visible{outline:3px solid #a84c2d;outline-offset:-4px}
 .update-slide[hidden],.updates-controls[hidden]{display:none}
 @media(min-width:901px){body.home-static-bg .hero.hero-with-updates{min-height:850px}}
 @media(max-width:900px){
