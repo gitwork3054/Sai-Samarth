@@ -529,6 +529,8 @@ class HomeSlide(models.Model):
     image = models.ImageField(upload_to="homepage/", blank=True)
     image_url = models.URLField(blank=True)
     built_in_image = models.CharField(max_length=200, blank=True, help_text="Bundled image path; leave unchanged when using an uploaded photo.")
+    link_url = models.CharField(max_length=300, blank=True, help_text="Optional destination link for the immersive journey chapter (e.g. /domestic/ or /international/).")
+    link_text = models.CharField(max_length=70, blank=True, default="Explore this escape", help_text="Text of the chapter action button.")
     order = models.PositiveSmallIntegerField(default=0)
     is_active = models.BooleanField(default=True)
 

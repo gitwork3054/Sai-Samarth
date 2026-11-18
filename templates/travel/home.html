@@ -20,6 +20,8 @@
   </a>
 </section>
 
+{% include "travel/_immersive_journey.html" %}
+
 {% if offers %}
 <section class="wrap sec" id="offers">
   <div class="sec-head">
@@ -151,6 +153,7 @@
 
 {% block scripts %}
 <script src="{% static 'js/updates-carousel.js' %}?v=2" defer></script>
+<script src="{% static 'js/immersive.js' %}?v=1" defer></script>
 <script src="{% static 'js/carousel.js' %}?v=1" defer></script>
 {% endblock %}
 
