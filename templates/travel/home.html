@@ -1,5 +1,7 @@
 {% extends "base.html" %}{% load static travel_extras %}
 
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/cinematic-home.css' %}?v=1">{% endblock %}
+
 {% block body_class %}home-static-bg{% endblock %}
 
 {% block content %}
@@ -21,7 +23,7 @@
 </section>
 
 {% if offers %}
-<section class="wrap sec" id="offers">
+<section class="wrap sec cinema-scene" id="offers">
   <div class="sec-head">
     <div>
       <h2>Offers & discounts</h2>
@@ -36,7 +38,7 @@
 {% endif %}
 
 {% if events %}
-<section class="band band-dusk" id="events">
+<section class="band band-dusk cinema-scene" id="events">
   <div class="wrap sec">
     <div class="sec-head">
       <div>
@@ -52,7 +54,7 @@
 </section>
 {% endif %}
 
-<section class="wrap sec">
+<section class="wrap sec cinema-scene">
   <div class="sec-head">
     <div>
       <h2>Travel your way</h2>
@@ -71,7 +73,7 @@
   </div>
 </section>
 
-<section class="wrap sec">
+<section class="wrap sec cinema-scene">
   <div class="sec-head">
     <div>
       <h2>Domestic favourites</h2>
@@ -84,7 +86,7 @@
   </div>
 </section>
 
-<section class="wrap sec">
+<section class="wrap sec cinema-scene cinema-international">
   <div class="sec-head">
     <div>
       <h2>International escapes</h2>
@@ -98,7 +100,7 @@
 </section>
 
 {% if group_tours %}
-<section class="band band-sand">
+<section class="band band-sand cinema-scene">
   <div class="wrap sec">
     <div class="sec-head">
       <div>
@@ -114,7 +116,7 @@
 </section>
 {% endif %}
 
-<section class="wrap sec">
+<section class="wrap sec cinema-scene cinema-places">
   <div class="sec-head">
     <div>
       <h2>Popular places</h2>
@@ -150,6 +152,7 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{% static 'js/cinematic-home.js' %}?v=1" defer></script>
 <script src="{% static 'js/updates-carousel.js' %}?v=2" defer></script>
 <script src="{% static 'js/carousel.js' %}?v=1" defer></script>
 {% endblock %}
