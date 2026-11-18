@@ -218,7 +218,7 @@ admin.site.register(m.Profile)
 class HomeSlideAdmin(admin.ModelAdmin):
     list_display = ("title", "order", "is_active")
     list_editable = ("order", "is_active")
-    fields = ("title", "eyebrow", "caption", "image", "image_url", "built_in_image", "link_url", "link_text", "order", "is_active")
+    fields = ("title", "eyebrow", "caption", "image", "image_url", "built_in_image", "order", "is_active")
 
 
 @admin.register(m.CorporateService)
