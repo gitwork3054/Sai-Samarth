@@ -3,6 +3,11 @@
 {% block body_class %}home-static-bg{% endblock %}
 
 {% block content %}
+<div class="home-video-layer" aria-hidden="true">
+  <video autoplay muted loop playsinline preload="metadata" poster="{% static 'img/home-beach.jpg' %}" disablepictureinpicture>
+    <source src="{% static 'video/home-beach-bg.mp4' %}" type="video/mp4">
+  </video>
+</div>
 {% include "travel/_hero_slider.html" %}
 
 <section class="wrap tiles">
