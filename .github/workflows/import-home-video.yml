@@ -15,12 +15,12 @@ jobs:
           persist-credentials: true
       - name: Download user-provided homepage video
         env:
-          SOURCE_URL: https://at.adobe.com/MfpICNTIHMFcDCdA
+          SOURCE_URL: https://at.adobe.com/yY4CWgtVTDGl2m3G
         run: |
           set -euo pipefail
           mkdir -p static/video
           curl --fail --location --retry 3 --connect-timeout 15 --max-time 150 "$SOURCE_URL" -o static/video/home-beach-bg.mp4
-          test "$(wc -c < static/video/home-beach-bg.mp4)" -gt 100000
+          test "$(wc -c < static/video/home-beach-bg.mp4)" -gt 5000000
           file static/video/home-beach-bg.mp4 | grep -qi 'ISO Media'
       - name: Commit video asset to repository
         run: |
@@ -28,6 +28,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add static/video/home-beach-bg.mp4
           if ! git diff --staged --quiet; then
-            git commit -m "Add uploaded fixed homepage beach video"
+            git commit -m "Replace homepage video with 2560x1440 Gemini footage"
             git push
           fi

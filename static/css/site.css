@@ -1351,27 +1351,17 @@ body.home-static-bg .hero::after{background:none}
   body.home-static-bg .home-video-layer video{display:none}
 }
 
-
-/* Sharper perceived playback for the original 848x478 video.
-   This is deliberately lightweight: do not blur, add grain or force GPU-heavy
-   per-frame convolution on the looping background. */
+/* The replacement footage is native 2560x1440. Preserve its original
+   detail and color; keep only a restrained gradient for readable text. */
 body.home-static-bg .home-video-layer video{
-  filter:contrast(1.18) saturate(1.12) brightness(1.025);
+  filter:none;
 }
 body.home-static-bg .home-video-layer::after{
-  background:linear-gradient(180deg,
-    rgba(6,24,32,.23) 0%,
-    rgba(6,22,30,.11) 45%,
-    rgba(7,27,34,.22) 100%);
+  background:linear-gradient(180deg,rgba(6,24,32,.21),rgba(6,22,30,.09) 45%,rgba(7,27,34,.18));
 }
 body.home-static-bg .hero::before{
   background:linear-gradient(90deg,rgba(9,30,39,.37),rgba(9,30,39,.02) 83%);
 }
 @media(max-width:650px){
-  body.home-static-bg .home-video-layer{
-    background-image:url('../img/home-beach.jpg');
-  }
-  body.home-static-bg .home-video-layer video{
-    filter:contrast(1.12) saturate(1.08);
-  }
+  body.home-static-bg .home-video-layer video{filter:none}
 }
