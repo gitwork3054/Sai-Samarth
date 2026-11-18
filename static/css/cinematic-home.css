@@ -1,0 +1,28 @@
+/* Homepage motion layers: keep the site's existing trip cards and controls intact. */
+body.home-static-bg .cinema-scene{position:relative;isolation:isolate}
+body.home-static-bg .cinema-scene:not(.band)::before{
+  content:"";position:absolute;z-index:-1;inset:34px -24px -20px;border-radius:34px;
+  background:linear-gradient(145deg,rgba(12,35,42,.80),rgba(31,57,59,.60) 70%,rgba(61,65,56,.40));
+  box-shadow:0 24px 70px rgba(5,22,27,.15);pointer-events:none;
+}
+body.home-static-bg #offers.cinema-scene::before{background:linear-gradient(135deg,rgba(33,42,48,.86),rgba(67,50,44,.68))}
+body.home-static-bg .cinema-international::before{background:linear-gradient(145deg,rgba(15,37,54,.88),rgba(40,62,73,.68))!important}
+body.home-static-bg .cinema-places::before{background:linear-gradient(145deg,rgba(19,47,43,.90),rgba(52,66,48,.62))!important}
+body.home-static-bg .band.cinema-scene{position:relative;isolation:isolate;overflow:clip}
+body.home-static-bg .band.cinema-scene::before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(12,33,40,.92),rgba(38,58,61,.74),rgba(95,73,54,.56))}
+body.home-static-bg .band-sand.cinema-scene::before{background:linear-gradient(115deg,rgba(47,41,37,.89),rgba(74,65,51,.74),rgba(29,50,48,.82))}
+body.home-static-bg .cinema-scene .sec-head h2{font-size:clamp(2rem,4vw,3.4rem);line-height:1.06;letter-spacing:-.035em;text-wrap:balance}
+body.home-static-bg .cinema-scene .sec-head p{max-width:50ch}
+body.home-static-bg .cinema-scene .sec-head h2,
+body.home-static-bg .cinema-scene .sec-head p{position:relative}
+/* These ambient accents move independently of content and never receive input. */
+body.home-static-bg .cinema-scene .sec-head::after{content:"";position:absolute;right:4%;top:24px;width:clamp(75px,10vw,150px);aspect-ratio:1;border:1px solid rgba(244,216,173,.24);border-radius:50%;box-shadow:0 0 0 18px rgba(242,204,154,.045),0 0 0 36px rgba(242,204,154,.025);pointer-events:none;transform:translate3d(0,var(--scene-float,0px),0)}
+body.home-static-bg .cinema-places .place{translate:0 var(--place-float,0px);scale:var(--scene-scale,1)}
+body.home-static-bg .cinema-places .place:nth-child(even){translate:0 calc(var(--place-float,0px) * -1)}
+body.home-static-bg .hero-copy .hero-heading{translate:0 var(--hero-drift,0px)}
+@media(max-width:650px){
+  body.home-static-bg .cinema-scene:not(.band)::before{inset:24px -8px -12px;border-radius:24px}
+  body.home-static-bg .cinema-scene .sec-head::after{right:12px;top:20px;width:65px;opacity:.65}
+  body.home-static-bg .cinema-scene .sec-head h2{font-size:clamp(1.9rem,8vw,2.5rem)}
+}
+@media(prefers-reduced-motion:reduce){body.home-static-bg .cinema-scene .sec-head::after{transform:none!important}body.home-static-bg .cinema-places .place,body.home-static-bg .hero-copy .hero-heading{translate:none!important}body.home-static-bg .cinema-places .place{scale:none!important}}
