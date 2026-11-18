@@ -1,40 +1,42 @@
 {% load static %}
-<style>
-.hero.hero-slider{position:relative;min-height:760px;padding:0;background:transparent;overflow:hidden}
-.hero.hero-slider::before,.hero.hero-slider::after{display:none}
-.hero-static{position:relative;z-index:1}
-.hero-copy{padding-top:clamp(90px,14vh,150px)}
-.hero-eyebrow{display:block;margin-bottom:20px;font-size:12px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--ink)}
-.hero-slider .hero-heading{font-size:clamp(2.7rem,5.7vw,5rem);line-height:1.08;letter-spacing:-.04em;max-width:15ch;margin:0 0 22px;color:var(--ink);text-wrap:balance}
-.hero-slider .hero-caption{max-width:44ch;color:var(--muted);font-size:clamp(1rem,1.6vw,1.2rem);line-height:1.7;margin:0}
-.hero-search{position:absolute;z-index:3;bottom:82px;left:0;right:0}
-.hero-slider .finder{margin:0;background:rgba(255,255,255,.86);backdrop-filter:blur(16px);border-radius:14px}
-.hero-slider .finder input:focus-visible,.hero-slider .finder select:focus-visible{outline:2px solid #355e63;outline-offset:3px}
-.hero-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-@media(max-width:1100px){.hero.hero-slider{min-height:860px}.hero-copy{padding-top:75px}}
-@media(max-width:600px){.hero.hero-slider{min-height:930px}.hero-copy{padding-top:62px}.hero-slider .hero-heading{font-size:2.8rem}.hero-slider .hero-caption{max-width:30ch}.hero-search{bottom:70px}.hero-slider .finder{gap:8px;padding:12px}.hero-slider .finder label{padding:10px 12px}}
-</style>
-
-<section class="hero hero-slider{% if home_updates %} hero-with-updates{% endif %}" aria-label="Travel inspiration">
-  <h1 class="hero-sr">Explore with Sai Samarth Holidays Pvt. Ltd.</h1>
-  <div class="wrap hero-static">
-    <div class="hero-copy">
-      <span class="hero-eyebrow">Sai Samarth Holidays</span>
-      <h2 class="hero-heading">{{ site.hero_title }}</h2>
-      <p class="hero-caption">{{ site.hero_subtitle }}</p>
-    </div>
-    {% if home_updates %}{% include "travel/_updates_carousel.html" %}{% endif %}
+<section class="hero hero-slider ss-hero{% if home_updates %} hero-with-updates{% endif %}" aria-label="Travel inspiration" data-ss-hero>
+  <div class="ss-hero-scene" aria-hidden="true">
+    {% with cover=hero_slides|first %}
+      {% if cover and cover.photo %}<img class="ss-hero-scenery" src="{{ cover.photo }}" alt="" fetchpriority="high" decoding="async">{% else %}<img class="ss-hero-scenery" src="{% static 'img/hero/sunset-v2.jpg' %}" alt="" fetchpriority="high">{% endif %}
+    {% endwith %}
+    <div class="ss-hero-shade"></div>
+    <div class="ss-hero-orbit ss-hero-orbit-one"></div>
+    <div class="ss-hero-orbit ss-hero-orbit-two"></div>
   </div>
 
-  <div class="wrap hero-search">
-    <form class="finder" action="{% url 'packages' %}" method="get" role="search">
+  <div class="wrap ss-hero-inner">
+    <div class="ss-hero-words">
+      <span class="ss-hero-kicker"><span class="ss-hero-spark" aria-hidden="true">✳</span> SAI SAMARTH HOLIDAYS <span class="ss-hero-kicker-line"></span> EST. FOR THE LOVE OF TRAVEL</span>
+      <h1 class="ss-hero-heading">{{ site.hero_title }}</h1>
+      <p class="ss-hero-caption">{{ site.hero_subtitle }}</p>
+      <div class="ss-hero-links">
+        <a class="ss-button ss-button-cream" href="{% url 'domestic' %}">Discover India <span aria-hidden="true">↗</span></a>
+        <a class="ss-hero-text-link" href="{% url 'international' %}">Explore the world <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="ss-hero-stamp" aria-hidden="true"><span>GO</span><small>WHERE YOU<br>FEEL ALIVE</small><span class="ss-stamp-star">✳</span></div>
+    </div>
+    {% if home_updates %}
+    <div class="ss-hero-updates">
+      <span class="ss-hero-updates-label">✳ &nbsp; THE TRAVEL EDIT <span>WHAT'S NEW</span></span>
+      {% include "travel/_updates_carousel.html" %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="wrap ss-hero-search-holder">
+    <form class="finder ss-hero-finder" action="{% url 'packages' %}" method="get" role="search" aria-label="Find your perfect holiday">
       <label class="f-wide"><span>Where to?</span><select name="destination" id="hero-destination"><option value="">All destinations</option>{% for d in destinations %}<option value="{{ d.slug }}" data-region="{{ d.region }}">{{ d.name }} · {{ d.state_or_country }}</option>{% endfor %}</select></label>
-      <label><span>Trip type</span><select name="region" id="hero-region"><option value="">Domestic + international</option><option value="domestic">Domestic</option><option value="international">International</option></select></label>
-      <label><span>Duration</span><select name="duration"><option value="">Any</option>{% for d in durations %}<option value="{{ d }}">{{ d }} days</option>{% endfor %}</select></label>
-      <label><span>Budget</span><select name="budget"><option value="">Any</option>{% for k, v in budgets %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></label>
-      <label><span>Tour style</span><select name="tour_type"><option value="">All styles</option><option value="individual">Individual / Customised</option><option value="group">Group tours</option><option value="corporate">Corporate</option></select></label>
-      <button class="btn btn-sun" type="submit">Find trips</button>
+      <label><span>Trip type</span><select name="region" id="hero-region"><option value="">All regions</option><option value="domestic">Domestic</option><option value="international">International</option></select></label>
+      <label><span>Duration</span><select name="duration"><option value="">Any duration</option>{% for d in durations %}<option value="{{ d }}">{{ d }} days</option>{% endfor %}</select></label>
+      <label><span>Budget</span><select name="budget"><option value="">Any budget</option>{% for k,v in budgets %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></label>
+      <label><span>Tour style</span><select name="tour_type"><option value="">All journeys</option><option value="individual">Customised</option><option value="group">Group tours</option><option value="corporate">Corporate</option></select></label>
+      <button class="btn btn-sun" type="submit">Find my escape <span aria-hidden="true">↗</span></button>
     </form>
   </div>
+  <a class="ss-scroll-cue" href="#journey-story" aria-label="Scroll down to our travel stories"><span>SCROLL TO WANDER</span><span aria-hidden="true">↓</span></a>
 </section>
-
