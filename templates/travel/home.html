@@ -1,11 +1,25 @@
 {% extends "base.html" %}{% load static travel_extras %}
 
-{% block extra_head %}<link rel="stylesheet" href="{% static 'css/cinematic-home.css' %}?v=1">{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/cinematic-home.css' %}?v=2">{% endblock %}
 
 {% block body_class %}home-static-bg{% endblock %}
 
 {% block content %}
 {% include "travel/_hero_slider.html" %}
+
+<section class="journey-story" aria-labelledby="journey-story-title">
+  <div class="journey-story__upper">
+    <div class="journey-story__intro">
+      <p class="journey-story__eyebrow">SAI SAMARTH HOLIDAYS &nbsp; / &nbsp; THE JOURNEY BEGINS</p>
+      <h2 id="journey-story-title">Go somewhere<br><em>unforgettable.</em></h2>
+      <p>From India's timeless wonders to the places you've always dreamed of, your next story starts here.</p>
+      <a href="{% url 'domestic' %}" class="journey-story__link">Explore journeys <span aria-hidden="true">↗</span></a>
+    </div>
+    <span class="journey-story__sun" aria-hidden="true"></span>
+  </div>
+  <div class="journey-story__lower" aria-hidden="true"><span>WANDER</span><span>WITH WONDER</span></div>
+  <img class="journey-story__landmark" src="{% static 'img/jaipur-floating-palace.webp' %}" alt="" width="1035" height="1100" loading="lazy" decoding="async">
+</section>
 
 <section class="wrap tiles">
   <a class="tile t1" href="{% url 'domestic' %}">
@@ -152,7 +166,7 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/cinematic-home.js' %}?v=1" defer></script>
+<script src="{% static 'js/cinematic-home.js' %}?v=2" defer></script>
 <script src="{% static 'js/updates-carousel.js' %}?v=2" defer></script>
 <script src="{% static 'js/carousel.js' %}?v=1" defer></script>
 {% endblock %}
