@@ -15,19 +15,20 @@ jobs:
           persist-credentials: true
       - name: Download user-provided homepage video
         env:
-          SOURCE_URL: https://at.adobe.com/yY4CWgtVTDGl2m3G
+          SOURCE_URL: https://at.adobe.com/jvsYCSdXlRCL62zg
         run: |
           set -euo pipefail
           mkdir -p static/video
           curl --fail --location --retry 3 --connect-timeout 15 --max-time 150 "$SOURCE_URL" -o static/video/home-beach-bg.mp4
-          test "$(wc -c < static/video/home-beach-bg.mp4)" -gt 5000000
+          test "$(wc -c < static/video/home-beach-bg.mp4)" -gt 6000000
           file static/video/home-beach-bg.mp4 | grep -qi 'ISO Media'
+          echo '7e1c28796fb505dd40a163e49f45d8844368c23fe967e372db71c69e3cbf546c  static/video/home-beach-bg.mp4' | sha256sum -c -
       - name: Commit video asset to repository
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add static/video/home-beach-bg.mp4
           if ! git diff --staged --quiet; then
-            git commit -m "Replace homepage video with 2560x1440 Gemini footage"
+            git commit -m "Replace Sai Samarth homepage video with the latest uploaded clip"
             git push
           fi
