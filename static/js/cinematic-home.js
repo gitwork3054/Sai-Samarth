@@ -3,6 +3,7 @@
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var scenes = Array.prototype.slice.call(document.querySelectorAll('.cinema-scene'));
   var hero = document.querySelector('.hero-copy');
+  var story = document.querySelector('.journey-story');
   var frame = null;
   function clear() {
     scenes.forEach(function (scene) {
@@ -11,6 +12,7 @@
       scene.style.removeProperty('--scene-scale');
     });
     if (hero) hero.style.removeProperty('--hero-drift');
+    if (story) ['--story-landmark', '--story-sun', '--story-scale'].forEach(function (key) { story.style.removeProperty(key); });
   }
   function paint() {
     frame = null;
@@ -24,6 +26,15 @@
       scene.style.setProperty('--place-float', (progress * 7).toFixed(1) + 'px');
       scene.style.setProperty('--scene-scale', (1 + progress * .012).toFixed(3));
     });
+    if (story) {
+      var storyRect = story.getBoundingClientRect();
+      if (storyRect.bottom >= 0 && storyRect.top <= height) {
+        var travel = Math.max(-1, Math.min(1, (height / 2 - (storyRect.top + storyRect.height / 2)) / height));
+        story.style.setProperty('--story-landmark', (travel * -80).toFixed(1) + 'px');
+        story.style.setProperty('--story-sun', (travel * 35).toFixed(1) + 'px');
+        story.style.setProperty('--story-scale', (1 + travel * .06).toFixed(3));
+      }
+    }
     if (hero) hero.style.setProperty('--hero-drift', Math.min(window.scrollY * .035, 15).toFixed(1) + 'px');
   }
   function schedule() { if (!frame) frame = window.requestAnimationFrame(paint); }
