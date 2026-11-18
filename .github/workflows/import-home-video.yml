@@ -1,0 +1,33 @@
+name: Import Sai Samarth homepage background video
+on:
+  push:
+    paths:
+      - '.github/workflows/import-home-video.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download user-provided homepage video
+        env:
+          SOURCE_URL: https://at.adobe.com/MfpICNTIHMFcDCdA
+        run: |
+          set -euo pipefail
+          mkdir -p static/video
+          curl --fail --location --retry 3 --connect-timeout 15 --max-time 150 "$SOURCE_URL" -o static/video/home-beach-bg.mp4
+          test "$(wc -c < static/video/home-beach-bg.mp4)" -gt 100000
+          file static/video/home-beach-bg.mp4 | grep -qi 'ISO Media'
+      - name: Commit video asset to repository
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/video/home-beach-bg.mp4
+          if ! git diff --staged --quiet; then
+            git commit -m "Add uploaded fixed homepage beach video"
+            git push
+          fi
