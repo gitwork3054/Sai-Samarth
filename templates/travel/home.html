@@ -1,7 +1,5 @@
 {% extends "base.html" %}{% load static travel_extras %}
 
-{% block extra_head %}<style>body.home-static-bg{isolation:isolate}body.home-static-bg .beach-motion{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}</style>{% endblock %}
-
 {% block body_class %}home-static-bg{% endblock %}
 
 {% block content %}
@@ -152,7 +150,6 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/beach-motion.js' %}?v=1" data-beach-src="{% static 'img/home-beach.jpg' %}" defer></script>
 <script src="{% static 'js/updates-carousel.js' %}?v=2" defer></script>
 <script src="{% static 'js/carousel.js' %}?v=1" defer></script>
 {% endblock %}
