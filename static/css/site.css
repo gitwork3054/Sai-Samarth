@@ -1316,3 +1316,37 @@ body.home-static-bg .auto-rail.is-swiping > *:hover{
 }
 @media(max-width:450px){.update-content{height:500px}.update-copy{padding:20px 20px 70px}.update-copy h3{font-size:clamp(1.5rem,7vw,2rem)}.updates-stage{border-radius:24px}.updates-controls{padding:0 20px}}
 @media(prefers-reduced-motion:reduce){.updates-actions button,.update-poster img,.update-details span{transition:none}}
+
+
+/* Fixed, cinematic full-homepage video. Cards, rails, and layout stay unchanged. */
+body.home-static-bg{background:#132c36}
+body.home-static-bg .home-video-layer{
+  position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  background:#132c36 url('../img/home-beach.jpg') center / cover no-repeat;
+}
+body.home-static-bg .home-video-layer video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:center center;display:block;
+}
+body.home-static-bg .home-video-layer::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(6,24,32,.37),rgba(6,22,30,.26) 42%,rgba(7,27,34,.39));
+}
+body.home-static-bg > main{position:relative;z-index:1;background:transparent}
+body.home-static-bg > .foot{position:relative;z-index:1}
+body.home-static-bg .hero::before{
+  background:linear-gradient(90deg,rgba(9,30,39,.43),rgba(9,30,39,.05) 80%);
+  animation:none;transform:none;inset:0;
+}
+body.home-static-bg .hero::after{background:none}
+@media(max-width:650px){
+  body.home-static-bg{background:#132c36}
+  body.home-static-bg .home-video-layer{
+    background-image:url('../img/home-beach-mobile.jpg');
+    background-position:center center;
+  }
+  body.home-static-bg .home-video-layer video{object-position:center center}
+}
+@media(prefers-reduced-motion:reduce){
+  body.home-static-bg .home-video-layer video{display:none}
+}
