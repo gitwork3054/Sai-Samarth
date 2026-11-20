@@ -1,0 +1,31 @@
+name: Build licensed destination photo library for tour PDFs
+on:
+  push:
+    paths:
+      - 'scripts/build_destination_pdf_photos.py'
+      - '.github/workflows/build-destination-pdf-photos.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  photo-catalogue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install requests pillow beautifulsoup4
+      - run: python scripts/build_destination_pdf_photos.py
+      - name: Commit verified image files and source/license information
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/img/pdf_destinations travel/data/pdf_destination_photos.json
+          if ! git diff --staged --quiet; then
+            git commit -m "Store location-specific travel PDF photography with Wikimedia credits"
+            git push
+          fi

@@ -1,0 +1,184 @@
+#!/usr/bin/env python3
+"""Download vetted city-specific Wikimedia travel photographs for PDF brochures.
+
+Only official English Wikipedia city lead images are considered. Images are
+resized to a practical print-ready resolution, with their Commons source and
+licensing metadata stored alongside. Never fetch unnamed random stock photos.
+"""
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
+from io import BytesIO
+import json
+from pathlib import Path
+import re
+from urllib.parse import quote, unquote, urlparse
+
+from bs4 import BeautifulSoup
+from PIL import Image, ImageOps
+import requests
+
+ROOT=Path(__file__).resolve().parents[1]
+DB=ROOT/"travel/data/flamingo_domestic_private_vans.json"
+INDEX=ROOT/"travel/data/pdf_destination_photos.json"
+OUT=ROOT/"static/img/pdf_destinations"
+OUT.mkdir(parents=True,exist_ok=True)
+UA="SaiSamarthHolidaysBrochure/1.0 (https://www.saisamarthholidays.com/contact/; destination photo attribution)"
+TITLE_FIX={
+ "Cochin":"Kochi","Bangalore":"Bengaluru","Mysore":"Mysuru",
+ "Katra":"Katra, Jammu and Kashmir","Port Blair":"Port Blair",
+ "Ooty":"Ooty","Gangtok":"Gangtok","Srinagar":"Srinagar",
+ "New Delhi":"New Delhi","Kashmir":"Srinagar",
+ "Andaman Islands":"Port Blair","Andaman & Nicobar":"Port Blair",
+ "Kerala Backwaters":"Alappuzha","North East India":"Shillong",
+ "West Bengal & Sikkim":"Gangtok",
+ "Delhi / Agra / Rajasthan":"Agra",
+ "Jammu & Kashmir":"Srinagar",
+ "Himachal Pradesh":"Shimla","Rajasthan":"Jaipur","Gujarat":"Dwarka",
+ "Odisha":"Puri","Uttar Pradesh":"Varanasi","Uttarakhand":"Nainital",
+ "Karnataka":"Mysore","Kerala":"Munnar","Maharashtra":"Mumbai",
+ "Tamil Nadu":"Chennai","Ladakh":"Leh","Goa":"Goa",
+ "Meghalaya":"Shillong","Sikkim":"Gangtok","Punjab":"Amritsar",
+ "Lakshadweep":"Agatti Island",
+}
+ADDITIONAL=[
+ "Jaipur","Goa","Kerala Backwaters","Rajasthan","Jaisalmer",
+ "Hampi","Darjeeling","Kashmir","Ladakh","Andaman Islands",
+ "Meghalaya","Agra","Delhi","Mumbai","Lakshadweep"
+]
+SKIP=re.compile(r"flag|logo|coat.of.arms|seal|blank.map|political.map|locator.map|district.map|municipal.emblem",re.I)
+
+
+def slug(text):
+    return re.sub(r"[^a-z0-9]+","-",text.lower()).strip("-")
+
+
+def get(session,url,**kw):
+    r=session.get(url,timeout=16,**kw)
+    r.raise_for_status()
+    return r
+
+
+def thumbnail_url(photo):
+    thumb=(photo.get("thumbnail") or {}).get("source","")
+    if not thumb or "upload.wikimedia.org" not in urlparse(thumb).hostname:
+        return ""
+    # Usually ".../330px-Filename.jpg"; request higher fidelity for print.
+    candidate=re.sub(r"/\d+px-", "/1400px-",thumb)
+    return candidate
+
+
+def commons_credit(session,url):
+    raw=unquote(urlparse(url).path.split("/")[-1])
+    file_name=re.sub(r"^\d+px-","",raw)
+    page="https://commons.wikimedia.org/wiki/File:"+quote(file_name,safe="")
+    artist=""
+    license_name=""
+    license_url=""
+    try:
+        json_data=get(session,"https://commons.wikimedia.org/w/api.php",params={
+            "action":"query","format":"json","prop":"imageinfo","iiprop":"extmetadata",
+            "titles":"File:"+file_name
+        }).json()
+        pages=(json_data.get("query") or {}).get("pages") or {}
+        entry=next(iter(pages.values()))
+        details=((entry.get("imageinfo") or [{}])[0].get("extmetadata") or {})
+        def field(key):
+            return BeautifulSoup((details.get(key) or {}).get("value",""),"html.parser").get_text(" ",strip=True)
+        artist=field("Artist")[:150]
+        license_name=field("LicenseShortName")[:80] or field("UsageTerms")[:80]
+        license_url=(details.get("LicenseUrl") or {}).get("value","")[:400]
+    except Exception:
+        pass
+    return {"source_url":page,"photographer":artist,"license":license_name,
+            "license_url":license_url}
+
+
+def collect(name):
+    resolved=TITLE_FIX.get(name,name)
+    with requests.Session() as session:
+        session.headers.update({"User-Agent":UA})
+        endpoint="https://en.wikipedia.org/api/rest_v1/page/summary/"+quote(resolved.replace(" ","_"),safe=",()_")
+        try:
+            data=get(session,endpoint).json()
+            original=(data.get("originalimage") or {}).get("source","")
+            thumbnail=thumbnail_url(data)
+            if not original or not original.startswith("https://upload.wikimedia.org/"):
+                return name,None,"no Wikimedia image"
+            if SKIP.search(original):
+                return name,None,"non-photo lead image"
+            candidates=[thumbnail,original]
+            raw=None
+            selected=""
+            for url in candidates:
+                if not url:
+                    continue
+                try:
+                    response=get(session,url)
+                    content=response.content
+                    if len(content)<3000 or len(content)>10*1024*1024:
+                        continue
+                    if not response.headers.get("content-type","").lower().startswith("image/"):
+                        continue
+                    with Image.open(BytesIO(content)) as img:
+                        if img.width<600 or img.height<400:
+                            continue
+                        img.verify()
+                    raw=content
+                    selected=url
+                    break
+                except Exception:
+                    continue
+            if not raw:
+                return name,None,"image download unavailable"
+            with Image.open(BytesIO(raw)) as opened:
+                image=ImageOps.exif_transpose(opened).convert("RGB")
+                image.thumbnail((1500,1900),Image.Resampling.LANCZOS)
+                path=OUT/(slug(name)+".jpg")
+                image.save(path,"JPEG",quality=85,optimize=True)
+            credit=commons_credit(session,original)
+            credit.update({"file":"static/img/pdf_destinations/"+path.name,
+                           "city":name,"wikipedia_page":(data.get("content_urls",{}).get("desktop") or {}).get("page",""),
+                           "downloaded_at":datetime.now(timezone.utc).isoformat()})
+            return name,credit,"ok"
+        except Exception as exc:
+            return name,None,type(exc).__name__
+
+
+def main():
+    snapshot=json.loads(DB.read_text(encoding="utf-8"))
+    city_names={step["city"] for row in snapshot["packages"] for step in (row.get("route") or [])
+                if step.get("city")}
+    city_names.update(ADDITIONAL)
+    city_names.update(TITLE_FIX.keys())
+    existing={}
+    if INDEX.exists():
+        try:
+            existing=json.loads(INDEX.read_text(encoding="utf-8")).get("photos",{})
+        except Exception:
+            pass
+    all_names=sorted(city_names)
+    ready={}
+    failed={}
+    with ThreadPoolExecutor(max_workers=7) as pool:
+        pending={pool.submit(collect,name):name for name in all_names}
+        for task in as_completed(pending):
+            city,entry,status=task.result()
+            if entry:
+                ready[city]=entry
+            elif city in existing and (ROOT/existing[city]["file"]).exists():
+                ready[city]=existing[city]
+            else:
+                failed[city]=status
+    result={"provider":"Wikimedia Commons / English Wikipedia","kind":"city_mapped_photo_credits",
+            "generated_at":datetime.now(timezone.utc).isoformat(),
+            "photos":dict(sorted(ready.items())),"unavailable":dict(sorted(failed.items()))}
+    INDEX.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    print("DESTINATION PHOTO AUDIT",len(ready),"photos /",len(all_names),"cities",
+          "unavailable",len(failed),flush=True)
+    print("PHOTO MISSING",json.dumps(failed,ensure_ascii=False)[:6500],flush=True)
+    if len(ready)<18:
+        raise SystemExit("Too few verified destination photographs; do not publish partial photo catalogue.")
+
+
+if __name__=="__main__":
+    main()
