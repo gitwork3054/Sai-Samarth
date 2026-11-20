@@ -17,6 +17,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 from travel import models as m
+from travel.curated_photos import photo_url
 
 DATA_PATH = Path(__file__).resolve().parents[2] / "data/flamingo_domestic_private_vans.json"
 SOURCE_HOST = "www.flamingotravels.co.in"
@@ -27,6 +28,7 @@ REGION_FIXES = {
     "West Bengal Sikkim": "West Bengal & Sikkim",
     "Jammu Kashmir": "Jammu & Kashmir",
     "Kashmir Packages From Ahmedabad": "Jammu & Kashmir",
+    "North East India": "North East India",
 }
 
 
@@ -206,7 +208,7 @@ class Command(BaseCommand):
                 code = re.search(r"/f(\d+)$", urlparse(source).path).group(1)
                 external_code = f"SPV-{code}"
                 digest = hashlib.sha256(
-                    json.dumps(row, sort_keys=True, ensure_ascii=False).encode("utf-8")
+                    (json.dumps(row, sort_keys=True, ensure_ascii=False) + ":v3").encode("utf-8")
                 ).hexdigest()[:20]
                 state = REGION_FIXES.get(row["region_label"], row["region_label"])[:80]
                 dest, _ = m.Destination.objects.get_or_create(
@@ -280,7 +282,12 @@ class Command(BaseCommand):
                 package.offer_valid_till = None
                 package.source_url = source
                 # Never copy supplier-owned photographs or thumbnails by default.
-                package.cover_url = ""
+                # Prefer existing credited Wikimedia Commons imagery for an
+                # actual route city; never copy the supplier's product pictures.
+                package.cover_url = next(
+                    (image for stop in row["route"]
+                     if (image := photo_url(stop["city"]))), ""
+                )
                 package.inclusions = inclusions
                 package.exclusions = exclusions
                 package.tour_info = info

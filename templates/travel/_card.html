@@ -5,7 +5,7 @@
     <span class="badges">
       {% if p.offer_active %}<b class="badge b-off">{{ p.discount_percent }}% off</b>{% endif %}
       {% if p.is_event %}<b class="badge b-evt">Festival</b>{% endif %}
-      {% if p.tour_type == 'group' %}<b class="badge b-grp">Group</b>{% elif p.tour_type == 'corporate' %}<b class="badge b-grp">Corporate</b>{% endif %}
+      {% if p.source_details.catalogue_kind == 'domestic_private_van' %}<b class="badge b-grp">Private Van</b>{% elif p.tour_type == 'group' %}<b class="badge b-grp">Group</b>{% elif p.tour_type == 'corporate' %}<b class="badge b-grp">Corporate</b>{% endif %}
     </span>
   </a>
   {% is_saved p as saved %}

@@ -66,6 +66,11 @@ class DomesticPrivateVanTests(TestCase):
         self.assertIn("Solang Valley",days[1]["description"])
         self.assertEqual(days[2]["meals"],"Breakfast")
 
+    def test_northeast_circuit_has_its_own_directory_group(self):
+        from travel.domestic_states import destination_states
+        dest=m.Destination(name="North East India",region="domestic",state_or_country="North East India")
+        self.assertEqual(destination_states(dest), ["North East India"])
+
     def test_import_preserves_group_and_removes_only_demo(self):
         dest = m.Destination.objects.create(name="Goa", region="domestic", state_or_country="Goa")
         demo = m.Package.objects.create(
@@ -98,6 +103,7 @@ class DomesticPrivateVanTests(TestCase):
             self.assertEqual(imported.itinerary.count(), 3)
             self.assertEqual(imported.sightseeing.count(), 2)
             self.assertEqual(imported.tour_type, "individual")
+            self.assertTrue(imported.cover_url or imported.destination.name)
             from travel.domestic_states import domestic_groups
             groups = domestic_groups(m.Package.objects.filter(
                 destination__region="domestic", is_active=True

@@ -14,7 +14,7 @@ STATES = ('Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh
           'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland',
           'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
           'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Delhi', 'Ladakh', 'Lakshadweep',
-          'Puducherry', 'Chandigarh', 'Jammu & Kashmir', 'Andaman & Nicobar', 'South India')
+          'Puducherry', 'Chandigarh', 'Jammu & Kashmir', 'Andaman & Nicobar', 'South India', 'North East India')
 LOOKUP = {name.casefold(): name for name in STATES}
 LOOKUP.update(ALIASES)
 CITIES = {'jaipur':'Rajasthan', 'udaipur':'Rajasthan', 'jaisalmer':'Rajasthan',
@@ -118,7 +118,7 @@ DOMESTIC_REGION_GROUPS = [
         "name": "Northeast India",
         "members": [
             "Arunachal Pradesh", "Assam", "Manipur", "Meghalaya", "Mizoram",
-            "Nagaland", "Sikkim", "Tripura"
+            "Nagaland", "Sikkim", "Tripura", "North East India"
         ],
     },
     {
