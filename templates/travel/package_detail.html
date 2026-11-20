@@ -2,7 +2,7 @@
 {% block title %}{{ pkg.title }} · {{ pkg.tour_code }} · {{ site.brand_name }}{% endblock %}
 {% block desc %}{{ pkg.short_description }}{% endblock %}
 {% block content %}
-<section class="d-hero" style="background:{% if pkg.cover %}linear-gradient(180deg,rgba(36,26,77,.15),rgba(36,26,77,.75)),url('{{ pkg.cover }}') center/cover{% else %}{{ pkg.pk|gradient }}{% endif %}">
+<section class="d-hero tour-detail-head" style="background:{% if pkg.cover %}linear-gradient(180deg,rgba(36,26,77,.15),rgba(36,26,77,.75)),url('{{ pkg.cover }}') center/cover{% else %}{{ pkg.pk|gradient }}{% endif %}">
   <div class="wrap">
     <p class="crumbs"><a href="{% url 'home' %}">Home</a> / <a href="{% if pkg.region == 'domestic' %}{% url 'domestic' %}{% else %}{% url 'international' %}{% endif %}">{{ pkg.destination.get_region_display }}</a> / {{ pkg.destination.name }}</p>
     <h1>{{ pkg.title }}</h1>

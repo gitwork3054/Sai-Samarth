@@ -1,7 +1,7 @@
 {% extends "base.html" %}{% load travel_extras %}
 {% block title %}{{ title }} · {{ site.brand_name }}{% endblock %}
 {% block content %}
-<section class="page-head"><div class="wrap">
+<section class="page-head tour-page-head"><div class="wrap">
   <p><a class="state-back" href="{% url 'international' %}">← All countries & destinations</a></p>
   <h1>{{ title }}</h1><p>{{ count }} trip{{ count|pluralize }} found</p>
 </div></section>

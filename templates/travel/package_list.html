@@ -1,7 +1,7 @@
 {% extends "base.html" %}{% load travel_extras %}
 {% block title %}{{ title }} · {{ site.brand_name }}{% endblock %}
 {% block content %}
-<section class="page-head"><div class="wrap">{% if selected_state %}<p><a class="state-back" href="{% url 'domestic' %}">← All states & regions</a></p>{% endif %}{% if selected_country %}<p><a class="state-back" href="{% if preset == 'group' %}{% url 'group_tours' %}?region=international{% else %}{% url 'international' %}{% endif %}">← All countries</a></p>{% endif %}<h1>{{ title }}</h1><p>{{ count }} trip{{ count|pluralize }} found</p></div></section>
+<section class="page-head tour-page-head"><div class="wrap">{% if selected_state %}<p><a class="state-back" href="{% url 'domestic' %}">← All states & regions</a></p>{% endif %}{% if selected_country %}<p><a class="state-back" href="{% if preset == 'group' %}{% url 'group_tours' %}?region=international{% else %}{% url 'international' %}{% endif %}">← All countries</a></p>{% endif %}<h1>{{ title }}</h1><p>{{ count }} trip{{ count|pluralize }} found</p></div></section>
 <div class="wrap list-layout">
   <button class="btn btn-ghost filter-toggle" type="button" data-toggle="#filters">Filters{% if active_filters %} · on{% endif %}</button>
   <aside class="filters" id="filters">

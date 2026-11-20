@@ -1,7 +1,7 @@
 {% extends "base.html" %}{% load travel_extras %}
 {% block title %}Journey search · {{ site.brand_name }}{% endblock %}
 {% block content %}
-<section class="page-head"><div class="wrap"><h1>Find your journey</h1><p>Domestic and international trips{% if query %} matching “{{ query }}”{% endif %}</p></div></section>
+<section class="page-head tour-page-head"><div class="wrap"><h1>Find your journey</h1><p>Domestic and international trips{% if query %} matching “{{ query }}”{% endif %}</p></div></section>
 <section class="wrap" style="padding-top:32px;padding-bottom:64px">
 <form action="{% url 'journey_results' %}" method="get" class="fl"><label for="journey-query">Search a destination, trip or tour code</label><input id="journey-query" type="search" name="q" value="{{ query }}" placeholder="Try Kerala or Vietnam"><button class="btn btn-sun sm" type="submit">Find journeys</button></form>
 {% if countries %}<h2>International destinations</h2><p>{% for country in countries %}<a class="btn btn-ghost sm" href="{% url 'international' %}?country={{ country.slug|urlencode }}">{{ country.name }}</a> {% endfor %}</p>{% endif %}

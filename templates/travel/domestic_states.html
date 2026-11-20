@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Domestic tour packages · {{ site.brand_name }}{% endblock %}
 {% block content %}
-<section class="page-head"><div class="wrap"><h1>Domestic tour packages</h1><p>Choose a state or region to explore all its packages.</p></div></section>
+<section class="page-head tour-page-head"><div class="wrap"><h1>Domestic tour packages</h1><p>Choose a state or region to explore all its packages.</p></div></section>
 <section class="wrap state-directory" aria-label="Domestic states and regions">
   <div class="state-directory-head"><h2>Where would you like to go?</h2><p>{{ states|length }} states & regions</p></div>
   <div class="state-grid">{% for state in states %}
