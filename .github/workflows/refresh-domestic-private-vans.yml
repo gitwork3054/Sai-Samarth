@@ -30,6 +30,10 @@ jobs:
           python manage.py check
           python manage.py import_flamingo_domestic_private --min-records 12 --dry-run
           python manage.py test travel.test_private_van_import --verbosity 1
+          python manage.py migrate --noinput
+          python manage.py generate_demo
+          python manage.py import_flamingo_domestic_private --min-records 40
+          python manage.py shell -c 'from travel.models import Package; assert Package.objects.filter(source_details__catalogue_kind="domestic_private_van",is_active=True).count() >= 40, "Imported count too small"; assert not Package.objects.filter(destination__region="domestic",tour_type="individual",overview__icontains="This is a demo description:",is_active=True).exists(), "Demo individual tours still visible"; print("FULL INTEGRATION VALIDATION PASSED: private-van tours active, demo individual tours removed")'
       - name: Commit verified domestic catalogue snapshot
         run: |
           git config user.name 'github-actions[bot]'
