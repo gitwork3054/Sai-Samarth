@@ -3,6 +3,7 @@ Prints only package titles, links and DOM structure (no marketing descriptions).
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import urlparse
 import re
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -27,9 +28,31 @@ def inspect(area):
     named=[x for x in ("Lakes & Forts Of Rajasthan","Whole of Rajasthan","Simplicity Rajasthan","Exotic Rajasthan","Scenic Himachal","Complete Kerala")
            if x.lower() in r.text.lower()]
     scripts=len(s.find_all("script"))
+    raw=s.find("script", id="__NEXT_DATA__")
+    next_data=json.loads(raw.string) if raw and raw.string else {}
+    def find_package_arrays(x, path="$", depth=0):
+        if depth>18: return []
+        if isinstance(x,list):
+            if x and isinstance(x[0],dict) and ("bI_Code" in x[0] or "pageSlug" in x[0] or "bIId" in x[0]):
+                return [(path,x)]
+            hits=[]
+            for i,v in enumerate(x[:5]): hits.extend(find_package_arrays(v,path+f"[{i}]",depth+1))
+            return hits
+        if isinstance(x,dict):
+            hits=[]
+            for k,v in x.items(): hits.extend(find_package_arrays(v,path+"."+k,depth+1))
+            return hits
+        return []
+    package_arrays=find_package_arrays(next_data)
     out=(f"AREA {area}: http={r.status_code} bytes={len(r.content)} text={len(s.get_text(' ',strip=True))} "
          f"regex_paths={len(matches)} html_anchors={len(anchors)} scripts={scripts} named={named}\n"
          f"  detail_paths={matches[:30]}\n")
+    out+="  NEXT_PAGE topkeys="+str(list(next_data.keys()))+" package_arrays="+str([(path,len(items)) for path,items in package_arrays[:20]])+"\\n"
+    for path,items in package_arrays[:3]:
+        if items:
+            out+="  NEXT_ITEM keys="+str(list(items[0].keys()))+"\\n"
+            out+="  NEXT_ITEM example="+str({k:items[0].get(k) for k in ["name","bI_Code","pageSlug","cities","tourType","tourTypeId","category","tourOrder","price","rate","sellingPrice","priceAdult","validity"]})+"\\n"
+            out+="  NEXT_TITLES "+str([(str(item.get("name",""))[:55],item.get("bI_Code"),item.get("pageSlug")) for item in items[:24]])+"\\n"
     if area=="rajasthan-holiday-tour-packages":
         for needle in ("Lakes & Forts", "Whole of Rajasthan","Simplicity Rajasthan","Exotic Rajasthan","f1402"):
             i=r.text.lower().find(needle.lower())
