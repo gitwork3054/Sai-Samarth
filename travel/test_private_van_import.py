@@ -112,6 +112,7 @@ class DomesticPrivateVanTests(TestCase):
             self.assertIn(imported.pk, rajasthan["package_ids"])
             self.assertEqual(imported.source_details["listed_states"], ["Himachal Pradesh", "Rajasthan"])
             self.assertEqual(imported.audiences.count(), 1)
+            self.assertEqual(imported.source_details["original_code"], "FIT/1360")
             call_command("import_flamingo_domestic_private", "--file", path, "--min-records", "1")
             self.assertEqual(m.Package.objects.filter(source_url=SOURCE).count(), 1)
         finally:

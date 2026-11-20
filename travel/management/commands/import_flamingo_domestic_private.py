@@ -208,7 +208,7 @@ class Command(BaseCommand):
                 code = re.search(r"/f(\d+)$", urlparse(source).path).group(1)
                 external_code = f"SPV-{code}"
                 digest = hashlib.sha256(
-                    (json.dumps(row, sort_keys=True, ensure_ascii=False) + ":v3").encode("utf-8")
+                    (json.dumps(row, sort_keys=True, ensure_ascii=False) + ":v4").encode("utf-8")
                 ).hexdigest()[:20]
                 state = REGION_FIXES.get(row["region_label"], row["region_label"])[:80]
                 dest, _ = m.Destination.objects.get_or_create(
@@ -286,7 +286,7 @@ class Command(BaseCommand):
                 # actual route city; never copy the supplier's product pictures.
                 package.cover_url = next(
                     (image for stop in row["route"]
-                     if (image := photo_url(stop["city"]))), ""
+                     if (image := photo_url(stop["city"])) and len(image) <= 200), ""
                 )
                 package.inclusions = inclusions
                 package.exclusions = exclusions
@@ -313,11 +313,16 @@ class Command(BaseCommand):
                 m.Hotel.objects.bulk_create([
                     m.Hotel(
                         package=package,
-                        tier=("premium" if int(hotel.get("stars") or 0)>=5 else
-                              "deluxe" if int(hotel.get("stars") or 0)==4 else "standard"),
+                        # Supplier's category (not the number of hotel stars)
+                        # determines which example option group is shown.
+                        tier=("premium" if any(label in (hotel.get("category") or "").casefold()
+                                              for label in ("premium", "luxury", "superior")) else
+                              "deluxe" if "deluxe" in (hotel.get("category") or "").casefold()
+                              else "standard"),
                         name=hotel["example"][:120],
                         city=hotel["city"][:80], nights=int(hotel["nights"]),
                         star_rating=int(hotel.get("stars") or 0),
+                        room_category=("Supplier option: " + (hotel.get("category") or "Unspecified"))[:120],
                         description="Example property from a public supplier listing, not an allocation or booking guarantee."
                     )
                     for hotel in row.get("hotel_examples", [])[:12] if hotel.get("example")

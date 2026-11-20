@@ -6,7 +6,7 @@
   <div class="wrap">
     <p class="crumbs"><a href="{% url 'home' %}">Home</a> / <a href="{% if pkg.region == 'domestic' %}{% url 'domestic' %}{% else %}{% url 'international' %}{% endif %}">{{ pkg.destination.get_region_display }}</a> / {{ pkg.destination.name }}</p>
     <h1>{{ pkg.title }}</h1>
-    <p class="d-meta"><span class="pill">Tour code {{ pkg.tour_code }}</span><span class="pill">{{ pkg.duration_label }}</span><span class="pill">{{ pkg.get_tour_type_display }}</span>
+    <p class="d-meta"><span class="pill">{% if pkg.source_details.catalogue_kind == 'domestic_private_van' %}Supplier {{ pkg.source_details.original_code }}{% else %}Tour code {{ pkg.tour_code }}{% endif %}</span><span class="pill">{{ pkg.duration_label }}</span><span class="pill">{{ pkg.get_tour_type_display }}</span>
       {% if pkg.offer_active %}<span class="pill hot">{{ pkg.discount_percent }}% off{% if pkg.offer_label %} · {{ pkg.offer_label }}{% endif %}{% if pkg.offer_valid_till %} · till {{ pkg.offer_valid_till|date:"d M" }}{% endif %}</span>{% endif %}
       {% if pkg.is_event %}<span class="pill hot">{{ pkg.event_name|default:"Festival tour" }}{% if pkg.event_date %} · {{ pkg.event_date|date:"M Y" }}{% endif %}</span>{% endif %}</p>
     <p class="chips light">{% for t in pkg.themes.all %}<span>{{ t.icon }} {{ t.name }}</span>{% endfor %}{% for a in pkg.audiences.all %}<span>{{ a.icon }} {{ a.name }}</span>{% endfor %}</p>
