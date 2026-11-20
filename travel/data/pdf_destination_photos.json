@@ -1,7 +1,7 @@
 {
   "provider": "Wikimedia Commons / English Wikipedia",
   "kind": "city_mapped_photo_credits",
-  "generated_at": "2026-11-20T10:25:33.573993+00:00",
+  "generated_at": "2026-11-20T10:26:50.579376+00:00",
   "photos": {
     "Agra": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Taj_Mahal%2C_Agra%2C_India.jpg",
@@ -83,6 +83,16 @@
       "wikipedia_page": "https://en.wikipedia.org/wiki/Kochi",
       "downloaded_at": "2026-11-20T10:23:46.983202+00:00"
     },
+    "Coorg": {
+      "file": "static/img/pdf_destinations/coorg.jpg",
+      "city": "Coorg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Coorg_landscape.jpg",
+      "photographer": "Cppfront",
+      "license": "CC0 1.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:26:49.921556+00:00",
+      "wikipedia_page": ""
+    },
     "Darjeeling": {
       "source_url": "https://commons.wikimedia.org/wiki/File:DarjeelingTrainFruitshop_%282%29.jpg",
       "photographer": "Arne Hückelheim 2010-09-21 12:41:53 This is a cropped in which the glare has been lessened",
@@ -112,6 +122,16 @@
       "city": "Delhi / Agra / Rajasthan",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Agra",
       "downloaded_at": "2026-11-20T10:23:47.386267+00:00"
+    },
+    "Diu": {
+      "file": "static/img/pdf_destinations/diu.jpg",
+      "city": "Diu",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Diu_fort,_India.JPG",
+      "photographer": "Aditya Mahar",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:26:49.789933+00:00",
+      "wikipedia_page": ""
     },
     "Dwarka": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Dwarakadheesh_Temple%2C_2014.jpg",
@@ -253,6 +273,26 @@
       "downloaded_at": "2026-11-20T10:25:31.518743+00:00",
       "wikipedia_page": ""
     },
+    "Kovalam": {
+      "file": "static/img/pdf_destinations/kovalam.jpg",
+      "city": "Kovalam",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kovalam_Beach_in_Kerala.jpg",
+      "photographer": "Salman2018",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:26:49.806485+00:00",
+      "wikipedia_page": ""
+    },
+    "Kumarakom": {
+      "file": "static/img/pdf_destinations/kumarakom.jpg",
+      "city": "Kumarakom",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kumarakom_Backwaters.jpg",
+      "photographer": "Rajkrishnan R",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:26:49.871988+00:00",
+      "wikipedia_page": ""
+    },
     "Lakshadweep": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Agatti_Airstrip.jpg",
       "photographer": "Julio",
@@ -292,6 +332,16 @@
       "city": "Mumbai",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Mumbai",
       "downloaded_at": "2026-11-20T10:20:08.366401+00:00"
+    },
+    "Munnar": {
+      "file": "static/img/pdf_destinations/munnar.jpg",
+      "city": "Munnar",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Munnar_Tea_gardens.jpg",
+      "photographer": "Sajith1sas",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:26:50.577424+00:00",
+      "wikipedia_page": ""
     },
     "Mussoorie": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Mussoorie_Snow_Over_Dehradun_%2814831297545%29.jpg",
@@ -372,6 +422,26 @@
       "city": "Rajasthan",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Jaipur",
       "downloaded_at": "2026-11-20T10:23:48.757702+00:00"
+    },
+    "Rishikesh": {
+      "file": "static/img/pdf_destinations/rishikesh.jpg",
+      "city": "Rishikesh",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ram_Jhula_footbridge_-_Rishikesh.jpg",
+      "photographer": "Paradise Chronicle",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:26:50.071921+00:00",
+      "wikipedia_page": ""
+    },
+    "Shillong": {
+      "file": "static/img/pdf_destinations/shillong.jpg",
+      "city": "Shillong",
+      "source_url": "https://commons.wikimedia.org/wiki/File:The-Umiam-Lake.jpg",
+      "photographer": "Eurich B Nongsteng",
+      "license": "CC0 1.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:26:50.365897+00:00",
+      "wikipedia_page": ""
     },
     "Shimla": {
       "file": "static/img/pdf_destinations/shimla.jpg",
@@ -475,23 +545,16 @@
     }
   },
   "unavailable": {
-    "Coorg": "no Wikimedia image",
     "Dharamshala": "no Wikimedia image",
-    "Diu": "no Wikimedia image",
     "Hampi": "no Wikimedia image",
     "Himachal Pradesh": "no Wikimedia image",
     "Kerala": "no Wikimedia image",
-    "Kovalam": "no Wikimedia image",
-    "Kumarakom": "no Wikimedia image",
     "Ladakh": "no Wikimedia image",
     "Mathura": "no Wikimedia image",
     "Meghalaya": "no Wikimedia image",
-    "Munnar": "no Wikimedia image",
     "New Delhi": "no Wikimedia image",
     "North East India": "no Wikimedia image",
     "Odisha": "no Wikimedia image",
-    "Rishikesh": "no Wikimedia image",
-    "Shillong": "no Wikimedia image",
     "Uttarakhand": "no Wikimedia image"
   }
 }
