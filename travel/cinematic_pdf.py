@@ -240,6 +240,27 @@ def photo_focal_point(photo):
     return 0.5, 0.5
 
 
+def photo_overlay_image():
+    """Continuous transparency gradient without visible PDF stripe seams.
+
+    The reference brochure uses navy photo scrims, a darker lower title area
+    and extra contrast under oversized destination lettering. Draw this as a
+    single RGBA image instead of stacked vector strips to avoid banding.
+    """
+    height = int(H*2)
+    veil = PILImage.new("RGBA", (2, height))
+    pixels = veil.load()
+    for row in range(height):
+        y = H - row/2.0
+        top = .16 * max(0.0, min(1.0, (y-480.0)/195.0))**1.15
+        headline = .14 * max(0.0, 1.0-abs(y-360.0)/175.0)
+        lower = .54 * max(0.0, min(1.0, (265.0-y)/175.0))**.7
+        alpha = round(255*min(.79, .12+top+headline+lower))
+        pixels[0,row] = (26, 26, 48, alpha)
+        pixels[1,row] = (26, 26, 48, alpha)
+    return ImageReader(veil)
+
+
 def text_style(name, size=9, leading=14, color=WHITE, bold=False):
     return ParagraphStyle(name, fontName="TripBold" if bold else "TripRegular",
                           fontSize=size, leading=leading, textColor=color, splitLongWords=True)
@@ -333,32 +354,10 @@ class Brochure:
             c.rect(0, 0, W, H, fill=1, stroke=0)
             c.setFillColor(colors.HexColor("#EE8460"))
             c.circle(350, 365, 155, fill=1, stroke=0)
-        # Preserve the hero-photo editorial look: a gentle midnight-blue
-        # tint, a readable headline scrim and a richer bottom fade. The
-        # photograph stays saturated and visible, rather than appearing grey.
-        c.saveState()
-        c.setFillColor(INK)
-        if hasattr(c, "setFillAlpha"):
-            c.setFillAlpha(.13)
-            c.rect(0, 0, W, H, fill=1, stroke=0)
-            # Top-to-bottom translucent bands create a smooth tonal fade;
-            # they remain inside the photograph, not separate boxes.
-            for stripe in range(12):
-                c.setFillAlpha(.26 * (1.0 - stripe/12.0))
-                c.rect(0, H-(stripe+1)*16, W, 17, fill=1, stroke=0)
-            # Keep oversized white location text legible over clouds/sunlight.
-            for stripe in range(12):
-                contrast = .09 + .12*(1.0-abs(stripe-5.5)/6.0)
-                c.setFillAlpha(contrast)
-                c.rect(0, 252+stripe*19, W, 20, fill=1, stroke=0)
-            c.setFillAlpha(.61)
-            c.rect(0, 0, W, 190, fill=1, stroke=0)
-            for stripe in range(9):
-                c.setFillAlpha(.48 * (1.0-(stripe+1)/10.0))
-                c.rect(0, 190+stripe*12, W, 13, fill=1, stroke=0)
-        else:
-            c.rect(0, 0, W, H, fill=1, stroke=0)
-        c.restoreState()
+        # A smooth midnight-blue image scrim, without harsh horizontal seams.
+        # Leave the photo vivid while retaining a strong editorial text panel.
+        c.drawImage(photo_overlay_image(), 0, 0, width=W, height=H,
+                    mask="auto")
         # Fine architectural arches are the recurring pattern of the series.
         self.arches()
         self.logo_box()
