@@ -59,7 +59,9 @@ def fetch_one(city,name):
    if int(details.get("width") or 0)<1024 or int(details.get("height") or 0)<600:
     return (city,name,None,"resolution too low")
    url=details.get("thumburl") or details.get("url")
-   if urlparse(url or "").hostname!="upload.wikimedia.org":
+   host=urlparse(url or "").hostname
+   if host!="upload.wikimedia.org":
+    print("UNTRUSTED IMAGE HOST",city,repr(url)[:250],flush=True)
     return (city,name,None,"untrusted host")
    response=ses.get(url,timeout=22)
    response.raise_for_status()
