@@ -64,6 +64,64 @@ FALLBACK_DETAILS = [
     "/india-tour-packages/gujarat-holiday-tour-packages/complete-kutch-6nights/f1370",
     "/india-tour-packages/kerala-holiday-tour-packages/experience-the-natures-magic-vagamon-2nights/f2153",
 ]
+FALLBACK_DETAILS.extend([
+    "/india-tour-packages/golden-triangle-tour-packages/soulful-india-4nights/f1376",
+    "/india-tour-packages/gujarat-holiday-tour-packages/natural-beauty-with-historical-place-of-gujarat-5nights/f2367",
+    "/india-tour-packages/gujarat-holiday-tour-packages/discover-gujarat-9nights/f1372",
+    "/india-tour-packages/maharashtra-holiday-tour-packages/beautiful-south-gujarat-without-nashik-6nights/f2195",
+    "/india-tour-packages/maharashtra-holiday-tour-packages/beautiful-south-gujarat-with-nashik-7nights/f2186",
+    "/india-tour-packages/gujarat-holiday-tour-packages/statue-of-unity-tent-city-3nights/f4185",
+    "/india-tour-packages/gujarat-holiday-tour-packages/adventure-lover-special-3nights/f2734",
+    "/india-tour-packages/rajasthan-holiday-tour-packages/golden-heritage-7nights/f1380",
+    "/india-tour-packages/rajasthan-holiday-tour-packages/golden-triangle-5nights/f1377",
+    "/india-tour-packages/rajasthan-holiday-tour-packages/romantic-mount-abu-with-udaipur-5nights/f2741",
+    "/india-tour-packages/karnataka-holiday-tour-packages/the-little-paris-of-india-4nights/f2759",
+    "/india-tour-packages/kerala-holiday-tour-packages/whole-of-kerala-9nights/f1316",
+    "/india-tour-packages/kerala-holiday-tour-packages/complete-kerala-8nights/f1385",
+    "/india-tour-packages/kerala-holiday-tour-packages/kerala-god%E2%80%99s-own-country-honeymoon-tour-7nights/f3673",
+    "/india-tour-packages/kerala-holiday-tour-packages/kerala-highlights-7nights/f1310",
+    "/india-tour-packages/kerala-holiday-tour-packages/lagoons-of-kerala-7nights/f1314",
+    "/india-tour-packages/goa-holiday-tour-packages/2-nights-north-goa-2-nights-south-goa-4nights/f3457",
+    "/india-tour-packages/kerala-holiday-tour-packages/cool-kerala-6nights/f1304",
+    "/india-tour-packages/kerala-holiday-tour-packages/kerala-gods-own-country-7nights/f1305",
+    "/india-tour-packages/kerala-holiday-tour-packages/taj-incredible-kerala-journeys-6-nights/f3542",
+    "/india-tour-packages/kerala-holiday-tour-packages/kerala-soul-journey-6nights/f1312",
+    "/india-tour-packages/kerala-holiday-tour-packages/kerala-honeymoon-special-7nights/f3808",
+    "/india-tour-packages/kerala-holiday-tour-packages/kerala-coast-8nights/f1308",
+    "/india-tour-packages/kerala-holiday-tour-packages/wild-kerala-5nights/f1290",
+    "/india-tour-packages/andaman-holiday-tour-packages/tropical-andaman-5nights/f1626",
+    "/india-tour-packages/andaman-holiday-tour-packages/tropical-andaman-5nights/f3390",
+    "/india-tour-packages/andaman-holiday-tour-packages/magical-andaman-5nights/f4154",
+    "/india-tour-packages/andaman-holiday-tour-package/exotic-andaman-6nights/f3057",
+    "/india-tour-packages/andaman-holiday-tour-packages/tropical-andaman-with-cgh-hotel-5-nights/f3525",
+    "/india-tour-packages/andaman-holiday-tour-packages/best-of-andaman-with-baratang-6nights/f4067",
+    "/india-tour-packages/andaman-holiday-tour-packages/combination-of-3-beautiful-islands/f3054",
+    "/india-tour-packages/himachal-pradesh-holiday-tour-packages/himachal-with-golden-temple-4nghts/f1351",
+    "/india-tour-packages/uttranchal-holiday-tour-packages/best-of-uttaranchal-6nights/f2039",
+    "/india-tour-packages/himachal-pradesh-holiday-tour-packages/magical-himachal-6nights/f1844",
+    "/india-tour-packages/himachal-pradesh-holiday-tour-packages/himalayan-wonder-6nights/f2122",
+    "/india-tour-packages/himachal-pradesh-holiday-tour-packages/idyllic-himachal-4nights/f2335",
+    "/india-tour-packages/himachal-pradesh-holiday-tour-packages/charming-himachal-5night/f2219",
+    "/india-tour-packages/karnataka-holiday-tour-packages/karnataka-hills-8nights/f1357",
+    "/india-tour-packages/uttranchal-holiday-tour-packages/3-dham-by-road-and-1-dham-by-helicopter-8nights/f3583",
+    "/india-tour-packages/himachal-pradesh-holiday-tour-packages/himachal-with-amritsar-6nights/f1969",
+    "/india-tour-packages/west-bengal-sikkim-holiday-tour-packages/scenic-sikkim-4nights/f3331",
+    "/india-tour-packages/himachal-pradesh-holiday-tour-packages/heavenly-himachal-with-golden-temple-9night/f2228",
+    "/india-tour-packages/himachal-pradesh-holiday-tour-packages/mesmerizing-himachal-6nights/f2131",
+    "/india-tour-packages/himachal-pradesh-holiday-tour-packages/heavenly-himachal-8night/f2374",
+    "/india-tour-packages/west-bengal-sikkim-holiday-tour-packages/sikkim-splendor/f3123",
+    "/india-tour-packages/uttranchal-holiday-tour-packages/a-travelers-paradise-nainital-and-corbett-5nights/f2169",
+])
+KNOWN_LISTING_QUOTES = {
+  "f1360": (32830, "2027-09-30"),
+  "f1363": (33410, "2027-09-30"),
+  "f1402": (27120, "2027-09-30"),
+  "f4075": (21040, "2027-09-30"),
+  "f1844": (28420, "2027-09-30"),
+  "f2335": (18510, "2027-09-30"),
+  "f1969": (28100, "2027-09-30"),
+  "f1376": (18940, "2027-09-30"),
+}
 AREA_MAP = {
     "himachal-pradesh": "Himachal Pradesh", "uttranchal": "Uttarakhand",
     "uttarakhand": "Uttarakhand", "odisha": "Odisha", "kashmir": "Jammu & Kashmir",
@@ -298,6 +356,12 @@ def main():
                     detail_urls.add(url)
         except Exception as exc:
             print("Listing unavailable:", category, type(exc).__name__)
+    for link in detail_urls:
+        match = RE_DETAIL.match(urlparse(link).path)
+        quote = KNOWN_LISTING_QUOTES.get(match.group("id").lower()) if match else None
+        if quote and link not in prices:
+            prices[link] = {"starting_price_inr": quote[0], "valid_until": quote[1],
+                            "price_source": "supplier published destination listing"}
     urls = sorted(filter(None, detail_urls))
     if args.max_detail:
         urls = urls[:args.max_detail]
