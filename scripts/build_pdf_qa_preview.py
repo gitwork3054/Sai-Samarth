@@ -40,6 +40,14 @@ from travel.cinematic_pdf import matched_photo,fetch_trusted_photo
 print("PHOTO CANDIDATES",photo_url("Jaipur"),flush=True)
 jaipur_photo, jaipur_credit=matched_photo(pkg)
 print("PHOTO JAIPUR",str(jaipur_photo),str(jaipur_credit),flush=True)
+assert jaipur_photo and Path(jaipur_photo).is_file(), "Jaipur PDF must use its own licensed destination cover photo"
+import json
+from travel.cinematic_pdf import packaged_destination_photo
+catalog=json.loads(Path("travel/data/pdf_destination_photos.json").read_text(encoding="utf-8"))["photos"]
+source=json.loads(Path("travel/data/flamingo_domestic_private_vans.json").read_text(encoding="utf-8"))["packages"]
+unmatched=[row["title"] for row in source if not any(stop["city"] in catalog for stop in row["route"])]
+assert not unmatched, "Tours without route-city-matched photos: "+str(unmatched)
+print("PHOTO COVERAGE CHECK",len(source),"tour itineraries all match a city in their actual overnight route",flush=True)
 pdf=build_itinerary_pdf(pkg,site)
 Path("docs").mkdir(exist_ok=True)
 Path("docs/jaipur-design-qa.pdf").write_bytes(pdf)
