@@ -1,7 +1,7 @@
 {
   "provider": "Wikimedia Commons / English Wikipedia",
   "kind": "city_mapped_photo_credits",
-  "generated_at": "2026-11-20T10:23:49.174920+00:00",
+  "generated_at": "2026-11-20T10:25:33.573993+00:00",
   "photos": {
     "Agra": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Taj_Mahal%2C_Agra%2C_India.jpg",
@@ -203,6 +203,36 @@
       "wikipedia_page": "https://en.wikipedia.org/wiki/Jodhpur",
       "downloaded_at": "2026-11-20T10:20:07.631188+00:00"
     },
+    "Karnataka": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Mysuru_Montage.jpg",
+      "photographer": "Sathyaprakash01",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "file": "static/img/pdf_destinations/karnataka.jpg",
+      "city": "Karnataka",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Mysore",
+      "downloaded_at": "2026-11-20T10:25:31.108694+00:00"
+    },
+    "Kashmir": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Red_and_Yellow_Tulips.JPG",
+      "photographer": "Abdars",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "file": "static/img/pdf_destinations/kashmir.jpg",
+      "city": "Kashmir",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Srinagar",
+      "downloaded_at": "2026-11-20T10:25:31.334253+00:00"
+    },
+    "Katra": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Katra_town1.JPG",
+      "photographer": "Vinayaraj",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "file": "static/img/pdf_destinations/katra.jpg",
+      "city": "Katra",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Katra%2C_Jammu_and_Kashmir",
+      "downloaded_at": "2026-11-20T10:25:31.319999+00:00"
+    },
     "Kerala Backwaters": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Alappuzha_Boat_Beauty_W.jpg",
       "photographer": "Augustus Binu / facebook",
@@ -212,6 +242,36 @@
       "city": "Kerala Backwaters",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Alappuzha",
       "downloaded_at": "2026-11-20T10:23:48.199600+00:00"
+    },
+    "Kodaikanal": {
+      "file": "static/img/pdf_destinations/kodaikanal.jpg",
+      "city": "Kodaikanal",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kodaikanal_Lake,_Tamil_Nadu.jpg",
+      "photographer": "Sinash",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:25:31.518743+00:00",
+      "wikipedia_page": ""
+    },
+    "Lakshadweep": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Agatti_Airstrip.jpg",
+      "photographer": "Julio",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "file": "static/img/pdf_destinations/lakshadweep.jpg",
+      "city": "Lakshadweep",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Agatti_Island",
+      "downloaded_at": "2026-11-20T10:25:32.061808+00:00"
+    },
+    "Mahabalipuram": {
+      "file": "static/img/pdf_destinations/mahabalipuram.jpg",
+      "city": "Mahabalipuram",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Shore_Temple_at_Mahabalipuram_Tamilnadu.jpg",
+      "photographer": "Rafflord",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:25:32.016646+00:00",
+      "wikipedia_page": ""
     },
     "Maharashtra": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Mumbai_Bandra-Worli_Sea_Link.jpg",
@@ -233,6 +293,26 @@
       "wikipedia_page": "https://en.wikipedia.org/wiki/Mumbai",
       "downloaded_at": "2026-11-20T10:20:08.366401+00:00"
     },
+    "Mussoorie": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Mussoorie_Snow_Over_Dehradun_%2814831297545%29.jpg",
+      "photographer": "Paul Hamilton",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "file": "static/img/pdf_destinations/mussoorie.jpg",
+      "city": "Mussoorie",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Mussoorie",
+      "downloaded_at": "2026-11-20T10:25:32.279132+00:00"
+    },
+    "Mysore": {
+      "file": "static/img/pdf_destinations/mysore.jpg",
+      "city": "Mysore",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Mysore_Palace,_Mysore,_Karnataka,_India.jpg",
+      "photographer": "Wikimedia Commons contributor",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:25:32.225571+00:00",
+      "wikipedia_page": ""
+    },
     "Nainital": {
       "file": "static/img/pdf_destinations/nainital.jpg",
       "city": "Nainital",
@@ -241,6 +321,16 @@
       "license": "CC BY-SA 4.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:23:48.353592+00:00",
+      "wikipedia_page": ""
+    },
+    "Ooty": {
+      "file": "static/img/pdf_destinations/ooty.jpg",
+      "city": "Ooty",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Lake_in_Ooty.jpg",
+      "photographer": "Barkave Balusamy",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:25:32.786775+00:00",
       "wikipedia_page": ""
     },
     "Port Blair": {
@@ -333,6 +423,46 @@
       "wikipedia_page": "https://en.wikipedia.org/wiki/Tezpur",
       "downloaded_at": "2026-11-20T10:23:48.811285+00:00"
     },
+    "Tirupati": {
+      "file": "static/img/pdf_destinations/tirupati.jpg",
+      "city": "Tirupati",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Tirupati_temple.jpg",
+      "photographer": "Kajal Dhanotia",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://commons.wikimedia.org/",
+      "downloaded_at": "2026-11-20T10:25:32.848867+00:00",
+      "wikipedia_page": ""
+    },
+    "Udaipur": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Evening_view%2C_City_Palace%2C_Udaipur.jpg",
+      "photographer": "Geri from Biel/Bienne, Schweiz",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "file": "static/img/pdf_destinations/udaipur.jpg",
+      "city": "Udaipur",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Udaipur",
+      "downloaded_at": "2026-11-20T10:25:33.219228+00:00"
+    },
+    "Uttar Pradesh": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Varanasi%2C_India%2C_Ghats%2C_Cremation_ceremony_in_progress.jpg",
+      "photographer": "Vyacheslav Argenberg",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "file": "static/img/pdf_destinations/uttar-pradesh.jpg",
+      "city": "Uttar Pradesh",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Varanasi",
+      "downloaded_at": "2026-11-20T10:25:33.189470+00:00"
+    },
+    "Varanasi": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Varanasi%2C_India%2C_Ghats%2C_Cremation_ceremony_in_progress.jpg",
+      "photographer": "Vyacheslav Argenberg",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "file": "static/img/pdf_destinations/varanasi.jpg",
+      "city": "Varanasi",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Varanasi",
+      "downloaded_at": "2026-11-20T10:25:33.569531+00:00"
+    },
     "West Bengal & Sikkim": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Kangch-Goechala.jpg",
       "photographer": "Ashinpt at enwiki",
@@ -350,31 +480,18 @@
     "Diu": "no Wikimedia image",
     "Hampi": "no Wikimedia image",
     "Himachal Pradesh": "no Wikimedia image",
-    "Karnataka": "image download unavailable",
-    "Kashmir": "image download unavailable",
-    "Katra": "image download unavailable",
     "Kerala": "no Wikimedia image",
-    "Kodaikanal": "no Wikimedia image",
     "Kovalam": "no Wikimedia image",
     "Kumarakom": "no Wikimedia image",
     "Ladakh": "no Wikimedia image",
-    "Lakshadweep": "image download unavailable",
-    "Mahabalipuram": "no Wikimedia image",
     "Mathura": "no Wikimedia image",
     "Meghalaya": "no Wikimedia image",
     "Munnar": "no Wikimedia image",
-    "Mussoorie": "image download unavailable",
-    "Mysore": "image download unavailable",
     "New Delhi": "no Wikimedia image",
     "North East India": "no Wikimedia image",
     "Odisha": "no Wikimedia image",
-    "Ooty": "image download unavailable",
     "Rishikesh": "no Wikimedia image",
     "Shillong": "no Wikimedia image",
-    "Tirupati": "no Wikimedia image",
-    "Udaipur": "image download unavailable",
-    "Uttar Pradesh": "image download unavailable",
-    "Uttarakhand": "no Wikimedia image",
-    "Varanasi": "image download unavailable"
+    "Uttarakhand": "no Wikimedia image"
   }
 }
