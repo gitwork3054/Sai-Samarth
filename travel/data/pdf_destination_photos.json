@@ -1,7 +1,7 @@
 {
   "provider": "Wikimedia Commons / English Wikipedia",
   "kind": "city_mapped_photo_credits",
-  "generated_at": "2026-11-20T10:18:40.352753+00:00",
+  "generated_at": "2026-11-20T10:20:08.384878+00:00",
   "photos": {
     "Agra": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Taj_Mahal%2C_Agra%2C_India.jpg",
@@ -11,17 +11,7 @@
       "file": "static/img/pdf_destinations/agra.jpg",
       "city": "Agra",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Agra",
-      "downloaded_at": "2026-11-20T10:18:38.077933+00:00"
-    },
-    "Alleppey": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Alappuzha_Boat_Beauty_W.jpg",
-      "photographer": "Augustus Binu / facebook",
-      "license": "CC BY-SA 3.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
-      "file": "static/img/pdf_destinations/alleppey.jpg",
-      "city": "Alleppey",
-      "wikipedia_page": "https://en.wikipedia.org/wiki/Alappuzha",
-      "downloaded_at": "2026-11-20T10:18:38.096979+00:00"
+      "downloaded_at": "2026-11-20T10:20:07.175000+00:00"
     },
     "Amritsar": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Golden_Temple_Amritsar_Gurudwara_%28cropped%29.jpg",
@@ -31,7 +21,7 @@
       "file": "static/img/pdf_destinations/amritsar.jpg",
       "city": "Amritsar",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Amritsar",
-      "downloaded_at": "2026-11-20T10:18:37.926561+00:00"
+      "downloaded_at": "2026-11-20T10:20:06.719459+00:00"
     },
     "Andaman & Nicobar": {
       "source_url": "https://commons.wikimedia.org/wiki/File:View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg",
@@ -41,7 +31,7 @@
       "file": "static/img/pdf_destinations/andaman-nicobar.jpg",
       "city": "Andaman & Nicobar",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Port_Blair",
-      "downloaded_at": "2026-11-20T10:18:37.706723+00:00"
+      "downloaded_at": "2026-11-20T10:20:06.534177+00:00"
     },
     "Andaman Islands": {
       "source_url": "https://commons.wikimedia.org/wiki/File:View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg",
@@ -51,7 +41,7 @@
       "file": "static/img/pdf_destinations/andaman-islands.jpg",
       "city": "Andaman Islands",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Port_Blair",
-      "downloaded_at": "2026-11-20T10:18:37.708586+00:00"
+      "downloaded_at": "2026-11-20T10:20:06.531543+00:00"
     },
     "Ayodhya": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Shri_Ram_Janambhoomi_Mandir%2C_Ayodhya_Dham.jpg",
@@ -61,7 +51,7 @@
       "file": "static/img/pdf_destinations/ayodhya.jpg",
       "city": "Ayodhya",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Ayodhya",
-      "downloaded_at": "2026-11-20T10:18:38.086051+00:00"
+      "downloaded_at": "2026-11-20T10:20:06.804525+00:00"
     },
     "Bangalore": {
       "source_url": "https://commons.wikimedia.org/wiki/File:UB_City%2C_Bangalore.JPG",
@@ -71,27 +61,7 @@
       "file": "static/img/pdf_destinations/bangalore.jpg",
       "city": "Bangalore",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Bengaluru",
-      "downloaded_at": "2026-11-20T10:18:38.160217+00:00"
-    },
-    "Bhubaneswar": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Bhubaneswar_skyline_121224.jpg",
-      "photographer": "Ashok3932",
-      "license": "CC BY-SA 4.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
-      "file": "static/img/pdf_destinations/bhubaneswar.jpg",
-      "city": "Bhubaneswar",
-      "wikipedia_page": "https://en.wikipedia.org/wiki/Bhubaneswar",
-      "downloaded_at": "2026-11-20T10:18:38.074118+00:00"
-    },
-    "Chandigarh": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Open_Hand_monument%2C_Chandigarh.jpg",
-      "photographer": "Raakesh Blokhra",
-      "license": "CC BY-SA 2.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
-      "file": "static/img/pdf_destinations/chandigarh.jpg",
-      "city": "Chandigarh",
-      "wikipedia_page": "https://en.wikipedia.org/wiki/Chandigarh",
-      "downloaded_at": "2026-11-20T10:18:38.478846+00:00"
+      "downloaded_at": "2026-11-20T10:20:07.365173+00:00"
     },
     "Chennai": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Chennai_Central.jpg",
@@ -101,7 +71,7 @@
       "file": "static/img/pdf_destinations/chennai.jpg",
       "city": "Chennai",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Chennai",
-      "downloaded_at": "2026-11-20T10:18:38.363739+00:00"
+      "downloaded_at": "2026-11-20T10:20:06.478008+00:00"
     },
     "Cochin": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Kochi_Skyline.jpg",
@@ -111,17 +81,17 @@
       "file": "static/img/pdf_destinations/cochin.jpg",
       "city": "Cochin",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Kochi",
-      "downloaded_at": "2026-11-20T10:18:38.458890+00:00"
+      "downloaded_at": "2026-11-20T10:20:06.698728+00:00"
     },
-    "Corbett National Park": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Bengal-Tiger_Corbett_Uttarakhand_Dec-2013.jpg",
-      "photographer": "Soumyajit Nandy",
-      "license": "CC BY-SA 3.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
-      "file": "static/img/pdf_destinations/corbett-national-park.jpg",
-      "city": "Corbett National Park",
-      "wikipedia_page": "https://en.wikipedia.org/wiki/Jim_Corbett_National_Park",
-      "downloaded_at": "2026-11-20T10:18:38.525881+00:00"
+    "Darjeeling": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:DarjeelingTrainFruitshop_%282%29.jpg",
+      "photographer": "Arne Hückelheim 2010-09-21 12:41:53 This is a cropped in which the glare has been lessened",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "file": "static/img/pdf_destinations/darjeeling.jpg",
+      "city": "Darjeeling",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Darjeeling",
+      "downloaded_at": "2026-11-20T10:20:07.140372+00:00"
     },
     "Delhi": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Jama_Masjid_2011.jpg",
@@ -131,7 +101,17 @@
       "file": "static/img/pdf_destinations/delhi.jpg",
       "city": "Delhi",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Delhi",
-      "downloaded_at": "2026-11-20T10:18:38.961689+00:00"
+      "downloaded_at": "2026-11-20T10:20:07.577683+00:00"
+    },
+    "Delhi / Agra / Rajasthan": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Taj_Mahal%2C_Agra%2C_India.jpg",
+      "photographer": "Yann ( talk )",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "file": "static/img/pdf_destinations/delhi-agra-rajasthan.jpg",
+      "city": "Delhi / Agra / Rajasthan",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Agra",
+      "downloaded_at": "2026-11-20T10:20:07.560839+00:00"
     },
     "Dwarka": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Dwarakadheesh_Temple%2C_2014.jpg",
@@ -141,7 +121,17 @@
       "file": "static/img/pdf_destinations/dwarka.jpg",
       "city": "Dwarka",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Dwarka",
-      "downloaded_at": "2026-11-20T10:18:38.795205+00:00"
+      "downloaded_at": "2026-11-20T10:20:06.972707+00:00"
+    },
+    "Gangtok": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kangch-Goechala.jpg",
+      "photographer": "Ashinpt at enwiki",
+      "license": "CC BY-SA 3.0",
+      "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "file": "static/img/pdf_destinations/gangtok.jpg",
+      "city": "Gangtok",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Gangtok",
+      "downloaded_at": "2026-11-20T10:20:07.383773+00:00"
     },
     "Gujarat": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Dwarakadheesh_Temple%2C_2014.jpg",
@@ -151,7 +141,7 @@
       "file": "static/img/pdf_destinations/gujarat.jpg",
       "city": "Gujarat",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Dwarka",
-      "downloaded_at": "2026-11-20T10:18:38.797858+00:00"
+      "downloaded_at": "2026-11-20T10:20:07.190471+00:00"
     },
     "Guwahati": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Guwahati_citysky.jpg",
@@ -161,7 +151,67 @@
       "file": "static/img/pdf_destinations/guwahati.jpg",
       "city": "Guwahati",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Guwahati",
-      "downloaded_at": "2026-11-20T10:18:38.895291+00:00"
+      "downloaded_at": "2026-11-20T10:20:07.417270+00:00"
+    },
+    "Jaipur": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg",
+      "photographer": "Chainwit.",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "file": "static/img/pdf_destinations/jaipur.jpg",
+      "city": "Jaipur",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Jaipur",
+      "downloaded_at": "2026-11-20T10:20:07.946431+00:00"
+    },
+    "Jaisalmer": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Jaisalmer_Fort.jpg",
+      "photographer": "Adrian Sulc",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "file": "static/img/pdf_destinations/jaisalmer.jpg",
+      "city": "Jaisalmer",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Jaisalmer",
+      "downloaded_at": "2026-11-20T10:20:07.523717+00:00"
+    },
+    "Jammu & Kashmir": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Red_and_Yellow_Tulips.JPG",
+      "photographer": "Abdars",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "file": "static/img/pdf_destinations/jammu-kashmir.jpg",
+      "city": "Jammu & Kashmir",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Srinagar",
+      "downloaded_at": "2026-11-20T10:20:08.022422+00:00"
+    },
+    "Jodhpur": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Mehrangarh_Fort_sanhita.jpg",
+      "photographer": "Sanhitasinha",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "file": "static/img/pdf_destinations/jodhpur.jpg",
+      "city": "Jodhpur",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Jodhpur",
+      "downloaded_at": "2026-11-20T10:20:07.631188+00:00"
+    },
+    "Maharashtra": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Mumbai_Bandra-Worli_Sea_Link.jpg",
+      "photographer": "Rutiknatekar",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "file": "static/img/pdf_destinations/maharashtra.jpg",
+      "city": "Maharashtra",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Mumbai",
+      "downloaded_at": "2026-11-20T10:20:08.366002+00:00"
+    },
+    "Mumbai": {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Mumbai_Bandra-Worli_Sea_Link.jpg",
+      "photographer": "Rutiknatekar",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "file": "static/img/pdf_destinations/mumbai.jpg",
+      "city": "Mumbai",
+      "wikipedia_page": "https://en.wikipedia.org/wiki/Mumbai",
+      "downloaded_at": "2026-11-20T10:20:08.366401+00:00"
     },
     "Port Blair": {
       "source_url": "https://commons.wikimedia.org/wiki/File:View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg",
@@ -171,7 +221,7 @@
       "file": "static/img/pdf_destinations/port-blair.jpg",
       "city": "Port Blair",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Port_Blair",
-      "downloaded_at": "2026-11-20T10:18:39.842208+00:00"
+      "downloaded_at": "2026-11-20T10:20:08.092016+00:00"
     },
     "Tamil Nadu": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Chennai_Central.jpg",
@@ -181,93 +231,51 @@
       "file": "static/img/pdf_destinations/tamil-nadu.jpg",
       "city": "Tamil Nadu",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Chennai",
-      "downloaded_at": "2026-11-20T10:18:40.103754+00:00"
+      "downloaded_at": "2026-11-20T10:20:08.230168+00:00"
     }
   },
   "unavailable": {
-    "Ahmedabad": "no Wikimedia image",
-    "Bharatpur": "no Wikimedia image",
-    "Bikaner": "no Wikimedia image",
     "Coorg": "no Wikimedia image",
-    "Dalhousie": "no Wikimedia image",
-    "Darjeeling": "image download unavailable",
-    "Delhi / Agra / Rajasthan": "image download unavailable",
     "Dharamshala": "no Wikimedia image",
-    "Dirang": "no Wikimedia image",
     "Diu": "no Wikimedia image",
-    "Gangtok": "image download unavailable",
     "Goa": "no Wikimedia image",
-    "Gopalpur": "no Wikimedia image",
-    "Gulmarg": "image download unavailable",
     "Hampi": "no Wikimedia image",
-    "Havelock Island": "no Wikimedia image",
     "Himachal Pradesh": "no Wikimedia image",
-    "Jaipur": "image download unavailable",
-    "Jaisalmer": "image download unavailable",
-    "Jammu & Kashmir": "image download unavailable",
-    "Jodhpur": "image download unavailable",
-    "Kabini": "image download unavailable",
-    "Kalimpong": "image download unavailable",
-    "Kanyakumari": "no Wikimedia image",
     "Karnataka": "image download unavailable",
     "Kashmir": "image download unavailable",
     "Katra": "image download unavailable",
-    "Kausani": "no Wikimedia image",
-    "Kaziranga": "image download unavailable",
     "Kerala": "no Wikimedia image",
     "Kerala Backwaters": "image download unavailable",
     "Kodaikanal": "no Wikimedia image",
     "Kovalam": "no Wikimedia image",
     "Kumarakom": "no Wikimedia image",
-    "Kumbhalgarh": "image download unavailable",
-    "Lachung": "no Wikimedia image",
     "Ladakh": "no Wikimedia image",
     "Lakshadweep": "image download unavailable",
-    "Madurai": "no Wikimedia image",
     "Mahabalipuram": "no Wikimedia image",
-    "Maharashtra": "image download unavailable",
-    "Manali": "no Wikimedia image",
-    "Mandawa": "image download unavailable",
-    "Manvar": "HTTPError",
     "Mathura": "no Wikimedia image",
     "Meghalaya": "no Wikimedia image",
-    "Mumbai": "image download unavailable",
     "Munnar": "no Wikimedia image",
     "Mussoorie": "image download unavailable",
     "Mysore": "image download unavailable",
     "Nainital": "no Wikimedia image",
-    "Neil Island": "image download unavailable",
     "New Delhi": "no Wikimedia image",
     "North East India": "no Wikimedia image",
     "Odisha": "no Wikimedia image",
     "Ooty": "image download unavailable",
-    "Pahalgam": "no Wikimedia image",
-    "Pelling": "image download unavailable",
-    "Pondicherry": "no Wikimedia image",
-    "Prayagraj": "image download unavailable",
     "Punjab": "image download unavailable",
     "Puri": "no Wikimedia image",
     "Rajasthan": "image download unavailable",
-    "Rameshwaram": "no Wikimedia image",
-    "Ranthambore National Park": "image download unavailable",
     "Rishikesh": "no Wikimedia image",
-    "Sasan Gir": "image download unavailable",
     "Shillong": "no Wikimedia image",
     "Shimla": "no Wikimedia image",
     "Sikkim": "image download unavailable",
-    "Somnath": "no Wikimedia image",
     "Srinagar": "image download unavailable",
-    "Tawang": "image download unavailable",
     "Tezpur": "image download unavailable",
-    "Thanjavur": "no Wikimedia image",
-    "Thekkady": "no Wikimedia image",
     "Tirupati": "no Wikimedia image",
-    "Trivandrum": "no Wikimedia image",
     "Udaipur": "image download unavailable",
     "Uttar Pradesh": "image download unavailable",
     "Uttarakhand": "no Wikimedia image",
     "Varanasi": "image download unavailable",
-    "Wayanad": "no Wikimedia image",
     "West Bengal & Sikkim": "image download unavailable"
   }
 }
