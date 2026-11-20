@@ -1,0 +1,1704 @@
+{
+  "count": 54,
+  "missing_files": [],
+  "low_resolution": [
+    "Chennai",
+    "Tamil Nadu"
+  ],
+  "photos": [
+    {
+      "city": "Agra",
+      "file": "static/img/pdf_destinations/agra.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Taj_Mahal%2C_Agra%2C_India.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Yann ( talk )",
+      "width": 1500,
+      "height": 986,
+      "edge_std": 47.33,
+      "pixel_count": 1479000,
+      "aspect": 1.521
+    },
+    {
+      "city": "Amritsar",
+      "file": "static/img/pdf_destinations/amritsar.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Golden_Temple_Amritsar_Gurudwara_%28cropped%29.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Shubhashish",
+      "width": 1500,
+      "height": 614,
+      "edge_std": 63.82,
+      "pixel_count": 921000,
+      "aspect": 2.443
+    },
+    {
+      "city": "Andaman & Nicobar",
+      "file": "static/img/pdf_destinations/andaman-nicobar.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg",
+      "license": "Public domain",
+      "photographer": "(WT-en) Prateek4 at English Wikivoyage",
+      "width": 1500,
+      "height": 958,
+      "edge_std": 40.21,
+      "pixel_count": 1437000,
+      "aspect": 1.566
+    },
+    {
+      "city": "Andaman Islands",
+      "file": "static/img/pdf_destinations/andaman-islands.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg",
+      "license": "Public domain",
+      "photographer": "(WT-en) Prateek4 at English Wikivoyage",
+      "width": 1500,
+      "height": 958,
+      "edge_std": 40.21,
+      "pixel_count": 1437000,
+      "aspect": 1.566
+    },
+    {
+      "city": "Ayodhya",
+      "file": "static/img/pdf_destinations/ayodhya.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Shri_Ram_Janambhoomi_Mandir%2C_Ayodhya_Dham.jpg",
+      "license": "GODL-India",
+      "photographer": "Prime Minister's Office",
+      "width": 1500,
+      "height": 1133,
+      "edge_std": 67.0,
+      "pixel_count": 1699500,
+      "aspect": 1.324
+    },
+    {
+      "city": "Bangalore",
+      "file": "static/img/pdf_destinations/bangalore.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:UB_City%2C_Bangalore.JPG",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Prateek Karandikar",
+      "width": 1500,
+      "height": 1125,
+      "edge_std": 69.16,
+      "pixel_count": 1687500,
+      "aspect": 1.333
+    },
+    {
+      "city": "Chennai",
+      "file": "static/img/pdf_destinations/chennai.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Chennai_Central.jpg",
+      "license": "CC BY-SA 2.0",
+      "photographer": "jamal haider from india",
+      "width": 636,
+      "height": 438,
+      "edge_std": 82.82,
+      "pixel_count": 278568,
+      "aspect": 1.452
+    },
+    {
+      "city": "Cochin",
+      "file": "static/img/pdf_destinations/cochin.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Kochi_Skyline.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Fsquares (The Ibrahims)",
+      "width": 1200,
+      "height": 800,
+      "edge_std": 44.57,
+      "pixel_count": 960000,
+      "aspect": 1.5
+    },
+    {
+      "city": "Coorg",
+      "file": "static/img/pdf_destinations/coorg.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Coorg_landscape.jpg",
+      "license": "CC0 1.0",
+      "photographer": "Cppfront",
+      "width": 1280,
+      "height": 1698,
+      "edge_std": 54.64,
+      "pixel_count": 2173440,
+      "aspect": 0.754
+    },
+    {
+      "city": "Darjeeling",
+      "file": "static/img/pdf_destinations/darjeeling.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:DarjeelingTrainFruitshop_%282%29.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Arne Hückelheim 2010-09-21 12:41:53 This is a cropped in which the glare has been lessened",
+      "width": 1500,
+      "height": 980,
+      "edge_std": 77.44,
+      "pixel_count": 1470000,
+      "aspect": 1.531
+    },
+    {
+      "city": "Delhi",
+      "file": "static/img/pdf_destinations/delhi.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Jama_Masjid_2011.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Marcin Białek",
+      "width": 1500,
+      "height": 1779,
+      "edge_std": 61.64,
+      "pixel_count": 2668500,
+      "aspect": 0.843
+    },
+    {
+      "city": "Delhi / Agra / Rajasthan",
+      "file": "static/img/pdf_destinations/delhi-agra-rajasthan.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Taj_Mahal%2C_Agra%2C_India.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Yann ( talk )",
+      "width": 1500,
+      "height": 986,
+      "edge_std": 47.33,
+      "pixel_count": 1479000,
+      "aspect": 1.521
+    },
+    {
+      "city": "Diu",
+      "file": "static/img/pdf_destinations/diu.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Diu_fort,_India.JPG",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Aditya Mahar",
+      "width": 1280,
+      "height": 960,
+      "edge_std": 50.69,
+      "pixel_count": 1228800,
+      "aspect": 1.333
+    },
+    {
+      "city": "Dwarka",
+      "file": "static/img/pdf_destinations/dwarka.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Dwarakadheesh_Temple%2C_2014.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Vishnupranay.k",
+      "width": 1024,
+      "height": 768,
+      "edge_std": 68.2,
+      "pixel_count": 786432,
+      "aspect": 1.333
+    },
+    {
+      "city": "Gangtok",
+      "file": "static/img/pdf_destinations/gangtok.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Kangch-Goechala.jpg",
+      "license": "CC BY-SA 3.0",
+      "photographer": "Ashinpt at enwiki",
+      "width": 1500,
+      "height": 1125,
+      "edge_std": 46.42,
+      "pixel_count": 1687500,
+      "aspect": 1.333
+    },
+    {
+      "city": "Goa",
+      "file": "static/img/pdf_destinations/goa.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Baga_Beach,_Calangute,_Goa.jpg",
+      "license": "See Commons file page",
+      "photographer": "Wikimedia Commons contributor",
+      "width": 1280,
+      "height": 960,
+      "edge_std": 28.29,
+      "pixel_count": 1228800,
+      "aspect": 1.333
+    },
+    {
+      "city": "Gujarat",
+      "file": "static/img/pdf_destinations/gujarat.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Dwarakadheesh_Temple%2C_2014.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Vishnupranay.k",
+      "width": 1024,
+      "height": 768,
+      "edge_std": 68.2,
+      "pixel_count": 786432,
+      "aspect": 1.333
+    },
+    {
+      "city": "Guwahati",
+      "file": "static/img/pdf_destinations/guwahati.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Guwahati_citysky.jpg",
+      "license": "CC BY-SA 2.0",
+      "photographer": "Rituraj Bhuyan from Guwahati, India",
+      "width": 1024,
+      "height": 768,
+      "edge_std": 77.24,
+      "pixel_count": 786432,
+      "aspect": 1.333
+    },
+    {
+      "city": "Jaipur",
+      "file": "static/img/pdf_destinations/jaipur.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Chainwit.",
+      "width": 1500,
+      "height": 1125,
+      "edge_std": 85.71,
+      "pixel_count": 1687500,
+      "aspect": 1.333
+    },
+    {
+      "city": "Jaisalmer",
+      "file": "static/img/pdf_destinations/jaisalmer.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Jaisalmer_Fort.jpg",
+      "license": "CC BY-SA 3.0",
+      "photographer": "Adrian Sulc",
+      "width": 1500,
+      "height": 1000,
+      "edge_std": 39.56,
+      "pixel_count": 1500000,
+      "aspect": 1.5
+    },
+    {
+      "city": "Jammu & Kashmir",
+      "file": "static/img/pdf_destinations/jammu-kashmir.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Red_and_Yellow_Tulips.JPG",
+      "license": "CC BY-SA 3.0",
+      "photographer": "Abdars",
+      "width": 1500,
+      "height": 1125,
+      "edge_std": 53.34,
+      "pixel_count": 1687500,
+      "aspect": 1.333
+    },
+    {
+      "city": "Jodhpur",
+      "file": "static/img/pdf_destinations/jodhpur.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Mehrangarh_Fort_sanhita.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Sanhitasinha",
+      "width": 1280,
+      "height": 854,
+      "edge_std": 57.22,
+      "pixel_count": 1093120,
+      "aspect": 1.499
+    },
+    {
+      "city": "Karnataka",
+      "file": "static/img/pdf_destinations/karnataka.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Mysuru_Montage.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Sathyaprakash01",
+      "width": 1000,
+      "height": 1754,
+      "edge_std": 80.12,
+      "pixel_count": 1754000,
+      "aspect": 0.57
+    },
+    {
+      "city": "Kashmir",
+      "file": "static/img/pdf_destinations/kashmir.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Red_and_Yellow_Tulips.JPG",
+      "license": "CC BY-SA 3.0",
+      "photographer": "Abdars",
+      "width": 1500,
+      "height": 1125,
+      "edge_std": 53.34,
+      "pixel_count": 1687500,
+      "aspect": 1.333
+    },
+    {
+      "city": "Katra",
+      "file": "static/img/pdf_destinations/katra.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Katra_town1.JPG",
+      "license": "CC BY-SA 3.0",
+      "photographer": "Vinayaraj",
+      "width": 1500,
+      "height": 1051,
+      "edge_std": 79.59,
+      "pixel_count": 1576500,
+      "aspect": 1.427
+    },
+    {
+      "city": "Kerala Backwaters",
+      "file": "static/img/pdf_destinations/kerala-backwaters.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Alappuzha_Boat_Beauty_W.jpg",
+      "license": "CC BY-SA 3.0",
+      "photographer": "Augustus Binu / facebook",
+      "width": 1500,
+      "height": 994,
+      "edge_std": 72.03,
+      "pixel_count": 1491000,
+      "aspect": 1.509
+    },
+    {
+      "city": "Kodaikanal",
+      "file": "static/img/pdf_destinations/kodaikanal.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Kodaikanal_Lake,_Tamil_Nadu.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Sinash",
+      "width": 1280,
+      "height": 960,
+      "edge_std": 56.04,
+      "pixel_count": 1228800,
+      "aspect": 1.333
+    },
+    {
+      "city": "Kovalam",
+      "file": "static/img/pdf_destinations/kovalam.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Kovalam_Beach_in_Kerala.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Salman2018",
+      "width": 1280,
+      "height": 720,
+      "edge_std": 61.09,
+      "pixel_count": 921600,
+      "aspect": 1.778
+    },
+    {
+      "city": "Kumarakom",
+      "file": "static/img/pdf_destinations/kumarakom.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Kumarakom_Backwaters.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Rajkrishnan R",
+      "width": 1280,
+      "height": 949,
+      "edge_std": 49.04,
+      "pixel_count": 1214720,
+      "aspect": 1.349
+    },
+    {
+      "city": "Lakshadweep",
+      "file": "static/img/pdf_destinations/lakshadweep.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Agatti_Airstrip.jpg",
+      "license": "CC BY-SA 2.0",
+      "photographer": "Julio",
+      "width": 1500,
+      "height": 1105,
+      "edge_std": 26.84,
+      "pixel_count": 1657500,
+      "aspect": 1.357
+    },
+    {
+      "city": "Mahabalipuram",
+      "file": "static/img/pdf_destinations/mahabalipuram.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Shore_Temple_at_Mahabalipuram_Tamilnadu.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Rafflord",
+      "width": 1280,
+      "height": 960,
+      "edge_std": 63.85,
+      "pixel_count": 1228800,
+      "aspect": 1.333
+    },
+    {
+      "city": "Maharashtra",
+      "file": "static/img/pdf_destinations/maharashtra.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Mumbai_Bandra-Worli_Sea_Link.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Rutiknatekar",
+      "width": 1500,
+      "height": 1125,
+      "edge_std": 60.73,
+      "pixel_count": 1687500,
+      "aspect": 1.333
+    },
+    {
+      "city": "Mumbai",
+      "file": "static/img/pdf_destinations/mumbai.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Mumbai_Bandra-Worli_Sea_Link.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Rutiknatekar",
+      "width": 1500,
+      "height": 1125,
+      "edge_std": 60.73,
+      "pixel_count": 1687500,
+      "aspect": 1.333
+    },
+    {
+      "city": "Munnar",
+      "file": "static/img/pdf_destinations/munnar.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Munnar_Tea_gardens.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Sajith1sas",
+      "width": 1280,
+      "height": 720,
+      "edge_std": 57.41,
+      "pixel_count": 921600,
+      "aspect": 1.778
+    },
+    {
+      "city": "Mussoorie",
+      "file": "static/img/pdf_destinations/mussoorie.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Mussoorie_Snow_Over_Dehradun_%2814831297545%29.jpg",
+      "license": "CC BY-SA 2.0",
+      "photographer": "Paul Hamilton",
+      "width": 1500,
+      "height": 1041,
+      "edge_std": 75.6,
+      "pixel_count": 1561500,
+      "aspect": 1.441
+    },
+    {
+      "city": "Mysore",
+      "file": "static/img/pdf_destinations/mysore.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Mysore_Palace,_Mysore,_Karnataka,_India.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Wikimedia Commons contributor",
+      "width": 1280,
+      "height": 880,
+      "edge_std": 51.23,
+      "pixel_count": 1126400,
+      "aspect": 1.455
+    },
+    {
+      "city": "Nainital",
+      "file": "static/img/pdf_destinations/nainital.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Nainital-1.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Lalitgupta isgec",
+      "width": 1280,
+      "height": 960,
+      "edge_std": 54.49,
+      "pixel_count": 1228800,
+      "aspect": 1.333
+    },
+    {
+      "city": "Ooty",
+      "file": "static/img/pdf_destinations/ooty.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Lake_in_Ooty.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Barkave Balusamy",
+      "width": 1280,
+      "height": 591,
+      "edge_std": 46.97,
+      "pixel_count": 756480,
+      "aspect": 2.166
+    },
+    {
+      "city": "Port Blair",
+      "file": "static/img/pdf_destinations/port-blair.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg",
+      "license": "Public domain",
+      "photographer": "(WT-en) Prateek4 at English Wikivoyage",
+      "width": 1500,
+      "height": 958,
+      "edge_std": 40.21,
+      "pixel_count": 1437000,
+      "aspect": 1.566
+    },
+    {
+      "city": "Punjab",
+      "file": "static/img/pdf_destinations/punjab.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Golden_Temple_Amritsar_Gurudwara_%28cropped%29.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Shubhashish",
+      "width": 1500,
+      "height": 614,
+      "edge_std": 63.82,
+      "pixel_count": 921000,
+      "aspect": 2.443
+    },
+    {
+      "city": "Puri",
+      "file": "static/img/pdf_destinations/puri.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Bird_view_of_Jagannath_Temple,_Puri.jpg",
+      "license": "CC BY 4.0",
+      "photographer": "Government of Odisha",
+      "width": 1200,
+      "height": 659,
+      "edge_std": 76.77,
+      "pixel_count": 790800,
+      "aspect": 1.821
+    },
+    {
+      "city": "Rajasthan",
+      "file": "static/img/pdf_destinations/rajasthan.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Chainwit.",
+      "width": 1500,
+      "height": 1125,
+      "edge_std": 85.71,
+      "pixel_count": 1687500,
+      "aspect": 1.333
+    },
+    {
+      "city": "Rishikesh",
+      "file": "static/img/pdf_destinations/rishikesh.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Ram_Jhula_footbridge_-_Rishikesh.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Paradise Chronicle",
+      "width": 1280,
+      "height": 853,
+      "edge_std": 52.86,
+      "pixel_count": 1091840,
+      "aspect": 1.501
+    },
+    {
+      "city": "Shillong",
+      "file": "static/img/pdf_destinations/shillong.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:The-Umiam-Lake.jpg",
+      "license": "CC0 1.0",
+      "photographer": "Eurich B Nongsteng",
+      "width": 1280,
+      "height": 960,
+      "edge_std": 45.34,
+      "pixel_count": 1228800,
+      "aspect": 1.333
+    },
+    {
+      "city": "Shimla",
+      "file": "static/img/pdf_destinations/shimla.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Mall_Road_Shimla.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Satyamrai7777",
+      "width": 1280,
+      "height": 719,
+      "edge_std": 61.97,
+      "pixel_count": 920320,
+      "aspect": 1.78
+    },
+    {
+      "city": "Sikkim",
+      "file": "static/img/pdf_destinations/sikkim.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Kangch-Goechala.jpg",
+      "license": "CC BY-SA 3.0",
+      "photographer": "Ashinpt at enwiki",
+      "width": 1500,
+      "height": 1125,
+      "edge_std": 46.42,
+      "pixel_count": 1687500,
+      "aspect": 1.333
+    },
+    {
+      "city": "Srinagar",
+      "file": "static/img/pdf_destinations/srinagar.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:View_of_Dal_lake_Srinagar.jpg",
+      "license": "CC BY 4.0",
+      "photographer": "Harvinder Chandigarh",
+      "width": 1280,
+      "height": 960,
+      "edge_std": 64.77,
+      "pixel_count": 1228800,
+      "aspect": 1.333
+    },
+    {
+      "city": "Tamil Nadu",
+      "file": "static/img/pdf_destinations/tamil-nadu.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Chennai_Central.jpg",
+      "license": "CC BY-SA 2.0",
+      "photographer": "jamal haider from india",
+      "width": 636,
+      "height": 438,
+      "edge_std": 82.82,
+      "pixel_count": 278568,
+      "aspect": 1.452
+    },
+    {
+      "city": "Tezpur",
+      "file": "static/img/pdf_destinations/tezpur.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Agnigarh_Hill%2C_Tezpur.JPG",
+      "license": "Public domain",
+      "photographer": "Anupom007bora at English Wikipedia",
+      "width": 1024,
+      "height": 768,
+      "edge_std": 80.86,
+      "pixel_count": 786432,
+      "aspect": 1.333
+    },
+    {
+      "city": "Tirupati",
+      "file": "static/img/pdf_destinations/tirupati.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Tirupati_temple.jpg",
+      "license": "CC BY-SA 4.0",
+      "photographer": "Kajal Dhanotia",
+      "width": 1280,
+      "height": 960,
+      "edge_std": 62.03,
+      "pixel_count": 1228800,
+      "aspect": 1.333
+    },
+    {
+      "city": "Udaipur",
+      "file": "static/img/pdf_destinations/udaipur.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Evening_view%2C_City_Palace%2C_Udaipur.jpg",
+      "license": "CC BY-SA 2.0",
+      "photographer": "Geri from Biel/Bienne, Schweiz",
+      "width": 1500,
+      "height": 1000,
+      "edge_std": 49.25,
+      "pixel_count": 1500000,
+      "aspect": 1.5
+    },
+    {
+      "city": "Uttar Pradesh",
+      "file": "static/img/pdf_destinations/uttar-pradesh.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Varanasi%2C_India%2C_Ghats%2C_Cremation_ceremony_in_progress.jpg",
+      "license": "CC BY 4.0",
+      "photographer": "Vyacheslav Argenberg",
+      "width": 1500,
+      "height": 1000,
+      "edge_std": 52.85,
+      "pixel_count": 1500000,
+      "aspect": 1.5
+    },
+    {
+      "city": "Varanasi",
+      "file": "static/img/pdf_destinations/varanasi.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Varanasi%2C_India%2C_Ghats%2C_Cremation_ceremony_in_progress.jpg",
+      "license": "CC BY 4.0",
+      "photographer": "Vyacheslav Argenberg",
+      "width": 1500,
+      "height": 1000,
+      "edge_std": 52.85,
+      "pixel_count": 1500000,
+      "aspect": 1.5
+    },
+    {
+      "city": "West Bengal & Sikkim",
+      "file": "static/img/pdf_destinations/west-bengal-sikkim.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Kangch-Goechala.jpg",
+      "license": "CC BY-SA 3.0",
+      "photographer": "Ashinpt at enwiki",
+      "width": 1500,
+      "height": 1125,
+      "edge_std": 46.42,
+      "pixel_count": 1687500,
+      "aspect": 1.333
+    }
+  ],
+  "sheets": [
+    "contact-sheet-01.jpg",
+    "contact-sheet-02.jpg",
+    "contact-sheet-03.jpg",
+    "contact-sheet-04.jpg",
+    "contact-sheet-05.jpg",
+    "contact-sheet-06.jpg"
+  ],
+  "private_van_coverage": {
+    "FIT/2978": {
+      "title": "Andaman with Neil Island",
+      "region": "Andaman & Nicobar",
+      "route_cities": [
+        "Port Blair",
+        "Havelock Island",
+        "Neil Island",
+        "Port Blair"
+      ],
+      "photo_candidates": [
+        "Port Blair",
+        "Port Blair"
+      ]
+    },
+    "FIT/4067": {
+      "title": "Best Of Andaman With Baratang",
+      "region": "Andaman & Nicobar",
+      "route_cities": [
+        "Port Blair",
+        "Havelock Island",
+        "Neil Island"
+      ],
+      "photo_candidates": [
+        "Port Blair"
+      ]
+    },
+    "FIT/4066": {
+      "title": "Best Of Port Blair & Havelock",
+      "region": "Andaman & Nicobar",
+      "route_cities": [
+        "Port Blair",
+        "Havelock Island"
+      ],
+      "photo_candidates": [
+        "Port Blair"
+      ]
+    },
+    "FIT/3054": {
+      "title": "Combination of 3 Beautiful Islands Andaman",
+      "region": "Andaman & Nicobar",
+      "route_cities": [
+        "Port Blair",
+        "Havelock Island",
+        "Neil Island",
+        "Port Blair"
+      ],
+      "photo_candidates": [
+        "Port Blair",
+        "Port Blair"
+      ]
+    },
+    "FIT/4069": {
+      "title": "Magical Andaman",
+      "region": "Andaman & Nicobar",
+      "route_cities": [
+        "Port Blair",
+        "Havelock Island",
+        "Neil Island"
+      ],
+      "photo_candidates": [
+        "Port Blair"
+      ]
+    },
+    "FIT/3390": {
+      "title": "Tropical Andaman",
+      "region": "Andaman & Nicobar",
+      "route_cities": [
+        "Port Blair",
+        "Havelock Island",
+        "Port Blair"
+      ],
+      "photo_candidates": [
+        "Port Blair",
+        "Port Blair"
+      ]
+    },
+    "FIT/1376": {
+      "title": "Soulful India",
+      "region": "Golden Triangle Tour Packages",
+      "route_cities": [
+        "New Delhi",
+        "Agra",
+        "Jaipur"
+      ],
+      "photo_candidates": [
+        "Agra",
+        "Jaipur"
+      ]
+    },
+    "FIT/1368": {
+      "title": "Beaches and Wildlife",
+      "region": "Gujarat",
+      "route_cities": [
+        "Diu",
+        "Sasan Gir"
+      ],
+      "photo_candidates": [
+        "Diu"
+      ]
+    },
+    "FIT/3471": {
+      "title": "Divine Dwarka With Gir",
+      "region": "Gujarat",
+      "route_cities": [
+        "Dwarka",
+        "Somnath",
+        "Sasan Gir",
+        "Ahmedabad"
+      ],
+      "photo_candidates": [
+        "Dwarka"
+      ]
+    },
+    "FIT/2782": {
+      "title": "Spiritual Gateway of Gujarat",
+      "region": "Gujarat",
+      "route_cities": [
+        "Dwarka",
+        "Somnath"
+      ],
+      "photo_candidates": [
+        "Dwarka"
+      ]
+    },
+    "FIT/1969": {
+      "title": "Himachal With Amritsar",
+      "region": "Himachal Pradesh",
+      "route_cities": [
+        "Dharamshala",
+        "Dalhousie",
+        "Amritsar"
+      ],
+      "photo_candidates": [
+        "Amritsar"
+      ]
+    },
+    "FIT/1365": {
+      "title": "Himalayan Wonder With Amritsar",
+      "region": "Himachal Pradesh",
+      "route_cities": [
+        "Shimla",
+        "Manali",
+        "Dharamshala",
+        "Dalhousie",
+        "Amritsar"
+      ],
+      "photo_candidates": [
+        "Shimla",
+        "Amritsar"
+      ]
+    },
+    "FIT/1367": {
+      "title": "Himalayan Wonder With Chandigarh",
+      "region": "Himachal Pradesh",
+      "route_cities": [
+        "Shimla",
+        "Manali",
+        "Dharamshala",
+        "Dalhousie",
+        "Chandigarh"
+      ],
+      "photo_candidates": [
+        "Shimla"
+      ]
+    },
+    "FIT/2335": {
+      "title": "Idyllic Himachal",
+      "region": "Himachal Pradesh",
+      "route_cities": [
+        "Amritsar",
+        "Dalhousie"
+      ],
+      "photo_candidates": [
+        "Amritsar"
+      ]
+    },
+    "FIT/1844": {
+      "title": "Magic of Himachal With Chandigarh",
+      "region": "Himachal Pradesh",
+      "route_cities": [
+        "Shimla",
+        "Manali",
+        "Chandigarh"
+      ],
+      "photo_candidates": [
+        "Shimla"
+      ]
+    },
+    "FIT/1360": {
+      "title": "Scenic Himachal",
+      "region": "Himachal Pradesh",
+      "route_cities": [
+        "Shimla",
+        "Manali",
+        "Chandigarh"
+      ],
+      "photo_candidates": [
+        "Shimla"
+      ]
+    },
+    "FIT/2745": {
+      "title": "Best of Kashmir",
+      "region": "Jammu & Kashmir",
+      "route_cities": [
+        "Srinagar",
+        "Srinagar",
+        "Gulmarg",
+        "Pahalgam"
+      ],
+      "photo_candidates": [
+        "Srinagar",
+        "Srinagar"
+      ]
+    },
+    "FIT/2777": {
+      "title": "Kashmir Corridor",
+      "region": "Jammu & Kashmir",
+      "route_cities": [
+        "Srinagar",
+        "Gulmarg",
+        "Pahalgam",
+        "Srinagar"
+      ],
+      "photo_candidates": [
+        "Srinagar",
+        "Srinagar"
+      ]
+    },
+    "FIT/2972": {
+      "title": "Kashmir with Vaishnodevi",
+      "region": "Jammu & Kashmir",
+      "route_cities": [
+        "Katra",
+        "Pahalgam",
+        "Gulmarg",
+        "Srinagar",
+        "Srinagar"
+      ],
+      "photo_candidates": [
+        "Katra",
+        "Srinagar",
+        "Srinagar"
+      ]
+    },
+    "FIT/1936": {
+      "title": "Majestic Kashmir",
+      "region": "Jammu & Kashmir",
+      "route_cities": [
+        "Srinagar",
+        "Gulmarg",
+        "Pahalgam",
+        "Srinagar"
+      ],
+      "photo_candidates": [
+        "Srinagar",
+        "Srinagar"
+      ]
+    },
+    "FIT/1354": {
+      "title": "Botanical Hilly Mystery",
+      "region": "Karnataka",
+      "route_cities": [
+        "Mysore",
+        "Ooty",
+        "Kodaikanal"
+      ],
+      "photo_candidates": [
+        "Mysore",
+        "Ooty",
+        "Kodaikanal"
+      ]
+    },
+    "FIT/3948": {
+      "title": "Coastal Charm Chennai to Pondicherry",
+      "region": "Karnataka",
+      "route_cities": [
+        "Chennai",
+        "Mahabalipuram",
+        "Pondicherry"
+      ],
+      "photo_candidates": [
+        "Chennai",
+        "Mahabalipuram"
+      ]
+    },
+    "FIT/3952": {
+      "title": "Divine South India Pilgrimage",
+      "region": "Karnataka",
+      "route_cities": [
+        "Tirupati",
+        "Mahabalipuram",
+        "Thanjavur",
+        "Madurai",
+        "Rameshwaram",
+        "Kanyakumari",
+        "Trivandrum"
+      ],
+      "photo_candidates": [
+        "Tirupati",
+        "Mahabalipuram"
+      ]
+    },
+    "FIT/3949": {
+      "title": "Enchanting South India Escape",
+      "region": "Karnataka",
+      "route_cities": [
+        "Ooty",
+        "Kodaikanal",
+        "Rameshwaram",
+        "Kanyakumari"
+      ],
+      "photo_candidates": [
+        "Ooty",
+        "Kodaikanal"
+      ]
+    },
+    "FIT/1345": {
+      "title": "Jewels Of South India",
+      "region": "Karnataka",
+      "route_cities": [
+        "Mysore",
+        "Coorg",
+        "Ooty"
+      ],
+      "photo_candidates": [
+        "Mysore",
+        "Coorg",
+        "Ooty"
+      ]
+    },
+    "FIT/1357": {
+      "title": "Karnataka Hills",
+      "region": "Karnataka",
+      "route_cities": [
+        "Bangalore",
+        "Mysore",
+        "Ooty",
+        "Kodaikanal"
+      ],
+      "photo_candidates": [
+        "Bangalore",
+        "Mysore",
+        "Ooty",
+        "Kodaikanal"
+      ]
+    },
+    "FIT/1931": {
+      "title": "Nilgiri Hills",
+      "region": "Karnataka",
+      "route_cities": [
+        "Kodaikanal",
+        "Ooty"
+      ],
+      "photo_candidates": [
+        "Kodaikanal",
+        "Ooty"
+      ]
+    },
+    "FIT/3946": {
+      "title": "Southern Wonders Culture And Coast",
+      "region": "Karnataka",
+      "route_cities": [
+        "Mahabalipuram",
+        "Thanjavur",
+        "Madurai",
+        "Rameshwaram",
+        "Kanyakumari",
+        "Trivandrum"
+      ],
+      "photo_candidates": [
+        "Mahabalipuram"
+      ]
+    },
+    "FIT/2144": {
+      "title": "Beach The Best Escape - kovalam",
+      "region": "Kerala",
+      "route_cities": [
+        "Kovalam"
+      ],
+      "photo_candidates": [
+        "Kovalam"
+      ]
+    },
+    "FIT/1385": {
+      "title": "Complete Kerala",
+      "region": "Kerala",
+      "route_cities": [
+        "Cochin",
+        "Munnar",
+        "Thekkady",
+        "Kumarakom",
+        "Kovalam"
+      ],
+      "photo_candidates": [
+        "Cochin",
+        "Munnar",
+        "Kumarakom",
+        "Kovalam"
+      ]
+    },
+    "FIT/1304": {
+      "title": "Cool Kerala",
+      "region": "Kerala",
+      "route_cities": [
+        "Cochin",
+        "Munnar",
+        "Thekkady",
+        "Kumarakom"
+      ],
+      "photo_candidates": [
+        "Cochin",
+        "Munnar",
+        "Kumarakom"
+      ]
+    },
+    "FIT/1343": {
+      "title": "Essence of North Kerala",
+      "region": "Kerala",
+      "route_cities": [
+        "Coorg",
+        "Kabini"
+      ],
+      "photo_candidates": [
+        "Coorg"
+      ]
+    },
+    "FIT/3532": {
+      "title": "Karnataka With Coorg",
+      "region": "Kerala",
+      "route_cities": [
+        "Bangalore",
+        "Mysore",
+        "Coorg"
+      ],
+      "photo_candidates": [
+        "Bangalore",
+        "Mysore",
+        "Coorg"
+      ]
+    },
+    "FIT/1305": {
+      "title": "Kerala - Gods Own Country",
+      "region": "Kerala",
+      "route_cities": [
+        "Cochin",
+        "Munnar",
+        "Thekkady",
+        "Kumarakom"
+      ],
+      "photo_candidates": [
+        "Cochin",
+        "Munnar",
+        "Kumarakom"
+      ]
+    },
+    "FIT/1307": {
+      "title": "Kerala Beauty",
+      "region": "Kerala",
+      "route_cities": [
+        "Munnar",
+        "Thekkady",
+        "Kumarakom"
+      ],
+      "photo_candidates": [
+        "Munnar",
+        "Kumarakom"
+      ]
+    },
+    "FIT/1308": {
+      "title": "Kerala Coast (Land Package)",
+      "region": "Kerala",
+      "route_cities": [
+        "Munnar",
+        "Thekkady",
+        "Kumarakom",
+        "Kovalam"
+      ],
+      "photo_candidates": [
+        "Munnar",
+        "Kumarakom",
+        "Kovalam"
+      ]
+    },
+    "FIT/1310": {
+      "title": "Kerala Highlights",
+      "region": "Kerala",
+      "route_cities": [
+        "Munnar",
+        "Thekkady",
+        "Kumarakom",
+        "Alleppey",
+        "Kovalam"
+      ],
+      "photo_candidates": [
+        "Munnar",
+        "Kumarakom",
+        "Kovalam"
+      ]
+    },
+    "FIT/1314": {
+      "title": "Lagoons of Kerala",
+      "region": "Kerala",
+      "route_cities": [
+        "Munnar",
+        "Thekkady",
+        "Alleppey",
+        "Kovalam"
+      ],
+      "photo_candidates": [
+        "Munnar",
+        "Kovalam"
+      ]
+    },
+    "FIT/1347": {
+      "title": "Malabar Circuit",
+      "region": "Kerala",
+      "route_cities": [
+        "Coorg",
+        "Kabini",
+        "Wayanad"
+      ],
+      "photo_candidates": [
+        "Coorg"
+      ]
+    },
+    "FIT/3370": {
+      "title": "Mysore with Coorg and Kabini",
+      "region": "Kerala",
+      "route_cities": [
+        "Mysore",
+        "Coorg",
+        "Kabini"
+      ],
+      "photo_candidates": [
+        "Mysore",
+        "Coorg"
+      ]
+    },
+    "FIT/2092": {
+      "title": "Nature At It’s Best- Kumarakom",
+      "region": "Kerala",
+      "route_cities": [
+        "Kumarakom"
+      ],
+      "photo_candidates": [
+        "Kumarakom"
+      ]
+    },
+    "FIT/2097": {
+      "title": "Paradise On Earth - Munnar",
+      "region": "Kerala",
+      "route_cities": [
+        "Munnar"
+      ],
+      "photo_candidates": [
+        "Munnar"
+      ]
+    },
+    "FIT/1315": {
+      "title": "Venice of Kerala",
+      "region": "Kerala",
+      "route_cities": [
+        "Cochin",
+        "Munnar",
+        "Thekkady",
+        "Kumarakom",
+        "Alleppey",
+        "Kovalam"
+      ],
+      "photo_candidates": [
+        "Cochin",
+        "Munnar",
+        "Kumarakom",
+        "Kovalam"
+      ]
+    },
+    "FIT/1316": {
+      "title": "Whole of Kerala",
+      "region": "Kerala",
+      "route_cities": [
+        "Cochin",
+        "Munnar",
+        "Thekkady",
+        "Kumarakom",
+        "Kovalam"
+      ],
+      "photo_candidates": [
+        "Cochin",
+        "Munnar",
+        "Kumarakom",
+        "Kovalam"
+      ]
+    },
+    "FIT/4091": {
+      "title": "Amazing Assam",
+      "region": "North East India",
+      "route_cities": [
+        "Shillong",
+        "Kaziranga",
+        "Guwahati"
+      ],
+      "photo_candidates": [
+        "Shillong",
+        "Guwahati"
+      ]
+    },
+    "FIT/4092": {
+      "title": "Experience Of Assam",
+      "region": "North East India",
+      "route_cities": [
+        "Tezpur",
+        "Dirang",
+        "Tawang",
+        "Dirang",
+        "Guwahati"
+      ],
+      "photo_candidates": [
+        "Tezpur",
+        "Guwahati"
+      ]
+    },
+    "FIT/4090": {
+      "title": "Fascinating Assam",
+      "region": "North East India",
+      "route_cities": [
+        "Shillong",
+        "Kaziranga"
+      ],
+      "photo_candidates": [
+        "Shillong"
+      ]
+    },
+    "FIT/4093": {
+      "title": "Pristine Nature Beauty Of North East",
+      "region": "North East India",
+      "route_cities": [
+        "Guwahati",
+        "Dirang",
+        "Tawang",
+        "Dirang",
+        "Tezpur",
+        "Shillong"
+      ],
+      "photo_candidates": [
+        "Guwahati",
+        "Tezpur",
+        "Shillong"
+      ]
+    },
+    "FIT/4075": {
+      "title": "Glorious Odisha Tour",
+      "region": "Odisha",
+      "route_cities": [
+        "Puri",
+        "Gopalpur",
+        "Bhubaneswar"
+      ],
+      "photo_candidates": [
+        "Puri"
+      ]
+    },
+    "FIT/3519": {
+      "title": "Golden Triangle With Chilika Lake Tour",
+      "region": "Odisha",
+      "route_cities": [
+        "Puri",
+        "Bhubaneswar"
+      ],
+      "photo_candidates": [
+        "Puri"
+      ]
+    },
+    "FIT/4079": {
+      "title": "Jagannath And Shaktipeeth Tour",
+      "region": "Odisha",
+      "route_cities": [
+        "Puri",
+        "Gopalpur",
+        "Bhubaneswar"
+      ],
+      "photo_candidates": [
+        "Puri"
+      ]
+    },
+    "FIT/1387": {
+      "title": "Odisha Golden Triangle",
+      "region": "Odisha",
+      "route_cities": [
+        "Puri",
+        "Bhubaneswar"
+      ],
+      "photo_candidates": [
+        "Puri"
+      ]
+    },
+    "FIT/4076": {
+      "title": "Shree Jagannath Temple Tour",
+      "region": "Odisha",
+      "route_cities": [
+        "Puri"
+      ],
+      "photo_candidates": [
+        "Puri"
+      ]
+    },
+    "FIT/1379": {
+      "title": "Exotic Rajasthan",
+      "region": "Rajasthan",
+      "route_cities": [
+        "Jaipur",
+        "Bharatpur",
+        "Ranthambore National Park"
+      ],
+      "photo_candidates": [
+        "Jaipur"
+      ]
+    },
+    "FIT/1377": {
+      "title": "Golden Triangle",
+      "region": "Rajasthan",
+      "route_cities": [
+        "New Delhi",
+        "Agra",
+        "Jaipur"
+      ],
+      "photo_candidates": [
+        "Agra",
+        "Jaipur"
+      ]
+    },
+    "FIT/1381": {
+      "title": "Heritage Rajasthan",
+      "region": "Rajasthan",
+      "route_cities": [
+        "Jaipur",
+        "Bikaner",
+        "Jaisalmer",
+        "Jodhpur"
+      ],
+      "photo_candidates": [
+        "Jaipur",
+        "Jaisalmer",
+        "Jodhpur"
+      ]
+    },
+    "FIT/2025": {
+      "title": "Lakes & Forts Of Rajasthan",
+      "region": "Rajasthan",
+      "route_cities": [
+        "Udaipur",
+        "Kumbhalgarh"
+      ],
+      "photo_candidates": [
+        "Udaipur"
+      ]
+    },
+    "FIT/3398": {
+      "title": "Simplicity Rajasthan",
+      "region": "Rajasthan",
+      "route_cities": [
+        "Udaipur",
+        "Kumbhalgarh",
+        "Jodhpur"
+      ],
+      "photo_candidates": [
+        "Udaipur",
+        "Jodhpur"
+      ]
+    },
+    "FIT/1402": {
+      "title": "The Golden Rajasthan",
+      "region": "Rajasthan",
+      "route_cities": [
+        "Jodhpur",
+        "Manvar",
+        "Jaisalmer"
+      ],
+      "photo_candidates": [
+        "Jodhpur",
+        "Jaisalmer"
+      ]
+    },
+    "FIT/1382": {
+      "title": "Whole of Rajasthan",
+      "region": "Rajasthan",
+      "route_cities": [
+        "New Delhi",
+        "Agra",
+        "Jaipur",
+        "Mandawa",
+        "Bikaner",
+        "Jaisalmer",
+        "Jodhpur",
+        "Udaipur"
+      ],
+      "photo_candidates": [
+        "Agra",
+        "Jaipur",
+        "Jaisalmer",
+        "Jodhpur",
+        "Udaipur"
+      ]
+    },
+    "FIT/4081": {
+      "title": "Braj Bhoomi Mathura & Agra",
+      "region": "Uttar Pradesh",
+      "route_cities": [
+        "Mathura",
+        "Agra",
+        "New Delhi"
+      ],
+      "photo_candidates": [
+        "Agra"
+      ]
+    },
+    "FIT/4078": {
+      "title": "Feel Spiritual In Uttarpradesh",
+      "region": "Uttar Pradesh",
+      "route_cities": [
+        "Varanasi",
+        "Ayodhya",
+        "Prayagraj",
+        "Varanasi"
+      ],
+      "photo_candidates": [
+        "Varanasi",
+        "Ayodhya",
+        "Varanasi"
+      ]
+    },
+    "FIT/4080": {
+      "title": "Glory Of Tristhal Varanasi",
+      "region": "Uttar Pradesh",
+      "route_cities": [
+        "Varanasi",
+        "Ayodhya",
+        "Prayagraj",
+        "Varanasi"
+      ],
+      "photo_candidates": [
+        "Varanasi",
+        "Ayodhya",
+        "Varanasi"
+      ]
+    },
+    "FIT/4086": {
+      "title": "Holy Trip To Varanasi & Prayagraj",
+      "region": "Uttar Pradesh",
+      "route_cities": [
+        "Varanasi"
+      ],
+      "photo_candidates": [
+        "Varanasi"
+      ]
+    },
+    "FIT/4089": {
+      "title": "Mesmerizing Varanasi With Ayodhya",
+      "region": "Uttar Pradesh",
+      "route_cities": [
+        "Varanasi",
+        "Ayodhya",
+        "Varanasi"
+      ],
+      "photo_candidates": [
+        "Varanasi",
+        "Ayodhya",
+        "Varanasi"
+      ]
+    },
+    "FIT/4084": {
+      "title": "Spiritual Ayodhya",
+      "region": "Uttar Pradesh",
+      "route_cities": [
+        "Ayodhya"
+      ],
+      "photo_candidates": [
+        "Ayodhya"
+      ]
+    },
+    "FIT/4082": {
+      "title": "Spiritual Varanasi Prayagraj And Ayodhya",
+      "region": "Uttar Pradesh",
+      "route_cities": [
+        "Varanasi",
+        "Ayodhya",
+        "Prayagraj",
+        "Varanasi"
+      ],
+      "photo_candidates": [
+        "Varanasi",
+        "Ayodhya",
+        "Varanasi"
+      ]
+    },
+    "FIT/2169": {
+      "title": "A Traveler’s Paradise – Nainital and Corbett",
+      "region": "Uttarakhand",
+      "route_cities": [
+        "Nainital",
+        "Corbett National Park"
+      ],
+      "photo_candidates": [
+        "Nainital"
+      ]
+    },
+    "FIT/3011": {
+      "title": "Adventure in Uttaranchal",
+      "region": "Uttarakhand",
+      "route_cities": [
+        "Rishikesh"
+      ],
+      "photo_candidates": [
+        "Rishikesh"
+      ]
+    },
+    "FIT/2039": {
+      "title": "Best Of Uttaranchal",
+      "region": "Uttarakhand",
+      "route_cities": [
+        "Rishikesh",
+        "Mussoorie",
+        "Corbett National Park"
+      ],
+      "photo_candidates": [
+        "Rishikesh",
+        "Mussoorie"
+      ]
+    },
+    "FIT/1361": {
+      "title": "Kumaon Special",
+      "region": "Uttarakhand",
+      "route_cities": [
+        "Nainital",
+        "Kausani",
+        "Corbett National Park"
+      ],
+      "photo_candidates": [
+        "Nainital"
+      ]
+    },
+    "FIT/2213": {
+      "title": "Kumaon With Garhwal Special",
+      "region": "Uttarakhand",
+      "route_cities": [
+        "Mussoorie",
+        "Rishikesh",
+        "Corbett National Park",
+        "Nainital"
+      ],
+      "photo_candidates": [
+        "Mussoorie",
+        "Rishikesh",
+        "Nainital"
+      ]
+    },
+    "FIT/1364": {
+      "title": "Soul Searching Uttaranchal",
+      "region": "Uttarakhand",
+      "route_cities": [
+        "Nainital",
+        "Kausani",
+        "Corbett National Park",
+        "Mussoorie",
+        "Rishikesh"
+      ],
+      "photo_candidates": [
+        "Nainital",
+        "Mussoorie",
+        "Rishikesh"
+      ]
+    },
+    "FIT/2330": {
+      "title": "Spiritual with Hill Station",
+      "region": "Uttarakhand",
+      "route_cities": [
+        "Rishikesh",
+        "Mussoorie"
+      ],
+      "photo_candidates": [
+        "Rishikesh",
+        "Mussoorie"
+      ]
+    },
+    "FIT/2977": {
+      "title": "The Charming Hill Stations With Beautiful Forest Experience",
+      "region": "Uttarakhand",
+      "route_cities": [
+        "Nainital",
+        "Kausani",
+        "Corbett National Park"
+      ],
+      "photo_candidates": [
+        "Nainital"
+      ]
+    },
+    "FIT/1363": {
+      "title": "Uniquely Uttaranchal",
+      "region": "Uttarakhand",
+      "route_cities": [
+        "Nainital",
+        "Kausani",
+        "Corbett National Park"
+      ],
+      "photo_candidates": [
+        "Nainital"
+      ]
+    },
+    "FIT/3923": {
+      "title": "Eastern Delight",
+      "region": "West Bengal Sikkim",
+      "route_cities": [
+        "Gangtok",
+        "Kalimpong",
+        "Darjeeling"
+      ],
+      "photo_candidates": [
+        "Gangtok",
+        "Darjeeling"
+      ]
+    },
+    "FIT/3123": {
+      "title": "Sikkim Splendor",
+      "region": "West Bengal Sikkim",
+      "route_cities": [
+        "Gangtok",
+        "Lachung",
+        "Gangtok",
+        "Pelling",
+        "Darjeeling"
+      ],
+      "photo_candidates": [
+        "Gangtok",
+        "Gangtok",
+        "Darjeeling"
+      ]
+    }
+  }
+}
