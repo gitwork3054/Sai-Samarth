@@ -16,27 +16,27 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"docs/pdf-photo-candidates"
 OUT.mkdir(parents=True,exist_ok=True)
 QUERIES={
- "Shimla":"Shimla cityscape hillside ridge Himalayas",
- "Srinagar":"Dal Lake Srinagar shikara mountains Kashmir",
- "Katra":"Vaishno Devi Bhawan Jammu Kashmir mountain",
- "Coorg":"Coorg Kodagu coffee plantation scenic hills",
- "Chennai":"Chennai Marina Beach lighthouse Tamil Nadu",
- "Tamil Nadu":"Madurai Meenakshi temple Tamil Nadu",
- "Jaisalmer":"Jaisalmer Fort view golden city",
- "Varanasi":"Varanasi sunrise ghats Ganges river",
- "Kodaikanal":"Kodaikanal lake landscape Tamil Nadu",
- "Kumarakom":"Kumarakom Kerala backwaters houseboat",
- "Ooty":"Ooty Nilgiri tea plantation hills",
- "Lakshadweep":"Agatti Lakshadweep island beach lagoon",
- "Port Blair":"Port Blair Corbyn Cove beach Andaman",
- "Andaman":"Havelock Radhanagar Beach Andaman",
- "Guwahati":"Guwahati Umananda temple Brahmaputra",
- "Goa":"Palolem Beach Goa palm trees",
- "Diu":"Diu Nagoa beach Gujarat",
- "Bangalore":"Bangalore Palace gardens Karnataka",
- "Darjeeling":"Darjeeling mountain Kanchenjunga tea gardens",
- "Rishikesh":"Rishikesh Laxman Jhula Ganges mountains",
- "Tezpur":"Tezpur Brahmaputra river Assam",
+ "Shimla":"Shimla",
+ "Srinagar":"Srinagar",
+ "Katra":"Vaishno Devi",
+ "Coorg":"Coorg",
+ "Chennai":"Chennai",
+ "Tamil Nadu":"Madurai",
+ "Jaisalmer":"Jaisalmer",
+ "Varanasi":"Varanasi",
+ "Kodaikanal":"Kodaikanal",
+ "Kumarakom":"Kumarakom",
+ "Ooty":"Ooty",
+ "Lakshadweep":"Lakshadweep",
+ "Port Blair":"Port Blair",
+ "Andaman":"Havelock",
+ "Guwahati":"Guwahati",
+ "Goa":"Goa",
+ "Diu":"Diu",
+ "Bangalore":"Bangalore",
+ "Darjeeling":"Darjeeling",
+ "Rishikesh":"Rishikesh",
+ "Tezpur":"Tezpur",
 }
 ACCEPT={
  "Shimla":["shimla","simla"],
@@ -73,18 +73,27 @@ def search_and_collect(city,query):
   with requests.Session() as s:
    s.headers.update({"User-Agent":UA})
    params={"action":"query","format":"json","generator":"search",
-           "gsrsearch":query,"gsrnamespace":"6","gsrlimit":24,
+           "gsrsearch":query,"gsrnamespace":"6","gsrlimit":65,
            "prop":"imageinfo","iiprop":"url|size|extmetadata","iiurlwidth":"1000"}
    response=s.get("https://commons.wikimedia.org/w/api.php",params=params,timeout=22)
    response.raise_for_status()
    pages=list((response.json().get("query") or {}).get("pages",{}).values())
-   pages.sort(key=lambda x:x.get("index",100))
+   scenic=re.compile(r"lake|mountain|panorama|hill|ridge|cityscape|valley|sunset|sunrise|tea|fort|palace|temple|beach|landscape|backwater|river|view|forest|island|harbour|coast|snow|green|aerial|scenic",re.I)
+   avoid=re.compile(r"police|traffic|road sign|congestion|station|railway|crowd|nightlife|bike|selfie|tourist|logo|map|coat.of.arms|flag|poster",re.I)
+   def rank(page):
+    name=page.get("title","")
+    details=(page.get("imageinfo") or [{}])[0]
+    score=(4 if scenic.search(name) else 0)+(1 if int(details.get("width",0))>=1800 else 0)
+    if avoid.search(name):score-=10
+    return (-score,page.get("index",100))
+   pages.sort(key=rank)
    for item in pages:
     if len(candidates)>=3:break
     title=item.get("title","")
     if not any(term in title.casefold().replace("_"," ") for term in ACCEPT[city]):
      continue
     if not re.search(r"\.(jpg|jpeg|png|webp)$",title,re.I):continue
+    if avoid.search(title):continue
     info=(item.get("imageinfo") or [{}])[0]
     if int(info.get("width",0))<1100 or int(info.get("height",0))<720:continue
     meta=info.get("extmetadata") or {}
