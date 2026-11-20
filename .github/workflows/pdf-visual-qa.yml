@@ -1,9 +1,5 @@
 name: Render cinematic PDF visual QA
 on:
-  push:
-    paths:
-      - 'scripts/build_pdf_qa_preview.py'
-      - '.github/workflows/pdf-visual-qa.yml'
   workflow_dispatch:
 permissions:
   contents: write

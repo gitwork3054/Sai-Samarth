@@ -1,9 +1,5 @@
 name: Build licensed destination photo library for tour PDFs
 on:
-  push:
-    paths:
-      - 'scripts/build_destination_pdf_photos.py'
-      - '.github/workflows/build-destination-pdf-photos.yml'
   workflow_dispatch:
 permissions:
   contents: write
