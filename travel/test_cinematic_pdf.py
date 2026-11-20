@@ -103,13 +103,14 @@ class AllDestinationPhotoTests(TestCase):
                                           state_or_country="Uttar Pradesh")
         pkg=m.Package.objects.create(destination=city,title="Ayodhya Spiritual Escape",
                                      days=3,nights=2,base_price=9999)
-        pdf=build_cinematic_pdf(pkg,self.site)
+        pdf=build_cinematic_pdf(pkg,m.SiteSettings.get())
         if PdfReader:
             reader=PdfReader(io.BytesIO(pdf))
             cover=reader.pages[0]
             self.assertIn("AYODHYA",cover.extract_text())
             resources=cover["/Resources"]
-            xobjs=resources.get("/XObject",{})
+            xobject_ref=resources.get("/XObject")
+            xobjs=xobject_ref.get_object() if xobject_ref else {}
             images=[obj for obj in xobjs.values()
                     if obj.get_object().get("/Subtype") == "/Image"]
             self.assertTrue(images, "The brochure cover must contain a real destination photograph")
