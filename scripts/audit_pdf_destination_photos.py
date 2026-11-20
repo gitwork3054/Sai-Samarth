@@ -93,3 +93,5 @@ report={"count":len(photos),"missing_files":[r["city"] for r in rows if r.get("e
 print("AUDIT_RESULT",json.dumps({"total_images":len(photos),"missing":report["missing_files"],
  "low_resolution":report["low_resolution"],"sheets":by_page,
  "tours_without_photo":[k for k,v in groups.items() if not v["photo_candidates"]]},ensure_ascii=False))
+
+# Reviewed scenic replacements are re-checked against the exact PDF cover crops.
