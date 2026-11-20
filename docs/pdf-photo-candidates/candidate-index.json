@@ -1,49 +1,111 @@
 {
-  "generated": "2026-11-20T10:51:49.527592+00:00",
+  "generated": "2026-11-20T10:52:50.936242+00:00",
   "queries": {
-    "Shimla": "Shimla cityscape hillside ridge Himalayas",
-    "Srinagar": "Dal Lake Srinagar shikara mountains Kashmir",
-    "Katra": "Vaishno Devi Bhawan Jammu Kashmir mountain",
-    "Coorg": "Coorg Kodagu coffee plantation scenic hills",
-    "Chennai": "Chennai Marina Beach lighthouse Tamil Nadu",
-    "Tamil Nadu": "Madurai Meenakshi temple Tamil Nadu",
-    "Jaisalmer": "Jaisalmer Fort view golden city",
-    "Varanasi": "Varanasi sunrise ghats Ganges river",
-    "Kodaikanal": "Kodaikanal lake landscape Tamil Nadu",
-    "Kumarakom": "Kumarakom Kerala backwaters houseboat",
-    "Ooty": "Ooty Nilgiri tea plantation hills",
-    "Lakshadweep": "Agatti Lakshadweep island beach lagoon",
-    "Port Blair": "Port Blair Corbyn Cove beach Andaman",
-    "Andaman": "Havelock Radhanagar Beach Andaman",
-    "Guwahati": "Guwahati Umananda temple Brahmaputra",
-    "Goa": "Palolem Beach Goa palm trees",
-    "Diu": "Diu Nagoa beach Gujarat",
-    "Bangalore": "Bangalore Palace gardens Karnataka",
-    "Darjeeling": "Darjeeling mountain Kanchenjunga tea gardens",
-    "Rishikesh": "Rishikesh Laxman Jhula Ganges mountains",
-    "Tezpur": "Tezpur Brahmaputra river Assam"
+    "Shimla": "Shimla",
+    "Srinagar": "Srinagar",
+    "Katra": "Vaishno Devi",
+    "Coorg": "Coorg",
+    "Chennai": "Chennai",
+    "Tamil Nadu": "Madurai",
+    "Jaisalmer": "Jaisalmer",
+    "Varanasi": "Varanasi",
+    "Kodaikanal": "Kodaikanal",
+    "Kumarakom": "Kumarakom",
+    "Ooty": "Ooty",
+    "Lakshadweep": "Lakshadweep",
+    "Port Blair": "Port Blair",
+    "Andaman": "Havelock",
+    "Guwahati": "Guwahati",
+    "Goa": "Goa",
+    "Diu": "Diu",
+    "Bangalore": "Bangalore",
+    "Darjeeling": "Darjeeling",
+    "Rishikesh": "Rishikesh",
+    "Tezpur": "Tezpur"
   },
   "results": {
     "Shimla": {
-      "status": "no qualifying candidates",
-      "candidates": []
+      "status": "ok",
+      "candidates": [
+        {
+          "city": "Shimla",
+          "source": "https://commons.wikimedia.org/wiki/File:Shimla_Top_View.jpg",
+          "file_title": "File:Shimla Top View.jpg",
+          "photographer": "Kafaldiary",
+          "license": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+          "original_width": 1280,
+          "original_height": 960
+        },
+        {
+          "city": "Shimla",
+          "source": "https://commons.wikimedia.org/wiki/File:Elephant_Headed_Dhaglu,_Upper_Shimla,_circa_late_18th_century.jpg",
+          "file_title": "File:Elephant Headed Dhaglu, Upper Shimla, circa late 18th century.jpg",
+          "photographer": "SpeakingArch",
+          "license": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+          "original_width": 1121,
+          "original_height": 1056
+        },
+        {
+          "city": "Shimla",
+          "source": "https://commons.wikimedia.org/wiki/File:Sculpture_of_Harihara,_Sarahan_(Shimla),_18th_century_CE,_Himachal_State_Museum,_Shimla.jpg",
+          "file_title": "File:Sculpture of Harihara, Sarahan (Shimla), 18th century CE, Himachal State Museum, Shimla.jpg",
+          "photographer": "SpeakingArch",
+          "license": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+          "original_width": 1200,
+          "original_height": 2143
+        }
+      ]
     },
     "Srinagar": {
-      "status": "no qualifying candidates",
-      "candidates": []
+      "status": "ok",
+      "candidates": [
+        {
+          "city": "Srinagar",
+          "source": "https://commons.wikimedia.org/wiki/File:Bridge-srinagar-6th-bridge.jpg",
+          "file_title": "File:Bridge-srinagar-6th-bridge.jpg",
+          "photographer": "J. L. Myres Zenith Press, London",
+          "license": "CC BY 4.0",
+          "license_url": "https://creativecommons.org/licenses/by/4.0",
+          "original_width": 1200,
+          "original_height": 754
+        },
+        {
+          "city": "Srinagar",
+          "source": "https://commons.wikimedia.org/wiki/File:Palace-of-srinagar_0.jpg",
+          "file_title": "File:Palace-of-srinagar 0.jpg",
+          "photographer": "H.A. Mirza & Sons Delhi c. 1910 Collotype",
+          "license": "CC BY 4.0",
+          "license_url": "https://creativecommons.org/licenses/by/4.0",
+          "original_width": 1200,
+          "original_height": 757
+        },
+        {
+          "city": "Srinagar",
+          "source": "https://commons.wikimedia.org/wiki/File:Srinagar-palace-2_0.jpg",
+          "file_title": "File:Srinagar-palace-2 0.jpg",
+          "photographer": "Fred Bremner c. 1903 Collotype",
+          "license": "CC BY 4.0",
+          "license_url": "https://creativecommons.org/licenses/by/4.0",
+          "original_width": 1200,
+          "original_height": 746
+        }
+      ]
     },
     "Katra": {
       "status": "ok",
       "candidates": [
         {
           "city": "Katra",
-          "source": "https://commons.wikimedia.org/wiki/File:Shri_Mata_Vaishno_Devi_Shrine,_Katra,_Jammu_and_Kashmir,_India.jpg",
-          "file_title": "File:Shri Mata Vaishno Devi Shrine, Katra, Jammu and Kashmir, India.jpg",
-          "photographer": "Baap8969",
-          "license": "CC0",
-          "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+          "source": "https://commons.wikimedia.org/wiki/File:SanjhiChhat_Helipad,_Vaishno_Devi,_Katra.jpg",
+          "file_title": "File:SanjhiChhat Helipad, Vaishno Devi, Katra.jpg",
+          "photographer": "SUDEEP PRAMANIK",
+          "license": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
           "original_width": 1280,
-          "original_height": 960
+          "original_height": 853
         }
       ]
     },
@@ -52,23 +114,43 @@
       "candidates": []
     },
     "Chennai": {
-      "status": "no qualifying candidates",
-      "candidates": []
-    },
-    "Tamil Nadu": {
       "status": "ok",
       "candidates": [
         {
-          "city": "Tamil Nadu",
-          "source": "https://commons.wikimedia.org/wiki/File:West_Tower,_Madurai_Meenakshi_Temple,_Tamil_Nadu,_India_(2018).jpg",
-          "file_title": "File:West Tower, Madurai Meenakshi Temple, Tamil Nadu, India (2018).jpg",
-          "photographer": "Shreya Victor Durai",
+          "city": "Chennai",
+          "source": "https://commons.wikimedia.org/wiki/File:Chennai_central_2.jpg",
+          "file_title": "File:Chennai central 2.jpg",
+          "photographer": "Vinoth offl",
           "license": "CC BY-SA 4.0",
           "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
-          "original_width": 1263,
-          "original_height": 2048
+          "original_width": 1280,
+          "original_height": 960
+        },
+        {
+          "city": "Chennai",
+          "source": "https://commons.wikimedia.org/wiki/File:Dragonfly_Brooch,_Madras,_circa_1850,_housed_in_the_V&A_Museum,_London.jpg",
+          "file_title": "File:Dragonfly Brooch, Madras, circa 1850, housed in the V&A Museum, London.jpg",
+          "photographer": "SpeakingArch",
+          "license": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+          "original_width": 1112,
+          "original_height": 1139
+        },
+        {
+          "city": "Chennai",
+          "source": "https://commons.wikimedia.org/wiki/File:Gold_Kada_with_sapphires,_Madras,_19th_century_CE,_V&A_Museum,_London.jpg",
+          "file_title": "File:Gold Kada with sapphires, Madras, 19th century CE, V&A Museum, London.jpg",
+          "photographer": "SpeakingArch",
+          "license": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+          "original_width": 1199,
+          "original_height": 1259
         }
       ]
+    },
+    "Tamil Nadu": {
+      "status": "no qualifying candidates",
+      "candidates": []
     },
     "Jaisalmer": {
       "status": "no qualifying candidates",
@@ -103,19 +185,8 @@
       "candidates": []
     },
     "Guwahati": {
-      "status": "ok",
-      "candidates": [
-        {
-          "city": "Guwahati",
-          "source": "https://commons.wikimedia.org/wiki/File:The_Umananda_Temple,_located_on_Peacock_Island_in_the_middle_of_the_Brahmaputra_River,_Guwahati.jpg",
-          "file_title": "File:The Umananda Temple, located on Peacock Island in the middle of the Brahmaputra River, Guwahati.jpg",
-          "photographer": "পাপৰি বৰা",
-          "license": "CC BY 4.0",
-          "license_url": "https://creativecommons.org/licenses/by/4.0",
-          "original_width": 1200,
-          "original_height": 1600
-        }
-      ]
+      "status": "no qualifying candidates",
+      "candidates": []
     },
     "Goa": {
       "status": "no qualifying candidates",
