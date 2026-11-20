@@ -23,7 +23,7 @@
     {% endif %}<p class="prose" data-readmore>{{ pkg.overview|default:pkg.short_description|linebreaksbr }}</p>
     {% if pkg.departure_list %}<div class="dep"><b>Fixed departures</b>{% for d in pkg.departure_list %}<span>{{ d }}</span>{% endfor %}</div>{% endif %}
     <div class="actions-row">{% if pkg.source_url %}<a class="btn btn-ghost" href="{{ pkg.source_url }}" target="_blank" rel="noopener">Latest partner itinerary ↗</a>{% endif %}
-      <a class="btn btn-ghost" href="{% url 'package_pdf' pkg.slug %}">Download itinerary PDF</a>
+      <a class="btn btn-sun" href="{% url 'package_pdf' pkg.slug %}" download="{{ pkg.slug }}-itinerary.pdf" aria-label="Download illustrated PDF for {{ pkg.title }}">↓ Download illustrated itinerary (PDF)</a>
       <button class="btn btn-ghost heart-btn{% if is_saved %} on{% endif %}" data-save="{% url 'toggle_save' pkg.slug %}" aria-pressed="{% if is_saved %}true{% else %}false{% endif %}"><span class="t-off">♡ Save for later</span><span class="t-on">♥ Saved</span></button>
     </div>
   </section>

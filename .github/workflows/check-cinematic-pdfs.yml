@@ -1,0 +1,22 @@
+name: Validate cinematic itinerary PDF downloads
+on:
+  push:
+    paths:
+      - 'travel/pdf.py'
+      - 'travel/cinematic_pdf.py'
+      - 'travel/test_cinematic_pdf.py'
+      - 'templates/travel/package_detail.html'
+      - '.github/workflows/check-cinematic-pdfs.yml'
+  workflow_dispatch:
+jobs:
+  pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r requirements.txt pypdf
+      - run: python manage.py check
+      - run: python manage.py test travel.test_cinematic_pdf --verbosity 2

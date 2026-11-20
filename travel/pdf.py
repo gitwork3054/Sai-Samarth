@@ -117,7 +117,7 @@ def _points(text):
     return result
 
 
-def build_itinerary_pdf(pkg, site):
+def build_legacy_itinerary_pdf(pkg, site):
     _fonts()
     photo, logo = _photo(pkg), _logo(site)
     buf = io.BytesIO()
@@ -266,3 +266,9 @@ def build_itinerary_pdf(pkg, site):
     story += [Spacer(1, 5), para('Prices are indicative and subject to availability. Your travel expert will confirm the final quote.', small)]
     doc.build(story)
     return buf.getvalue()
+
+
+def build_itinerary_pdf(pkg, site):
+    """Public tour downloads use the selected tour's cinematic brochure."""
+    from .cinematic_pdf import build_cinematic_pdf
+    return build_cinematic_pdf(pkg, site)
