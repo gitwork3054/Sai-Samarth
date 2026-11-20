@@ -3,6 +3,8 @@ import io
 import os
 from pathlib import Path
 from unittest.mock import patch
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 import django

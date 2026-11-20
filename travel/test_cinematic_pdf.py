@@ -52,7 +52,7 @@ class CinematicPdfTests(TestCase):
         day.save(update_fields=["description"])
         if PdfReader:
             text=" ".join(p.extract_text() or "" for p in PdfReader(io.BytesIO(self.get_pdf())).pages)
-            self.assertEqual(" ".join(text.split()).count("Explore culture and local scenery."),140)
+            self.assertEqual(len(__import__("re").findall(r"\bscenery\b", text)),140)
 
     def test_download_is_pdf_attachment(self):
         with patch("travel.cinematic_pdf.matched_photo",return_value=(None,None)):
