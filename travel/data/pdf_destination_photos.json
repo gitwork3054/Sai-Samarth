@@ -11,7 +11,10 @@
       "file": "static/img/pdf_destinations/agra.jpg",
       "city": "Agra",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Agra",
-      "downloaded_at": "2026-11-20T10:23:47.077555+00:00"
+      "downloaded_at": "2026-11-20T10:23:47.077555+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "7852dc6dbc12508cc7e02c14da5918f6061d994286f201fde43071c57a85c1ce"
     },
     "Amritsar": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Golden_Temple_Amritsar_Gurudwara_%28cropped%29.jpg",
@@ -21,27 +24,41 @@
       "file": "static/img/pdf_destinations/amritsar.jpg",
       "city": "Amritsar",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Amritsar",
-      "downloaded_at": "2026-11-20T10:23:46.802637+00:00"
+      "downloaded_at": "2026-11-20T10:23:46.802637+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "5b5950976b44cd8637893fdbd504fb261e4dbbf74c14dd7b1224897efa79fb99"
     },
     "Andaman & Nicobar": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg",
-      "photographer": "(WT-en) Prateek4 at English Wikivoyage",
-      "license": "Public domain",
-      "license_url": "",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Radhanagar_Beach%2C_Havelock_Island%2CAndaman.jpg",
+      "photographer": "Amey Ghule",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/andaman-nicobar.jpg",
       "city": "Andaman & Nicobar",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Port_Blair",
-      "downloaded_at": "2026-11-20T10:23:46.668503+00:00"
+      "downloaded_at": "2026-11-20T10:23:46.668503+00:00",
+      "reviewed_filename": "Radhanagar Beach, Havelock Island,Andaman.jpg",
+      "original_resolution": "4608x3456",
+      "sha256": "e06575a7aedb3a0c4327711a73092defcb5a3a73566810f81c5db9ba505f02e9",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "approved_alias": "Andaman Islands"
     },
     "Andaman Islands": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg",
-      "photographer": "(WT-en) Prateek4 at English Wikivoyage",
-      "license": "Public domain",
-      "license_url": "",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Radhanagar_Beach%2C_Havelock_Island%2CAndaman.jpg",
+      "photographer": "Amey Ghule",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/andaman-islands.jpg",
       "city": "Andaman Islands",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Port_Blair",
-      "downloaded_at": "2026-11-20T10:23:46.671398+00:00"
+      "downloaded_at": "2026-11-20T10:23:46.671398+00:00",
+      "reviewed_filename": "Radhanagar Beach, Havelock Island,Andaman.jpg",
+      "original_resolution": "4608x3456",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "e06575a7aedb3a0c4327711a73092defcb5a3a73566810f81c5db9ba505f02e9"
     },
     "Ayodhya": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Shri_Ram_Janambhoomi_Mandir%2C_Ayodhya_Dham.jpg",
@@ -51,27 +68,40 @@
       "file": "static/img/pdf_destinations/ayodhya.jpg",
       "city": "Ayodhya",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Ayodhya",
-      "downloaded_at": "2026-11-20T10:23:46.976761+00:00"
+      "downloaded_at": "2026-11-20T10:23:46.976761+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "7e096b300706c3c9173472c6d82487d6d401fcc17b83e8e2bf24b1a93f942ee0"
     },
     "Bangalore": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:UB_City%2C_Bangalore.JPG",
-      "photographer": "Prateek Karandikar",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Bengaluru_Palace.jpg",
+      "photographer": "Shubham Shah",
       "license": "CC BY-SA 4.0",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/bangalore.jpg",
       "city": "Bangalore",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Bengaluru",
-      "downloaded_at": "2026-11-20T10:23:47.222129+00:00"
+      "downloaded_at": "2026-11-20T10:23:47.222129+00:00",
+      "reviewed_filename": "Bengaluru Palace.jpg",
+      "original_resolution": "12000x9000",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "f547149b8fb773c92c45ddf2642bfb324ffac56041bb31b456fb8485037511b7"
     },
     "Chennai": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Chennai_Central.jpg",
-      "photographer": "jamal haider from india",
-      "license": "CC BY-SA 2.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Chennai%27s_Kapaleeshwarar_Temple.jpg",
+      "photographer": "Srishti Sethi",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/chennai.jpg",
       "city": "Chennai",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Chennai",
-      "downloaded_at": "2026-11-20T10:23:46.624917+00:00"
+      "downloaded_at": "2026-11-20T10:23:46.624917+00:00",
+      "reviewed_filename": "Chennai's Kapaleeshwarar Temple.jpg",
+      "original_resolution": "3024x4032",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "b67dfda1b8583fe95f679e18b14180cce8c9be85b1a7db8ee139122919b3335c"
     },
     "Cochin": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Kochi_Skyline.jpg",
@@ -81,27 +111,40 @@
       "file": "static/img/pdf_destinations/cochin.jpg",
       "city": "Cochin",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Kochi",
-      "downloaded_at": "2026-11-20T10:23:46.983202+00:00"
+      "downloaded_at": "2026-11-20T10:23:46.983202+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "9d05f38035b614dfaab59e096e7b023dec8a478b634ffceea001ee5955977561"
     },
     "Coorg": {
       "file": "static/img/pdf_destinations/coorg.jpg",
       "city": "Coorg",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Coorg_landscape.jpg",
-      "photographer": "Cppfront",
-      "license": "CC0 1.0",
-      "license_url": "https://commons.wikimedia.org/",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Areca_Paddy_Mist_Balamuri_Coorg_Feb24_A7C_09428.jpg",
+      "photographer": "This Photo was taken by Timothy A. Gonsalves .  Feel free to use my photos, but please mention me as the author.  I would much appreciate if you send me an emai",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "downloaded_at": "2026-11-20T10:26:49.921556+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "reviewed_filename": "Areca Paddy Mist Balamuri Coorg Feb24 A7C 09428.jpg",
+      "original_resolution": "5110x3407",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "ebd0ca14e0c11331dc8ffb7d322e986d1328bcf5a392520e8c1bf428c5126167"
     },
     "Darjeeling": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:DarjeelingTrainFruitshop_%282%29.jpg",
-      "photographer": "Arne Hückelheim 2010-09-21 12:41:53 This is a cropped in which the glare has been lessened",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kanchenjunga_range_from_tea_gardens_of_darjeeling.jpg",
+      "photographer": "Souviknshm",
       "license": "CC BY-SA 4.0",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/darjeeling.jpg",
       "city": "Darjeeling",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Darjeeling",
-      "downloaded_at": "2026-11-20T10:23:47.203516+00:00"
+      "downloaded_at": "2026-11-20T10:23:47.203516+00:00",
+      "reviewed_filename": "Kanchenjunga range from tea gardens of darjeeling.jpg",
+      "original_resolution": "3600x2160",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "e802b4144188e5eee59c0784e901e449ca45965b99cdaf2efe34d3c8d42c583e"
     },
     "Delhi": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Jama_Masjid_2011.jpg",
@@ -111,7 +154,10 @@
       "file": "static/img/pdf_destinations/delhi.jpg",
       "city": "Delhi",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Delhi",
-      "downloaded_at": "2026-11-20T10:23:47.584417+00:00"
+      "downloaded_at": "2026-11-20T10:23:47.584417+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "dcdc50d3766342fa1c7e149e605d784302acf25ab21c0ff46e6c7eae66847bb5"
     },
     "Delhi / Agra / Rajasthan": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Taj_Mahal%2C_Agra%2C_India.jpg",
@@ -121,7 +167,10 @@
       "file": "static/img/pdf_destinations/delhi-agra-rajasthan.jpg",
       "city": "Delhi / Agra / Rajasthan",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Agra",
-      "downloaded_at": "2026-11-20T10:23:47.386267+00:00"
+      "downloaded_at": "2026-11-20T10:23:47.386267+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "7852dc6dbc12508cc7e02c14da5918f6061d994286f201fde43071c57a85c1ce"
     },
     "Diu": {
       "file": "static/img/pdf_destinations/diu.jpg",
@@ -131,7 +180,10 @@
       "license": "CC BY-SA 4.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:26:49.789933+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "f0e6678f8b0df57a1304de7260be88534ffed6215e35b2d20c3294a8dc493754"
     },
     "Dwarka": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Dwarakadheesh_Temple%2C_2014.jpg",
@@ -141,7 +193,10 @@
       "file": "static/img/pdf_destinations/dwarka.jpg",
       "city": "Dwarka",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Dwarka",
-      "downloaded_at": "2026-11-20T10:23:47.398167+00:00"
+      "downloaded_at": "2026-11-20T10:23:47.398167+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "4b66534ca6e889b11fcc9a4655cc985f7dbcf3b1146afcf574e5c4af4f25b8dc"
     },
     "Gangtok": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Kangch-Goechala.jpg",
@@ -151,17 +206,25 @@
       "file": "static/img/pdf_destinations/gangtok.jpg",
       "city": "Gangtok",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Gangtok",
-      "downloaded_at": "2026-11-20T10:23:47.600587+00:00"
+      "downloaded_at": "2026-11-20T10:23:47.600587+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "677322ea1b3699e8aa7b90e17b2aae31c9c56c3583c4abf7bbf13f4af3b71f01"
     },
     "Goa": {
       "file": "static/img/pdf_destinations/goa.jpg",
       "city": "Goa",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Baga_Beach,_Calangute,_Goa.jpg",
-      "photographer": "Wikimedia Commons contributor",
-      "license": "See Commons file page",
-      "license_url": "https://commons.wikimedia.org/",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Palolem_Beach.jpg",
+      "photographer": "Manojz Kumar",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "downloaded_at": "2026-11-20T10:23:47.457652+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "reviewed_filename": "Palolem Beach.jpg",
+      "original_resolution": "3872x2176",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "c2b9bc911ebafad0f4621e41dcba2c87f515a11e250c5cd4c1de41846b7a8e6f"
     },
     "Gujarat": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Dwarakadheesh_Temple%2C_2014.jpg",
@@ -171,17 +234,25 @@
       "file": "static/img/pdf_destinations/gujarat.jpg",
       "city": "Gujarat",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Dwarka",
-      "downloaded_at": "2026-11-20T10:23:47.519874+00:00"
+      "downloaded_at": "2026-11-20T10:23:47.519874+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "4b66534ca6e889b11fcc9a4655cc985f7dbcf3b1146afcf574e5c4af4f25b8dc"
     },
     "Guwahati": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Guwahati_citysky.jpg",
-      "photographer": "Rituraj Bhuyan from Guwahati, India",
-      "license": "CC BY-SA 2.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:The_Umananda_Temple%2C_located_on_Peacock_Island_in_the_middle_of_the_Brahmaputra_River%2C_Guwahati.jpg",
+      "photographer": "পাপৰি বৰা",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
       "file": "static/img/pdf_destinations/guwahati.jpg",
       "city": "Guwahati",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Guwahati",
-      "downloaded_at": "2026-11-20T10:23:47.608724+00:00"
+      "downloaded_at": "2026-11-20T10:23:47.608724+00:00",
+      "reviewed_filename": "The Umananda Temple, located on Peacock Island in the middle of the Brahmaputra River, Guwahati.jpg",
+      "original_resolution": "1200x1600",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "202ca57d0963f78916e90e3d3874c1ea6105b5c2bcdb270a0e82f3b18f297621"
     },
     "Jaipur": {
       "source_url": "https://commons.wikimedia.org/wiki/File:East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg",
@@ -191,27 +262,41 @@
       "file": "static/img/pdf_destinations/jaipur.jpg",
       "city": "Jaipur",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Jaipur",
-      "downloaded_at": "2026-11-20T10:23:48.124059+00:00"
+      "downloaded_at": "2026-11-20T10:23:48.124059+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "dffceee727dde9913c5c612221f2fe8c7f402ae499623b50043b934911844b0f"
     },
     "Jaisalmer": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Jaisalmer_Fort.jpg",
-      "photographer": "Adrian Sulc",
-      "license": "CC BY-SA 3.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Jaisalmer_Fort_in_the_afternoon_sun.jpg",
+      "photographer": "Sreesarkar",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/jaisalmer.jpg",
       "city": "Jaisalmer",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Jaisalmer",
-      "downloaded_at": "2026-11-20T10:20:07.523717+00:00"
+      "downloaded_at": "2026-11-20T10:20:07.523717+00:00",
+      "reviewed_filename": "Jaisalmer Fort in the afternoon sun.jpg",
+      "original_resolution": "4517x2333",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "3bec591bc3a47cb3c91eaed03984213d963eef66fcf64a782e820959b164ffcc"
     },
     "Jammu & Kashmir": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Red_and_Yellow_Tulips.JPG",
-      "photographer": "Abdars",
-      "license": "CC BY-SA 3.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Sunrise_in_Nigeen_Lake.jpg",
+      "photographer": "Hellohappy",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/jammu-kashmir.jpg",
       "city": "Jammu & Kashmir",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Srinagar",
-      "downloaded_at": "2026-11-20T10:23:48.141175+00:00"
+      "downloaded_at": "2026-11-20T10:23:48.141175+00:00",
+      "reviewed_filename": "Sunrise in Nigeen Lake.jpg",
+      "original_resolution": "4080x2296",
+      "sha256": "12a9bfa71eccc1a397d6d2b434a107fddea77e18756f011ced3cbe38dbcc4159",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "approved_alias": "Srinagar"
     },
     "Jodhpur": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Mehrangarh_Fort_sanhita.jpg",
@@ -221,37 +306,55 @@
       "file": "static/img/pdf_destinations/jodhpur.jpg",
       "city": "Jodhpur",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Jodhpur",
-      "downloaded_at": "2026-11-20T10:20:07.631188+00:00"
+      "downloaded_at": "2026-11-20T10:20:07.631188+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "a258aaa7b524d43975817a9b3af67b6e2aee9c7c1f7071f1e5baf5e6a5d0c7dc"
     },
     "Karnataka": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Mysuru_Montage.jpg",
-      "photographer": "Sathyaprakash01",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Mysore_Palace,_Mysore,_Karnataka,_India.jpg",
+      "photographer": "Wikimedia Commons contributor",
       "license": "CC BY-SA 4.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_url": "https://commons.wikimedia.org/",
       "file": "static/img/pdf_destinations/karnataka.jpg",
       "city": "Karnataka",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Mysore",
-      "downloaded_at": "2026-11-20T10:25:31.108694+00:00"
+      "downloaded_at": "2026-11-20T10:25:31.108694+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "approved_alias": "Mysore",
+      "sha256": "0b7c522fc301332bec01b6a220d4b70bc34e0a5de8e581439d4cb341de02f5fb"
     },
     "Kashmir": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Red_and_Yellow_Tulips.JPG",
-      "photographer": "Abdars",
-      "license": "CC BY-SA 3.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Sunrise_in_Nigeen_Lake.jpg",
+      "photographer": "Hellohappy",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/kashmir.jpg",
       "city": "Kashmir",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Srinagar",
-      "downloaded_at": "2026-11-20T10:25:31.334253+00:00"
+      "downloaded_at": "2026-11-20T10:25:31.334253+00:00",
+      "reviewed_filename": "Sunrise in Nigeen Lake.jpg",
+      "original_resolution": "4080x2296",
+      "sha256": "12a9bfa71eccc1a397d6d2b434a107fddea77e18756f011ced3cbe38dbcc4159",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "approved_alias": "Srinagar"
     },
     "Katra": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Katra_town1.JPG",
-      "photographer": "Vinayaraj",
-      "license": "CC BY-SA 3.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Shri_Mata_Vaishno_Devi_Shrine%2C_Katra%2C_Jammu_and_Kashmir%2C_India.jpg",
+      "photographer": "Baap8969",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "file": "static/img/pdf_destinations/katra.jpg",
       "city": "Katra",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Katra%2C_Jammu_and_Kashmir",
-      "downloaded_at": "2026-11-20T10:25:31.319999+00:00"
+      "downloaded_at": "2026-11-20T10:25:31.319999+00:00",
+      "reviewed_filename": "Shri Mata Vaishno Devi Shrine, Katra, Jammu and Kashmir, India.jpg",
+      "original_resolution": "1280x960",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "809c0e32c59d49ff6be1fd215463fad05d4552e7dc1f2240be4fa9f98cacfaed"
     },
     "Kerala Backwaters": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Alappuzha_Boat_Beauty_W.jpg",
@@ -261,17 +364,25 @@
       "file": "static/img/pdf_destinations/kerala-backwaters.jpg",
       "city": "Kerala Backwaters",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Alappuzha",
-      "downloaded_at": "2026-11-20T10:23:48.199600+00:00"
+      "downloaded_at": "2026-11-20T10:23:48.199600+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "1bd5eeb5f3ce93cecb070d2d514b4bbeaa5f2fb080432dce8fb4a4a755303efe"
     },
     "Kodaikanal": {
       "file": "static/img/pdf_destinations/kodaikanal.jpg",
       "city": "Kodaikanal",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Kodaikanal_Lake,_Tamil_Nadu.jpg",
-      "photographer": "Sinash",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Top_View_of_Kodai_Lake.jpg",
+      "photographer": "Lpriyatham",
       "license": "CC BY-SA 4.0",
-      "license_url": "https://commons.wikimedia.org/",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "downloaded_at": "2026-11-20T10:25:31.518743+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "reviewed_filename": "Top View of Kodai Lake.jpg",
+      "original_resolution": "6000x4000",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "991d7ef0837641a053c732e5ff7443eb449194e9a7ef8c376a5628401e5f3aff"
     },
     "Kovalam": {
       "file": "static/img/pdf_destinations/kovalam.jpg",
@@ -281,27 +392,40 @@
       "license": "CC BY-SA 4.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:26:49.806485+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "17c976766c76e0d8174842d69fc54de5920099a7a0e198c420f77dd1bdf3dce8"
     },
     "Kumarakom": {
       "file": "static/img/pdf_destinations/kumarakom.jpg",
       "city": "Kumarakom",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Kumarakom_Backwaters.jpg",
-      "photographer": "Rajkrishnan R",
-      "license": "CC BY-SA 4.0",
-      "license_url": "https://commons.wikimedia.org/",
+      "source_url": "https://commons.wikimedia.org/wiki/File:House_Boats_At_Vembanattu_Lake%2CKumarakom%2CAlleppy%2CKerala%2CIndia_-_panoramio.jpg",
+      "photographer": "Geyo John",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
       "downloaded_at": "2026-11-20T10:26:49.871988+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "reviewed_filename": "House Boats At Vembanattu Lake,Kumarakom,Alleppy,Kerala,India - panoramio.jpg",
+      "original_resolution": "3888x2592",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "a0082d5f66f100cb4581c58cd67b97e0d9993aa3322718d3db3ef2f1df969166"
     },
     "Lakshadweep": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Agatti_Airstrip.jpg",
-      "photographer": "Julio",
-      "license": "CC BY-SA 2.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:LakshadweepIsland.jpg",
+      "photographer": "Lenish Namath",
+      "license": "CC BY-SA 3.0",
+      "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
       "file": "static/img/pdf_destinations/lakshadweep.jpg",
       "city": "Lakshadweep",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Agatti_Island",
-      "downloaded_at": "2026-11-20T10:25:32.061808+00:00"
+      "downloaded_at": "2026-11-20T10:25:32.061808+00:00",
+      "reviewed_filename": "LakshadweepIsland.jpg",
+      "original_resolution": "3038x2012",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "9a045c5be5ad35f826b00f13882f67ea5fe4cb056eb1db06285d18f9af349f65"
     },
     "Mahabalipuram": {
       "file": "static/img/pdf_destinations/mahabalipuram.jpg",
@@ -311,7 +435,10 @@
       "license": "CC BY-SA 4.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:25:32.016646+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "26a388b1cff4bfa400a73b294fd9fdc2915862d6c43102be29852c0f97160cb1"
     },
     "Maharashtra": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Mumbai_Bandra-Worli_Sea_Link.jpg",
@@ -321,7 +448,10 @@
       "file": "static/img/pdf_destinations/maharashtra.jpg",
       "city": "Maharashtra",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Mumbai",
-      "downloaded_at": "2026-11-20T10:20:08.366002+00:00"
+      "downloaded_at": "2026-11-20T10:20:08.366002+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "166ef70e70cec7a9cb07a1e2759a8f70d5c2605b4b56d5d9456381e0743211fc"
     },
     "Mumbai": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Mumbai_Bandra-Worli_Sea_Link.jpg",
@@ -331,7 +461,10 @@
       "file": "static/img/pdf_destinations/mumbai.jpg",
       "city": "Mumbai",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Mumbai",
-      "downloaded_at": "2026-11-20T10:20:08.366401+00:00"
+      "downloaded_at": "2026-11-20T10:20:08.366401+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "166ef70e70cec7a9cb07a1e2759a8f70d5c2605b4b56d5d9456381e0743211fc"
     },
     "Munnar": {
       "file": "static/img/pdf_destinations/munnar.jpg",
@@ -341,7 +474,10 @@
       "license": "CC BY-SA 4.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:26:50.577424+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "5f2caa6c7c528f5aeea03dce7ddcc3c4a1596b8bce0892aab77aa83ee58922e3"
     },
     "Mussoorie": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Mussoorie_Snow_Over_Dehradun_%2814831297545%29.jpg",
@@ -351,7 +487,10 @@
       "file": "static/img/pdf_destinations/mussoorie.jpg",
       "city": "Mussoorie",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Mussoorie",
-      "downloaded_at": "2026-11-20T10:25:32.279132+00:00"
+      "downloaded_at": "2026-11-20T10:25:32.279132+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "2e0fec28506eb42ea39611715441e0ca635b2852f7f22d254f2a4431a81c1055"
     },
     "Mysore": {
       "file": "static/img/pdf_destinations/mysore.jpg",
@@ -361,7 +500,10 @@
       "license": "CC BY-SA 4.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:25:32.225571+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "0b7c522fc301332bec01b6a220d4b70bc34e0a5de8e581439d4cb341de02f5fb"
     },
     "Nainital": {
       "file": "static/img/pdf_destinations/nainital.jpg",
@@ -371,27 +513,40 @@
       "license": "CC BY-SA 4.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:23:48.353592+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "ae4eb69f12c8c0614d0686725660ae8349432e4c2591e2f4e34769a37216bc87"
     },
     "Ooty": {
       "file": "static/img/pdf_destinations/ooty.jpg",
       "city": "Ooty",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Lake_in_Ooty.jpg",
-      "photographer": "Barkave Balusamy",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ooty-India.jpg",
+      "photographer": "Geetha Grandhe",
       "license": "CC BY-SA 4.0",
-      "license_url": "https://commons.wikimedia.org/",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "downloaded_at": "2026-11-20T10:25:32.786775+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "reviewed_filename": "Ooty-India.jpg",
+      "original_resolution": "2048x1536",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "47ace215bf70f60ccf97a093f2b86cc4b75bdfa280163e2a60eca1463f0f4535"
     },
     "Port Blair": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg",
-      "photographer": "(WT-en) Prateek4 at English Wikivoyage",
-      "license": "Public domain",
-      "license_url": "",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Corbyns_Cove_Sea_Beach.jpg",
+      "photographer": "Joe tarafdar",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/port-blair.jpg",
       "city": "Port Blair",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Port_Blair",
-      "downloaded_at": "2026-11-20T10:23:48.428318+00:00"
+      "downloaded_at": "2026-11-20T10:23:48.428318+00:00",
+      "reviewed_filename": "Corbyns Cove Sea Beach.jpg",
+      "original_resolution": "5184x3456",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "73eb1b0bb8338d0c353aba26595998977d025c814da581e12b1d1c3772f4a7b9"
     },
     "Punjab": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Golden_Temple_Amritsar_Gurudwara_%28cropped%29.jpg",
@@ -401,7 +556,10 @@
       "file": "static/img/pdf_destinations/punjab.jpg",
       "city": "Punjab",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Amritsar",
-      "downloaded_at": "2026-11-20T10:23:48.535489+00:00"
+      "downloaded_at": "2026-11-20T10:23:48.535489+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "5b5950976b44cd8637893fdbd504fb261e4dbbf74c14dd7b1224897efa79fb99"
     },
     "Puri": {
       "file": "static/img/pdf_destinations/puri.jpg",
@@ -411,7 +569,10 @@
       "license": "CC BY 4.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:23:48.485754+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "c684e24b43cde45fd88d1a7e1a8910f22602a8e0361fd043944b79c0ec8d33d9"
     },
     "Rajasthan": {
       "source_url": "https://commons.wikimedia.org/wiki/File:East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg",
@@ -421,7 +582,10 @@
       "file": "static/img/pdf_destinations/rajasthan.jpg",
       "city": "Rajasthan",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Jaipur",
-      "downloaded_at": "2026-11-20T10:23:48.757702+00:00"
+      "downloaded_at": "2026-11-20T10:23:48.757702+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "dffceee727dde9913c5c612221f2fe8c7f402ae499623b50043b934911844b0f"
     },
     "Rishikesh": {
       "file": "static/img/pdf_destinations/rishikesh.jpg",
@@ -431,7 +595,10 @@
       "license": "CC BY-SA 4.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:26:50.071921+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "65b1b532189f8956a58f4db8a19756754cbfc9f7106e565e971fcc4b427c35b1"
     },
     "Shillong": {
       "file": "static/img/pdf_destinations/shillong.jpg",
@@ -441,17 +608,25 @@
       "license": "CC0 1.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:26:50.365897+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "4fc9fdfd71184222edb1887314206e2dac4184e3f89868fcf1f58b718543dac9"
     },
     "Shimla": {
       "file": "static/img/pdf_destinations/shimla.jpg",
       "city": "Shimla",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Mall_Road_Shimla.jpg",
-      "photographer": "Satyamrai7777",
-      "license": "CC BY-SA 4.0",
-      "license_url": "https://commons.wikimedia.org/",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Shimla%2C_India%2C_Panoramic_view_of_Shimla_hills.jpg",
+      "photographer": "Vyacheslav Argenberg",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
       "downloaded_at": "2026-11-20T10:23:48.699804+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "reviewed_filename": "Shimla, India, Panoramic view of Shimla hills.jpg",
+      "original_resolution": "3072x2048",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "3c01fb83b9aa9b841a1e84668dafe97b78479303cdf181ac59a4daa64d3be69c"
     },
     "Sikkim": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Kangch-Goechala.jpg",
@@ -461,27 +636,40 @@
       "file": "static/img/pdf_destinations/sikkim.jpg",
       "city": "Sikkim",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Gangtok",
-      "downloaded_at": "2026-11-20T10:23:48.784426+00:00"
+      "downloaded_at": "2026-11-20T10:23:48.784426+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "677322ea1b3699e8aa7b90e17b2aae31c9c56c3583c4abf7bbf13f4af3b71f01"
     },
     "Srinagar": {
       "file": "static/img/pdf_destinations/srinagar.jpg",
       "city": "Srinagar",
-      "source_url": "https://commons.wikimedia.org/wiki/File:View_of_Dal_lake_Srinagar.jpg",
-      "photographer": "Harvinder Chandigarh",
-      "license": "CC BY 4.0",
-      "license_url": "https://commons.wikimedia.org/",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Sunrise_in_Nigeen_Lake.jpg",
+      "photographer": "Hellohappy",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "downloaded_at": "2026-11-20T10:23:48.718955+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "reviewed_filename": "Sunrise in Nigeen Lake.jpg",
+      "original_resolution": "4080x2296",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "12a9bfa71eccc1a397d6d2b434a107fddea77e18756f011ced3cbe38dbcc4159"
     },
     "Tamil Nadu": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Chennai_Central.jpg",
-      "photographer": "jamal haider from india",
-      "license": "CC BY-SA 2.0",
-      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:West_Tower%2C_Madurai_Meenakshi_Temple%2C_Tamil_Nadu%2C_India_%282018%29.jpg",
+      "photographer": "Shreya Victor Durai",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/tamil-nadu.jpg",
       "city": "Tamil Nadu",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Chennai",
-      "downloaded_at": "2026-11-20T10:23:48.679985+00:00"
+      "downloaded_at": "2026-11-20T10:23:48.679985+00:00",
+      "reviewed_filename": "West Tower, Madurai Meenakshi Temple, Tamil Nadu, India (2018).jpg",
+      "original_resolution": "1263x2048",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "c51ff06b9d220f78218ad91cd8c6b0945042e0a95b3b428f06cd37a1905814d6"
     },
     "Tezpur": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Agnigarh_Hill%2C_Tezpur.JPG",
@@ -491,7 +679,10 @@
       "file": "static/img/pdf_destinations/tezpur.jpg",
       "city": "Tezpur",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Tezpur",
-      "downloaded_at": "2026-11-20T10:23:48.811285+00:00"
+      "downloaded_at": "2026-11-20T10:23:48.811285+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "f0951f44f187d7d103d5f03320ecea93244907619b5f7d6b837c76ccf978e419"
     },
     "Tirupati": {
       "file": "static/img/pdf_destinations/tirupati.jpg",
@@ -501,7 +692,10 @@
       "license": "CC BY-SA 4.0",
       "license_url": "https://commons.wikimedia.org/",
       "downloaded_at": "2026-11-20T10:25:32.848867+00:00",
-      "wikipedia_page": ""
+      "wikipedia_page": "",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "3879841e543a59328cd7c756314e76582625d80845d88544bfa5cb5a230624c3"
     },
     "Udaipur": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Evening_view%2C_City_Palace%2C_Udaipur.jpg",
@@ -511,27 +705,41 @@
       "file": "static/img/pdf_destinations/udaipur.jpg",
       "city": "Udaipur",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Udaipur",
-      "downloaded_at": "2026-11-20T10:25:33.219228+00:00"
+      "downloaded_at": "2026-11-20T10:25:33.219228+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "3ca8c7f89e50af23c304615085a423ff1c4126b9ed20871253f70bacdbb5ac7c"
     },
     "Uttar Pradesh": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Varanasi%2C_India%2C_Ghats%2C_Cremation_ceremony_in_progress.jpg",
-      "photographer": "Vyacheslav Argenberg",
-      "license": "CC BY 4.0",
-      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Varanasi_Sunrise.jpg",
+      "photographer": "Jay.Jarosz",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/uttar-pradesh.jpg",
       "city": "Uttar Pradesh",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Varanasi",
-      "downloaded_at": "2026-11-20T10:25:33.189470+00:00"
+      "downloaded_at": "2026-11-20T10:25:33.189470+00:00",
+      "reviewed_filename": "Varanasi Sunrise.jpg",
+      "original_resolution": "3117x2226",
+      "sha256": "2bbe58b275207ca5d00ab87c4c1ec07410eb6ea4be2205ecb94eb8241350b6ea",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "approved_alias": "Varanasi"
     },
     "Varanasi": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Varanasi%2C_India%2C_Ghats%2C_Cremation_ceremony_in_progress.jpg",
-      "photographer": "Vyacheslav Argenberg",
-      "license": "CC BY 4.0",
-      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Varanasi_Sunrise.jpg",
+      "photographer": "Jay.Jarosz",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
       "file": "static/img/pdf_destinations/varanasi.jpg",
       "city": "Varanasi",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Varanasi",
-      "downloaded_at": "2026-11-20T10:25:33.569531+00:00"
+      "downloaded_at": "2026-11-20T10:25:33.569531+00:00",
+      "reviewed_filename": "Varanasi Sunrise.jpg",
+      "original_resolution": "3117x2226",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "2bbe58b275207ca5d00ab87c4c1ec07410eb6ea4be2205ecb94eb8241350b6ea"
     },
     "West Bengal & Sikkim": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Kangch-Goechala.jpg",
@@ -541,7 +749,10 @@
       "file": "static/img/pdf_destinations/west-bengal-sikkim.jpg",
       "city": "West Bengal & Sikkim",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Gangtok",
-      "downloaded_at": "2026-11-20T10:23:49.168533+00:00"
+      "downloaded_at": "2026-11-20T10:23:49.168533+00:00",
+      "cover_review_status": "approved",
+      "cover_reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+      "sha256": "677322ea1b3699e8aa7b90e17b2aae31c9c56c3583c4abf7bbf13f4af3b71f01"
     }
   },
   "unavailable": {
@@ -556,5 +767,8 @@
     "North East India": "no Wikimedia image",
     "Odisha": "no Wikimedia image",
     "Uttarakhand": "no Wikimedia image"
-  }
+  },
+  "approved_cover_count": 54,
+  "reviewed_at": "2026-11-20T11:00:02.577358+00:00",
+  "photo_selection_rule": "Destination-specific visually approved Wikimedia photo; source/author/license credited in PDF"
 }

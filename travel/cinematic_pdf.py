@@ -120,78 +120,98 @@ REGION_FALLBACKS = {
 
 
 def packaged_destination_photo(package):
-    """Use only correctly matched, pre-credited Wikimedia destination images."""
+    """Select only a reviewed, licensed destination photo belonging to the tour.
+
+    No unreviewed cover_url, Wikimedia search result, generic homepage
+    carousel photo, or automated filename match is ever shown in a brochure.
+    """
     index_file = Path(settings.BASE_DIR) / "travel/data/pdf_destination_photos.json"
     if not index_file.is_file():
         return None, None
     try:
-        photos = json.loads(index_file.read_text(encoding="utf-8")).get("photos", {})
+        catalog = json.loads(index_file.read_text(encoding="utf-8"))
+        photos = catalog.get("photos") or {}
     except (OSError, ValueError, TypeError):
         return None, None
+    if not catalog.get("approved_cover_count"):
+        return None, None
     route = (package.source_details or {}).get("route") or []
-    candidates = [stop.get("city") for stop in route if isinstance(stop, dict)]
-    candidates.extend(day.stay for day in package.itinerary.all() if day.stay)
-    candidates.extend((package.destination.name, package.destination.state_or_country))
-    # Where no exact tour city has a photographed lead image, use a known city
-    # in the advertised state, never scenery from an unrelated destination.
-    candidates.extend(REGION_FALLBACKS.get(name) for name in
-                      (package.destination.name, package.destination.state_or_country))
-    for name in candidates:
-        item = photos.get(txt(name))
-        if not item:
+    stops = [txt(step.get("city")) for step in route if isinstance(step, dict) and step.get("city")]
+    stays = [txt(day.stay) for day in package.itinerary.all() if day.stay]
+    destination = package.destination
+    dest_name = txt(destination.name)
+    state_name = txt(destination.state_or_country)
+    title = txt(package.title).casefold()
+    # Where the tour title names a city on the actual route, use that
+    # distinctive city rather than a broad state-level tourism photo.
+    route_named_in_title = [city for city in stops + stays
+                            if len(city) >= 4 and city.casefold() in title]
+    # State-level, manually configured trips should show their named state,
+    # not an incidental Delhi transit stop from a multi-state route.
+    imported = (package.source_details or {}).get("catalogue_kind") == "domestic_private_van"
+    if imported:
+        suggested = route_named_in_title + stops + stays + [dest_name, state_name]
+    else:
+        named = [dest_name] if dest_name and dest_name.casefold() in title else []
+        suggested = route_named_in_title + named + [dest_name] + stays + stops + [state_name]
+    if destination.region == "domestic":
+        for label in (dest_name, state_name):
+            place = REGION_FALLBACKS.get(label)
+            if place:
+                suggested.append(place)
+
+    seen = set()
+    base = Path(settings.BASE_DIR).resolve()
+    photo_root = (base / "static/img/pdf_destinations").resolve()
+    for name in suggested:
+        key = txt(name)
+        if not key or key.casefold() in seen:
+            continue
+        seen.add(key.casefold())
+        item = photos.get(key)
+        if not item or item.get("cover_review_status") != "approved":
+            continue
+        source = txt(item.get("source_url"))
+        licence = txt(item.get("license"))
+        licence_link = txt(item.get("license_url"))
+        if not source.startswith("https://commons.wikimedia.org/wiki/File:"):
+            continue
+        if not (licence.lower().startswith(("cc by", "cc0", "public domain"))):
             continue
         relative = Path(item.get("file") or "")
-        if not str(relative).startswith("static/img/pdf_destinations/"):
+        path = (base / relative).resolve()
+        try:
+            if not path.is_relative_to(photo_root) or not path.is_file():
+                continue
+            expected_sha = txt(item.get("sha256"))
+            if not expected_sha or hashlib.sha256(path.read_bytes()).hexdigest() != expected_sha:
+                continue
+        except (OSError, ValueError):
             continue
-        photo = Path(settings.BASE_DIR) / relative
-        if not photo.is_file():
-            continue
-        author = txt(item.get("photographer")) or "Contributor"
-        license_name = txt(item.get("license")) or "See source for usage licence"
-        source = txt(item.get("source_url"))
-        licence_link = txt(item.get("license_url"))
-        credit = f"{author} / Wikimedia Commons ({license_name}). Photo: {source}."
+        author = txt(item.get("photographer")) or "Wikimedia Commons contributor"
+        credit = (f"{author} / Wikimedia Commons ({licence}). Image source: {source}. "
+                  "Adaptation: resized and cropped for the booklet cover.")
         if licence_link:
-            credit += f" Licence: {licence_link}"
-        return photo, credit
+            credit += f" Licence: {licence_link}."
+        return path, credit
     return None, None
 
 
 def matched_photo(package):
-    """Only the exact package's image or a named city on its actual route."""
-    for field in (package.cover_image, package.destination.image):
-        image = safe_local(field)
-        if image:
-            return image, None
+    """Only artwork approved for this exact tour or approved destination art."""
     library_path, library_credit = packaged_destination_photo(package)
     if library_path:
         return library_path, library_credit
-    route = (package.source_details or {}).get("route") or []
-    places = [package.destination.name]
-    places += [x.get("city", "") for x in route if isinstance(x, dict)]
-    places += [day.stay for day in package.itinerary.all() if day.stay]
-    urls = [package.cover_url] if package.cover_url else []
-    seen = set()
-    for place in places:
-        if not txt(place) or txt(place).casefold() in seen:
-            continue
-        seen.add(txt(place).casefold())
-        specific = photo_url(place)
-        if specific:
-            urls.append(specific)
-    for url in urls[:7]:
-        if not url:
-            continue
-        image = fetch_trusted_photo(url)
-        if image:
-            credit = next((value for value in SOURCES.values()
-                           if Path(urlparse(url).path).name.lower() in value.lower()), None)
-            return image, credit or ("Wikimedia Commons" if "wikimedia" in url else None)
-    # User-uploaded gallery photos belong to this exact tour.
-    for item in package.gallery.all()[:3]:
-        image = safe_local(item.image)
-        if image:
-            return image, None
+    # Explicit staff-reviewed manual artwork is allowed as an exception;
+    # never auto-use unreviewed uploads, stock galleries or tour cover URLs.
+    details = package.source_details or {}
+    if details.get("pdf_cover_approved") is True and details.get("pdf_cover_credit"):
+        for field in (package.cover_image, package.destination.image):
+            file = safe_local(field)
+            if file:
+                return file, txt(details["pdf_cover_credit"])
+    # A matching photo is optional; a clean Sai Samarth brand-colour cover
+    # is much better than a misleading destination photograph.
     return None, None
 
 
