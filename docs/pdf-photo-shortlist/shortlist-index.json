@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-20T10:56:17.699964+00:00",
+  "generated_at": "2026-11-20T10:57:40.706165+00:00",
   "entries": {
     "Shimla": [
       {
@@ -26,23 +26,23 @@
     "Srinagar": [
       {
         "city": "Srinagar",
-        "filename": "Dal-Lake, Srinagar, Kashmir.jpg",
-        "file_page": "https://commons.wikimedia.org/wiki/File:Dal-Lake%2C_Srinagar%2C_Kashmir.jpg",
+        "filename": "Sunset at Dal Lake, Srinagar.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Sunset_at_Dal_Lake%2C_Srinagar.jpg",
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
-        "author": "Sudesh Nayak",
+        "author": "Pradeepkjoshi",
         "width": 5184,
         "height": 3456
       },
       {
         "city": "Srinagar",
-        "filename": "Dal Lake, Srinagar, Jammu and Kashmir.jpg",
-        "file_page": "https://commons.wikimedia.org/wiki/File:Dal_Lake%2C_Srinagar%2C_Jammu_and_Kashmir.jpg",
+        "filename": "Sunrise in Nigeen Lake.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Sunrise_in_Nigeen_Lake.jpg",
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
-        "author": "Dashrathgoyal85",
-        "width": 5184,
-        "height": 3456
+        "author": "Hellohappy",
+        "width": 4080,
+        "height": 2296
       }
     ],
     "Katra": [
@@ -237,8 +237,14 @@
     ],
     "Port Blair": [
       {
-        "file": "Corbyn's Cove beach Port Blair.jpg",
-        "error": "unlicensed or not found: "
+        "city": "Port Blair",
+        "filename": "Corbyns Cove Sea Beach.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Corbyns_Cove_Sea_Beach.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Joe tarafdar",
+        "width": 5184,
+        "height": 3456
       }
     ],
     "Andaman": [
