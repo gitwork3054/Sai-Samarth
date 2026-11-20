@@ -45,6 +45,18 @@ ADDITIONAL=[
  "Hampi","Darjeeling","Kashmir","Ladakh","Andaman Islands",
  "Meghalaya","Agra","Delhi","Mumbai","Lakshadweep"
 ]
+
+# Location-checked, openly licensed Commons files for places whose Wikipedia
+# summaries do not expose a reliable high-resolution image.
+SPECIAL_PHOTOS = {
+    "Shimla": ("Mall Road Shimla.jpg", "Satyamrai7777", "CC BY-SA 4.0"),
+    "Srinagar": ("View of Dal lake Srinagar.jpg", "Harvinder Chandigarh", "CC BY 4.0"),
+    "Mysore": ("Mysore-palace.jpg", "Mathew Mani", "CC BY-SA 4.0"),
+    "Puri": ("Bird view of Jagannath Temple, Puri.jpg", "Government of Odisha", "CC BY 4.0"),
+    "Nainital": ("Nainital-1.jpg", "Lalitgupta isgec", "CC BY-SA 4.0"),
+    "Goa": ("Baga Beach, Calangute, Goa.jpg", "Wikimedia Commons contributor", "See Commons file page"),
+}
+
 SKIP=re.compile(r"flag|logo|coat.of.arms|seal|blank.map|political.map|locator.map|district.map|municipal.emblem",re.I)
 
 
@@ -95,10 +107,45 @@ def commons_credit(session,url):
             "license_url":license_url}
 
 
+
+def targeted_commons_photo(session,name):
+    record=SPECIAL_PHOTOS.get(name)
+    if not record:
+        return None
+    filename,author,license_name=record
+    file_page="https://commons.wikimedia.org/wiki/File:"+quote(filename.replace(" ","_"),safe="").replace("%2C",",")
+    download="https://commons.wikimedia.org/wiki/Special:FilePath/"+quote(filename.replace(" ","_"),safe="").replace("%2C",",")+"?width=1280"
+    try:
+        response=get(session,download)
+        content=response.content
+        if not response.headers.get("content-type","").lower().startswith("image/"):
+            return None
+        if len(content)<3000 or len(content)>16*1024*1024:
+            return None
+        with Image.open(BytesIO(content)) as photo:
+            if photo.width<600 or photo.height<400:
+                return None
+            image=ImageOps.exif_transpose(photo).convert("RGB")
+            image.thumbnail((1500,1900),Image.Resampling.LANCZOS)
+            path=OUT/(slug(name)+".jpg")
+            image.save(path,"JPEG",quality=85,optimize=True)
+        return {"file":"static/img/pdf_destinations/"+path.name,
+                "city":name,"source_url":file_page,"photographer":author,
+                "license":license_name,"license_url":"https://commons.wikimedia.org/",
+                "downloaded_at":datetime.now(timezone.utc).isoformat(),
+                "wikipedia_page":""}
+    except Exception as exc:
+        print("SPECIAL PHOTO UNAVAILABLE",name,type(exc).__name__,str(exc)[:160],flush=True)
+        return None
+
+
 def collect(name):
     resolved=TITLE_FIX.get(name,name)
     with requests.Session() as session:
         session.headers.update({"User-Agent":UA})
+        special=targeted_commons_photo(session,name)
+        if special:
+            return name,special,"ok-special"
         endpoint="https://en.wikipedia.org/api/rest_v1/page/summary/"+quote(resolved.replace(" ","_"),safe=",()_")
         try:
             data=get(session,endpoint).json()
