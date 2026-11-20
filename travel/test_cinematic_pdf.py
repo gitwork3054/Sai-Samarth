@@ -104,6 +104,17 @@ class AllDestinationPhotoTests(TestCase):
         self.assertIsNone(image)
         self.assertIsNone(credit)
 
+    def test_ayodhya_riverside_cover_is_licensed_and_actually_renderable(self):
+        city=m.Destination.objects.create(name="Ayodhya",region="domestic",
+                                          state_or_country="Uttar Pradesh")
+        pkg=m.Package.objects.create(destination=city,title="Spiritual Ayodhya",
+                                     days=3,nights=2,base_price=11000)
+        photo,credit=matched_photo(pkg)
+        self.assertIsNotNone(photo)
+        self.assertEqual(photo.name,"ayodhya.jpg")
+        self.assertIn("Saryu",credit)
+        self.assertIn("CC BY-SA 4.0",credit)
+
     def test_all_imported_private_van_routes_have_a_reviewed_city_photo(self):
         data=json.loads((Path(settings.BASE_DIR)/"travel/data/pdf_destination_photos.json").read_text())
         photos=data["photos"]
@@ -111,5 +122,11 @@ class AllDestinationPhotoTests(TestCase):
         for row in tours["packages"]:
             with self.subTest(tour=row["tour_code_supplier"]):
                 candidates=[s["city"] for s in row["route"] if s.get("city")]
-                self.assertTrue(any(c in photos and photos[c].get("cover_review_status")=="approved"
-                                    for c in candidates))
+                self.assertTrue(any(
+                    c in photos and
+                    photos[c].get("cover_review_status")=="approved" and
+                    str(photos[c].get("license","")).lower().startswith(
+                        ("cc by", "cc0", "public domain")
+                    ) and bool(photos[c].get("sha256"))
+                    for c in candidates
+                ), "No usable photo for "+row["title"])
