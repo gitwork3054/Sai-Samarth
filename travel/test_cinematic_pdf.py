@@ -7,7 +7,7 @@ from pathlib import Path
 from django.conf import settings
 from django.test import TestCase
 from travel import models as m
-from travel.cinematic_pdf import build_cinematic_pdf, matched_photo, W, H
+from travel.cinematic_pdf import build_cinematic_pdf, matched_photo, photo_focal_point, W, H
 
 try:
     from pypdf import PdfReader
@@ -93,6 +93,26 @@ class AllDestinationPhotoTests(TestCase):
         self.assertEqual(photo.name,"shimla.jpg")
         self.assertIn("Panoramic_view_of_Shimla_hills",credit)
         self.assertNotIn("Mall_Road_Shimla",credit)
+
+    def test_reviewed_ayodhya_cover_focal_point_keeps_landmarks_visible(self):
+        folder=Path(settings.BASE_DIR)
+        image=folder/"static/img/pdf_destinations/ayodhya.jpg"
+        self.assertTrue(image.exists())
+        self.assertEqual(photo_focal_point(image), (0.23, 0.5))
+        city=m.Destination.objects.create(name="Ayodhya",region="domestic",
+                                          state_or_country="Uttar Pradesh")
+        pkg=m.Package.objects.create(destination=city,title="Ayodhya Spiritual Escape",
+                                     days=3,nights=2,base_price=9999)
+        pdf=build_cinematic_pdf(pkg,self.site)
+        if PdfReader:
+            reader=PdfReader(io.BytesIO(pdf))
+            cover=reader.pages[0]
+            self.assertIn("AYODHYA",cover.extract_text())
+            resources=cover["/Resources"]
+            xobjs=resources.get("/XObject",{})
+            images=[obj for obj in xobjs.values()
+                    if obj.get_object().get("/Subtype") == "/Image"]
+            self.assertTrue(images, "The brochure cover must contain a real destination photograph")
 
     def test_unreviewed_uploads_and_external_urls_are_not_pdf_covers(self):
         city=m.Destination.objects.create(name="Imaginary Lake City",region="domestic",

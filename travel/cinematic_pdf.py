@@ -215,6 +215,31 @@ def matched_photo(package):
     return None, None
 
 
+def photo_focal_point(photo):
+    """Keep a photographed landmark visible when a landscape photo is cropped.
+
+    Most destinations use the image center. Reviewed covers may include
+    cover_focus_x/cover_focus_y in their photographic attribution metadata.
+    """
+    if not photo:
+        return 0.5, 0.5
+    try:
+        index = Path(settings.BASE_DIR) / "travel/data/pdf_destination_photos.json"
+        catalog = json.loads(index.read_text(encoding="utf-8")).get("photos", {})
+        match = next(
+            (item for item in catalog.values()
+             if Path(item.get("file", "")).name == Path(photo).name
+             and item.get("cover_review_status") == "approved"), None
+        )
+        if match:
+            x = float(match.get("cover_focus_x", 0.5))
+            y = float(match.get("cover_focus_y", 0.5))
+            return max(0.05, min(0.95, x)), max(0.05, min(0.95, y))
+    except (OSError, ValueError, TypeError, StopIteration):
+        pass
+    return 0.5, 0.5
+
+
 def text_style(name, size=9, leading=14, color=WHITE, bold=False):
     return ParagraphStyle(name, fontName="TripBold" if bold else "TripRegular",
                           fontSize=size, leading=leading, textColor=color, splitLongWords=True)
@@ -296,8 +321,11 @@ class Brochure:
                     cw,ch=iw*ratio,ih*ratio
                     # ImageReader supports JPG, PNG and WEBP without an
                     # unsupported ReportLab file-extension decoder.
-                    c.drawImage(ImageReader(rgb), (W-cw)/2, (H-ch)/2,
-                                width=cw,height=ch)
+                    focus_x, focus_y = photo_focal_point(self.photo)
+                    offset_x = min(0, max(W-cw, W/2 - focus_x*cw))
+                    offset_y = min(0, max(H-ch, H/2 - focus_y*ch))
+                    c.drawImage(ImageReader(rgb), offset_x, offset_y,
+                                width=cw, height=ch)
             except Exception:
                 pass
         else:
@@ -305,17 +333,42 @@ class Brochure:
             c.rect(0, 0, W, H, fill=1, stroke=0)
             c.setFillColor(colors.HexColor("#EE8460"))
             c.circle(350, 365, 155, fill=1, stroke=0)
+        # Preserve the hero-photo editorial look: a gentle midnight-blue
+        # tint, a readable headline scrim and a richer bottom fade. The
+        # photograph stays saturated and visible, rather than appearing grey.
         c.saveState()
         c.setFillColor(INK)
         if hasattr(c, "setFillAlpha"):
-            c.setFillAlpha(.38)
-        c.rect(0, 0, W, H, fill=1, stroke=0)
-        if hasattr(c, "setFillAlpha"):
-            c.setFillAlpha(.44)
-        c.rect(0, 0, W, 192, fill=1, stroke=0)
+            c.setFillAlpha(.13)
+            c.rect(0, 0, W, H, fill=1, stroke=0)
+            # Top-to-bottom translucent bands create a smooth tonal fade;
+            # they remain inside the photograph, not separate boxes.
+            for stripe in range(12):
+                c.setFillAlpha(.26 * (1.0 - stripe/12.0))
+                c.rect(0, H-(stripe+1)*16, W, 17, fill=1, stroke=0)
+            # Keep oversized white location text legible over clouds/sunlight.
+            for stripe in range(12):
+                contrast = .09 + .12*(1.0-abs(stripe-5.5)/6.0)
+                c.setFillAlpha(contrast)
+                c.rect(0, 252+stripe*19, W, 20, fill=1, stroke=0)
+            c.setFillAlpha(.61)
+            c.rect(0, 0, W, 190, fill=1, stroke=0)
+            for stripe in range(9):
+                c.setFillAlpha(.48 * (1.0-(stripe+1)/10.0))
+                c.rect(0, 190+stripe*12, W, 13, fill=1, stroke=0)
+        else:
+            c.rect(0, 0, W, H, fill=1, stroke=0)
         c.restoreState()
+        # Fine architectural arches are the recurring pattern of the series.
         self.arches()
         self.logo_box()
+        c.saveState()
+        c.setFillColor(INK)
+        if hasattr(c, "setFillAlpha"):
+            c.setFillAlpha(.48)
+        c.setFont("TripRegular", 11)
+        c.drawCentredString(W/2+1.0, 561, "EXPLORE WITH SAI SAMARTH")
+        c.restoreState()
         c.setFillColor(WHITE)
         c.setFont("TripRegular", 11)
         c.drawCentredString(W/2, 562, "EXPLORE WITH SAI SAMARTH")
@@ -332,6 +385,14 @@ class Brochure:
             size = 103 if len(parts)==1 else 78
             while size > 24 and pdfmetrics.stringWidth(title, "TripBold", size) > W-26:
                 size -= 1.6
+            c.saveState()
+            c.setFillColor(INK)
+            if hasattr(c, "setFillAlpha"):
+                c.setFillAlpha(.54)
+            c.setFont("TripBold", size)
+            c.drawCentredString(W/2+1.4, 378.6 - idx*82, title)
+            c.restoreState()
+            c.setFillColor(WHITE)
             c.setFont("TripBold", size)
             c.drawCentredString(W/2, 380 - idx*82, title)
         c.setStrokeColor(ORANGE)
