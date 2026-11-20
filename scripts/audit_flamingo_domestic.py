@@ -101,6 +101,19 @@ for detail_url in detail_urls:
     if next_tag:
         data=json.loads(next_tag.string or "{}")
         props=data.get("props",{}).get("pageProps",{})
+        itinerary=props.get("data",{}).get("itinerary") or []
+        hotels=props.get("data",{}).get("hotels") or []
+        hotel_listing=props.get("HotelListingArray") or []
+        print("ITINERARY_ITEM",detail_url.split("/")[-1],
+              [{"day":i+1, "from":str(x.get("from"))[:80],"mealPlan":str(x.get("mealPlan"))[:80],
+                "description_length":len(str(x.get("description") or "")),
+                "description_sample":str(BeautifulSoup(str(x.get("description") or ""),"html.parser").get_text(" ",strip=True))[:90]} for i,x in enumerate(itinerary[:8])],flush=True)
+        print("HOTEL_OPTIONS",detail_url.split("/")[-1],
+              [{"keys":list(h.keys()),"data_keys":list((h.get("data") or {}).keys()) if isinstance(h.get("data"),dict) else [],
+                "names":[{k:t.get(k) for k in ("hotelName","cityName","hotelCity","hotelStar","city","night")}
+                         for t in ((h.get("data") or {}).get("data") or [])[:3] if isinstance(t,dict)]}
+               for h in hotels[:2]],"hotel_list_examples",
+              [{k:t.get(k) for k in ("HotelName","CityName","Category","StarRating")} for t in hotel_listing[:3]],flush=True)
         print("DETAIL_PAGE_KEYS",detail_url.split("/")[-1],list(props.keys()),flush=True)
         def drill(value,path="",depth=0):
             if depth>8: return
