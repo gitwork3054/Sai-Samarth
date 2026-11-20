@@ -1,0 +1,34 @@
+name: Audit every destination PDF cover photo
+on:
+  push:
+    branches:
+      - 'audit/destination-pdf-cover-images'
+    paths:
+      - 'scripts/audit_pdf_destination_photos.py'
+      - '.github/workflows/audit-pdf-destination-covers.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pillow
+      - name: Generate contact sheets for every destination photo
+        run: python scripts/audit_pdf_destination_photos.py
+      - name: Save visual audit back to audit branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/pdf-photo-audit/
+          if ! git diff --staged --quiet; then
+            git commit -m "QA: visually audit full destination cover photo library"
+            git push
+          fi
