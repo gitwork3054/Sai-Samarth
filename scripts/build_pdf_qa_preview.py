@@ -77,5 +77,7 @@ for idx,im in enumerate(pages):
     px=8+(idx%3)*tw
     py=8+(idx//3)*th
     sheet.paste(im,(px,py))
-sheet.save("docs/itinerary-design-qa.png",optimize=True)
+sheet.thumbnail((1550, 1450), Image.Resampling.LANCZOS)
+sheet.convert("RGB").save("docs/itinerary-design-qa.jpg",quality=72,optimize=True)
+Path("docs/itinerary-design-qa.png").unlink(missing_ok=True)
 print("PREVIEW READY",len(pdf),len(kerala_pdf),len(pages))

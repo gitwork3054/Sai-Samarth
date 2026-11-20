@@ -25,7 +25,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/itinerary-design-qa.png
+          git add -A docs/itinerary-design-qa.png docs/itinerary-design-qa.jpg
           if ! git diff --staged --quiet; then
             git commit -m 'QA: render cinematic itinerary cover and page previews'
             git push
