@@ -141,11 +141,11 @@ def targeted_commons_photo(session,name):
             path=OUT/(slug(name)+".jpg")
             image.save(path,"JPEG",quality=85,optimize=True)
         licence_links={
-        "CC BY-SA 4.0":"https://creativecommons.org/licenses/by-sa/4.0/",
-        "CC BY 4.0":"https://creativecommons.org/licenses/by/4.0/",
-        "CC0 1.0":"https://creativecommons.org/publicdomain/zero/1.0/",
-    }
-    return {"file":"static/img/pdf_destinations/"+path.name,
+            "CC BY-SA 4.0":"https://creativecommons.org/licenses/by-sa/4.0/",
+            "CC BY 4.0":"https://creativecommons.org/licenses/by/4.0/",
+            "CC0 1.0":"https://creativecommons.org/publicdomain/zero/1.0/",
+        }
+        return {"file":"static/img/pdf_destinations/"+path.name,
                 "city":name,"source_url":file_page,"photographer":author,
                 "license":license_name,"license_url":licence_links.get(license_name,file_page),
                 "downloaded_at":datetime.now(timezone.utc).isoformat(),
