@@ -58,13 +58,15 @@ def get(session,url,**kw):
     return r
 
 
-def thumbnail_url(photo):
+def thumbnail_urls(photo):
     thumb=(photo.get("thumbnail") or {}).get("source","")
-    if not thumb or "upload.wikimedia.org" not in urlparse(thumb).hostname:
-        return ""
-    # Usually ".../330px-Filename.jpg"; request higher fidelity for print.
-    candidate=re.sub(r"/\d+px-", "/1400px-",thumb)
-    return candidate
+    if not thumb or urlparse(thumb).hostname != "upload.wikimedia.org":
+        return []
+    # Thumbnail API hosts may not have all size variants cached; try several
+    # print-appropriate widths and the official thumbnail as a last resort.
+    result=[re.sub(r"/\d+px-",f"/{size}px-",thumb) for size in (1280,960,640)]
+    result.append(thumb)
+    return list(dict.fromkeys(result))
 
 
 def commons_credit(session,url):
@@ -101,12 +103,12 @@ def collect(name):
         try:
             data=get(session,endpoint).json()
             original=(data.get("originalimage") or {}).get("source","")
-            thumbnail=thumbnail_url(data)
+            thumbnails=thumbnail_urls(data)
             if not original or not original.startswith("https://upload.wikimedia.org/"):
                 return name,None,"no Wikimedia image"
             if SKIP.search(original):
                 return name,None,"non-photo lead image"
-            candidates=[thumbnail,original]
+            candidates=[*thumbnails,original]
             raw=None
             selected=""
             for url in candidates:
@@ -115,7 +117,7 @@ def collect(name):
                 try:
                     response=get(session,url)
                     content=response.content
-                    if len(content)<3000 or len(content)>10*1024*1024:
+                    if len(content)<3000 or len(content)>16*1024*1024:
                         continue
                     if not response.headers.get("content-type","").lower().startswith("image/"):
                         continue
@@ -146,9 +148,10 @@ def collect(name):
 
 def main():
     snapshot=json.loads(DB.read_text(encoding="utf-8"))
-    city_names={step["city"] for row in snapshot["packages"] for step in (row.get("route") or [])
-                if step.get("city")}
+    city_names={row["route"][0]["city"] for row in snapshot["packages"]
+                if row.get("route") and row["route"][0].get("city")}
     city_names.update(ADDITIONAL)
+    city_names.update(("Shimla","Udaipur","Jodhpur","Varanasi","Nainital","Srinagar","Gangtok","Puri","Munnar","Port Blair"))
     city_names.update(TITLE_FIX.keys())
     existing={}
     if INDEX.exists():
