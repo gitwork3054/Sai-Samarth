@@ -197,6 +197,7 @@ def listing_facts(soup):
             "starting_price_inr": int(value.group(1).replace(",", "")),
             "valid_until": (f"{valid.group(3)}-{datetime.strptime(valid.group(2)[:3].title(), '%b').month:02d}-{int(valid.group(1)):02d}" if valid else ""),
             "price_source": "supplier catalogue listing",
+            "flight_not_included": "flight not included" in card_text.lower(),
         }
     return found
 
@@ -314,7 +315,7 @@ def parse_detail(url, html, listed):
         "route": route, "sightseeing": sightseeing, "hotel_examples": hotels,
         "meals": meals, "day_headings": day_headings,
         "private_vehicle_mentioned": transfers,
-        "flight_not_included": bool(listed.get("flight_not_included", True)),
+        "flight_not_included": bool(listed.get("flight_not_included", False)),
         "starting_price_inr": int(listed.get("starting_price_inr") or 0),
         "valid_until": listed.get("valid_until", ""),
         "price_source": listed.get("price_source", ""),

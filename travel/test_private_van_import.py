@@ -59,6 +59,9 @@ class DomesticPrivateVanTests(TestCase):
         group = m.Package.objects.create(
             destination=dest, title="Goa Group Tour", short_description="group trip",
             overview="Real group details", base_price=12000, tour_type="group")
+        manual = m.Package.objects.create(
+            destination=dest, title="Custom Goa Escape", short_description="private tailored",
+            overview="Original independently designed trip", base_price=17500, tour_type="individual")
         row = example_row()
         snapshot = {"kind": "indian_domestic_private_van_facts", "retrieved_at": "2026-11-20T06:00:00Z",
                     "packages": [row]}
@@ -69,9 +72,11 @@ class DomesticPrivateVanTests(TestCase):
             call_command("import_flamingo_domestic_private", "--file", path, "--min-records", "1")
             demo.refresh_from_db()
             group.refresh_from_db()
+            manual.refresh_from_db()
             imported = m.Package.objects.get(source_url=SOURCE)
             self.assertFalse(demo.is_active)
             self.assertTrue(group.is_active)
+            self.assertTrue(manual.is_active)
             self.assertTrue(imported.is_active)
             self.assertEqual(imported.base_price, 15000)
             self.assertEqual(imported.itinerary.count(), 3)

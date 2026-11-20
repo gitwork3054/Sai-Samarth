@@ -21,6 +21,11 @@ from travel import models as m
 DATA_PATH = Path(__file__).resolve().parents[2] / "data/flamingo_domestic_private_vans.json"
 SOURCE_HOST = "www.flamingotravels.co.in"
 DEMO_MARKER = "This is a demo description:"
+REGION_FIXES = {
+    "Andaman Holiday Tour Package": "Andaman & Nicobar",
+    "Golden Triangle Tour Packages": "Delhi / Agra / Rajasthan",
+    "West Bengal Sikkim": "West Bengal & Sikkim",
+}
 
 
 def validated_records(snapshot, minimum):
@@ -204,7 +209,7 @@ class Command(BaseCommand):
                 digest = hashlib.sha256(
                     json.dumps(row, sort_keys=True, ensure_ascii=False).encode("utf-8")
                 ).hexdigest()[:20]
-                state = row["region_label"][:80]
+                state = REGION_FIXES.get(row["region_label"], row["region_label"])[:80]
                 dest, _ = m.Destination.objects.get_or_create(
                     name=state, defaults={
                         "region": "domestic", "state_or_country": state,
@@ -308,7 +313,10 @@ class Command(BaseCommand):
             demo = m.Package.objects.filter(
                 destination__region="domestic", tour_type="individual",
                 overview__icontains=DEMO_MARKER
-            ).exclude(source_details__catalogue_kind="domestic_private_van")
+            )
+            # A missing key in JSONField can yield SQL NULL and cause exclude()
+            # to discard every legacy demo. The unique generator-only marker
+            # already positively identifies placeholders; no JSON exclusion needed.
             hidden = demo.update(is_active=False)
         self.stdout.write(self.style.SUCCESS(
             f"Verified domestic private-van catalogue: {len(records)} records; "
