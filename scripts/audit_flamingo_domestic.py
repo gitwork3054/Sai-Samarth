@@ -54,6 +54,10 @@ def inspect(area):
             out+="  NEXT_ITEM example="+str({k:items[0].get(k) for k in ["name","bI_Code","pageSlug","cities","tourType","tourTypeId","category","tourOrder","price","rate","sellingPrice","priceAdult","validity"]})+"\\n"
             out+="  NEXT_TITLES "+str([(str(item.get("name",""))[:55],item.get("bI_Code"),item.get("pageSlug")) for item in items[:24]])+"\\n"
     if area=="rajasthan-holiday-tour-packages":
+        sample=package_arrays[0][1][0] if package_arrays else {}
+        out+="  RATES SAMPLE "+str({k: str(sample.get(k))[:350] for k in ("sellingPrice","totalDays","flightIncluded","isSellingPricePublish","validityPeriods","validityMonth","inclusions","exclusions","highlights")})+"\\n"
+        out+="  ALL RAJASTHAN RATES "+str([{"code":item.get("bI_Code"),"title":item.get("name"),"sell":item.get("sellingPrice"),"days":item.get("totalDays"),"validity":str(item.get("validityPeriods"))[:100]} for item in (package_arrays[0][1] if package_arrays else [])])+"\\n"
+    if area=="rajasthan-holiday-tour-packages":
         for needle in ("Lakes & Forts", "Whole of Rajasthan","Simplicity Rajasthan","Exotic Rajasthan","f1402"):
             i=r.text.lower().find(needle.lower())
             if i>=0:
