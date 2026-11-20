@@ -221,7 +221,7 @@ class Command(BaseCommand):
                 package = m.Package.objects.filter(source_url=source).first()
                 if not package:
                     package = m.Package.objects.filter(tour_code=external_code).first()
-                if (package and
+                if (package and package.is_active and
                         (package.source_details or {}).get("sync_fingerprint") == digest):
                     skipped += 1
                     continue
@@ -239,7 +239,10 @@ class Command(BaseCommand):
                         expiry = date.fromisoformat(valid)
                     except ValueError:
                         expiry = None
-                note = f"Reference amount ₹{amount:,} per person; final rate subject to availability." if amount else "Current amount confirmed on enquiry."
+                period = (f" (travel validity {row.get('valid_from')} to {valid})"
+                          if row.get("valid_from") and valid else "")
+                note = (f"Published from ₹{amount:,} per person{period}, indicative and subject to confirmation."
+                        if amount else "Price on request; confirm travel dates and costs before booking.")
                 details = {
                     "provider": "flamingo",
                     "catalogue_kind": "domestic_private_van",
@@ -249,6 +252,11 @@ class Command(BaseCommand):
                     "duration": f"{row['nights']} Nights / {row['days']} Days",
                     "price_source": row.get("price_source", ""),
                     "valid_until": valid,
+                    "valid_from": row.get("valid_from", ""),
+                    "listed_states": row.get("listed_states", []),
+                    "source_categories": row.get("source_categories", []),
+                    "listed_services": row.get("listed_services", []),
+                    "detail_discrepancy": bool(row.get("detail_discrepancy")),
                     "price_note": note,
                     "synced_at": snapshot.get("retrieved_at"),
                     "sync_fingerprint": digest,
@@ -318,8 +326,15 @@ class Command(BaseCommand):
             # to discard every legacy demo. The unique generator-only marker
             # already positively identifies placeholders; no JSON exclusion needed.
             hidden = demo.update(is_active=False)
+            # Remove private van tours dropped from the verified current supplier
+            # listings. Preserve the rows for historical enquiries and downloads.
+            source_urls = [row["source_url"] for row in records]
+            retired = m.Package.objects.filter(
+                source_details__managed_by="sai_samarth_private_van_import"
+            ).exclude(source_url__in=source_urls).update(is_active=False)
         self.stdout.write(self.style.SUCCESS(
             f"Verified domestic private-van catalogue: {len(records)} records; "
-            f"updated {updated}, unchanged {skipped}; hid {hidden} generated individual demos. "
+            f"updated {updated}, unchanged {skipped}; hid {hidden} generated individual demos; "
+            f"retired {retired} no-longer-listed private tours. "
             "All group, corporate, manually created and historical booking records preserved."
         ))

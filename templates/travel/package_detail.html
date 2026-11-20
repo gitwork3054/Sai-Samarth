@@ -19,7 +19,7 @@
 <div class="d-main">
   <section id="overview" class="blk"><h2>Overview</h2>
     {% if pkg.source_details.catalogue_kind == 'domestic_private_van' %}
-    <p class="fine"><strong>Supplier-reference itinerary:</strong> Independently written using publicly listed route facts from Flamingo Travels. Prices are indicative, availability and exact hotel/visit details require confirmation. This is not a confirmed booking.</p>
+    <p class="fine"><strong>Supplier-reference itinerary:</strong> Independently written using publicly listed route facts from Flamingo Travels. Prices are indicative{% if pkg.source_details.valid_from %} for the listed {{ pkg.source_details.valid_from }} to {{ pkg.source_details.valid_until }} travel period{% endif %}; availability and exact hotel/visit details require confirmation. This is not a confirmed booking.</p>
     {% endif %}<p class="prose" data-readmore>{{ pkg.overview|default:pkg.short_description|linebreaksbr }}</p>
     {% if pkg.departure_list %}<div class="dep"><b>Fixed departures</b>{% for d in pkg.departure_list %}<span>{{ d }}</span>{% endfor %}</div>{% endif %}
     <div class="actions-row">{% if pkg.source_url %}<a class="btn btn-ghost" href="{{ pkg.source_url }}" target="_blank" rel="noopener">Latest partner itinerary ↗</a>{% endif %}

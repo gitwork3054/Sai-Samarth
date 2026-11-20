@@ -17,7 +17,7 @@
     <h3><a href="{% if p.region == 'international' and p.partner_url %}{{ p.partner_url }}{% else %}{{ p.get_absolute_url }}{% endif %}"{% if p.region == 'international' and p.partner_url %} target="_blank" rel="noopener"{% endif %}>{{ p.title }}</a></h3>
     <p class="chips">{% for t in p.themes.all|slice:":2" %}<span>{{ t.icon }} {{ t.name }}</span>{% endfor %}{% for a in p.audiences.all|slice:":1" %}<span>{{ a.icon }} {{ a.name }}</span>{% endfor %}</p>
     <div class="card-foot">
-      <div class="price">{% if p.savings %}<s>{{ p.base_price|inr }}</s>{% endif %}{% if p.price_on_request %}<strong>Price on request</strong>{% else %}<strong>{{ p.price_from|inr }}</strong><small>{% if p.source_details.catalogue_kind == 'domestic_private_van' %}From / indicative · confirm{% else %}per person{% endif %}</small>{% endif %}</div>
+      <div class="price">{% if p.savings %}<s>{{ p.base_price|inr }}</s>{% endif %}{% if p.price_on_request %}<strong>Price on request</strong>{% else %}<strong>{{ p.price_from|inr }}</strong><small>{% if p.source_details.catalogue_kind == 'domestic_private_van' %}From / indicative{% if p.source_details.valid_from %} · {{ p.source_details.valid_from|slice:":4" }} travel{% endif %}{% else %}per person{% endif %}</small>{% endif %}</div>
       <a class="btn btn-sun sm" href="{% if p.region == 'international' and p.partner_url %}{{ p.partner_url }}{% else %}{{ p.get_absolute_url }}{% endif %}"{% if p.region == 'international' and p.partner_url %} target="_blank" rel="noopener"{% endif %}>View trip{% if p.region == 'international' and p.partner_url %} ↗{% endif %}</a>
     </div>
   </div>

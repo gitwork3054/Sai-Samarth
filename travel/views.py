@@ -61,7 +61,7 @@ def _filter(qs, p):
         qs = qs.filter(destination__region=p["region"])
     if p.get("state"):
         selected = next((g for g in domestic_groups(m.Package.objects.filter(is_active=True, destination__region="domestic").select_related("destination")) if g["slug"] == p["state"]), None)
-        qs = qs.filter(destination__region="domestic", destination_id__in=selected["destination_ids"] if selected else [])
+        qs = qs.filter(destination__region="domestic", pk__in=selected["package_ids"] if selected else [])
     if p.get("country"):
         selected = next((g for g in international_groups(m.Package.objects.filter(is_active=True, destination__region="international").select_related("destination")) if g["slug"] == p["country"]), None)
         qs = qs.filter(destination__region="international", destination_id__in=selected["destination_ids"] if selected else [])

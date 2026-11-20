@@ -26,7 +26,10 @@ def example_row():
         "hotel_examples": [], "meals": {"breakfast": 2},
         "day_headings": {}, "private_vehicle_mentioned": True,
         "flight_not_included": False, "starting_price_inr": 15000,
-        "valid_until": "2027-09-30", "price_source": "supplier catalogue listing", "tags": [],
+        "valid_from": "2027-04-01", "valid_until": "2027-09-30",
+        "listed_states": ["Himachal Pradesh","Rajasthan"],
+        "source_categories": ["himachal-pradesh","rajasthan"],
+        "price_source": "supplier catalogue listing", "tags": [],
     }
 
 
@@ -82,6 +85,13 @@ class DomesticPrivateVanTests(TestCase):
             self.assertEqual(imported.itinerary.count(), 3)
             self.assertEqual(imported.sightseeing.count(), 2)
             self.assertEqual(imported.tour_type, "individual")
+            from travel.domestic_states import domestic_groups
+            groups = domestic_groups(m.Package.objects.filter(
+                destination__region="domestic", is_active=True
+            ).select_related("destination"))
+            rajasthan = next(group for group in groups if group["slug"] == "rajasthan")
+            self.assertIn(imported.pk, rajasthan["package_ids"])
+            self.assertEqual(imported.source_details["listed_states"], ["Himachal Pradesh", "Rajasthan"])
             self.assertEqual(imported.audiences.count(), 1)
             call_command("import_flamingo_domestic_private", "--file", path, "--min-records", "1")
             self.assertEqual(m.Package.objects.filter(source_url=SOURCE).count(), 1)

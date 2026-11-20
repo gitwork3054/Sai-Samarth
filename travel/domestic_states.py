@@ -47,7 +47,12 @@ def domestic_groups(packages):
     for package in packages:
         if package.destination.region != 'domestic':
             continue
-        for name in destination_states(package.destination):
+        names = list(destination_states(package.destination))
+        for supplier_state in (package.source_details or {}).get('listed_states', []):
+            name = LOOKUP.get(str(supplier_state).strip().casefold())
+            if name and name not in names:
+                names.append(name)
+        for name in names:
             group = groups.setdefault(name, {'name': name, 'slug': slugify(name), 'destination_ids': set(), 'package_ids': set()})
             group['destination_ids'].add(package.destination_id)
             group['package_ids'].add(package.pk)
@@ -57,7 +62,7 @@ def domestic_groups(packages):
     for name in sorted(groups, key=lambda value: (priority.get(value.casefold(), 10000), value)):
 
         group = groups[name]
-        group['count'] = len(group.pop('package_ids'))
+        group['count'] = len(group['package_ids'])
         result.append(group)
     return result
 
