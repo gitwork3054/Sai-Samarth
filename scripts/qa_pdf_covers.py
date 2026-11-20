@@ -17,7 +17,7 @@ django.setup()
 import fitz
 from PIL import Image, ImageDraw
 from travel import models as m
-from travel.cinematic_pdf import build_cinematic_pdf, matched_photo
+from travel.cinematic_pdf import build_cinematic_pdf, matched_photo, photo_overlay_image
 
 SAMPLES = [
     ("Jaipur", "Rajasthan", "Jaipur Royal Escape"),
@@ -27,6 +27,7 @@ SAMPLES = [
     ("Munnar", "Kerala", "Kerala Tea Gardens Tour"),
     ("Ayodhya", "Uttar Pradesh", "Spiritual Ayodhya"),
 ]
+assert photo_overlay_image().getSize() == (2, 1350), "Continuous photo scrim missing"
 site = m.SiteSettings.get()
 pictures = []
 for city, state, title in SAMPLES:
