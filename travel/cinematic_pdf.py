@@ -4,6 +4,7 @@ Uses the selected tour's actual route, day plan, price, hotel options, inclusion
 exclusions and conditions. Never substitutes unrelated destination photography.
 """
 import hashlib
+import json
 import html
 import io
 import re
@@ -91,12 +92,77 @@ def fetch_trusted_photo(url):
         return None
 
 
+
+REGION_FALLBACKS = {
+    "Andaman & Nicobar": "Port Blair",
+    "Andaman Islands": "Port Blair",
+    "Rajasthan": "Jaipur",
+    "Gujarat": "Dwarka",
+    "Himachal Pradesh": "Shimla",
+    "Jammu & Kashmir": "Srinagar",
+    "Kashmir": "Srinagar",
+    "Karnataka": "Mysore",
+    "Kerala": "Cochin",
+    "North East India": "Guwahati",
+    "Odisha": "Bhubaneswar",
+    "Uttar Pradesh": "Ayodhya",
+    "Uttarakhand": "Corbett National Park",
+    "West Bengal & Sikkim": "Gangtok",
+    "Sikkim": "Gangtok",
+    "Delhi / Agra / Rajasthan": "Agra",
+    "Tamil Nadu": "Chennai",
+    "Delhi": "Delhi",
+    "Punjab": "Amritsar",
+    "Goa": "Goa",
+    "Ladakh": "Ladakh",
+    "Maharashtra": "Mumbai",
+}
+
+
+def packaged_destination_photo(package):
+    """Use only correctly matched, pre-credited Wikimedia destination images."""
+    index_file = Path(settings.BASE_DIR) / "travel/data/pdf_destination_photos.json"
+    if not index_file.is_file():
+        return None, None
+    try:
+        photos = json.loads(index_file.read_text(encoding="utf-8")).get("photos", {})
+    except (OSError, ValueError, TypeError):
+        return None, None
+    route = (package.source_details or {}).get("route") or []
+    candidates = [stop.get("city") for stop in route if isinstance(stop, dict)]
+    candidates.extend(day.stay for day in package.itinerary.all() if day.stay)
+    candidates.extend((package.destination.name, package.destination.state_or_country))
+    # Where no exact tour city has a photographed lead image, use a known city
+    # in the advertised state, never scenery from an unrelated destination.
+    candidates.extend(REGION_FALLBACKS.get(name) for name in
+                      (package.destination.name, package.destination.state_or_country))
+    for name in candidates:
+        item = photos.get(txt(name))
+        if not item:
+            continue
+        relative = Path(item.get("file") or "")
+        if not str(relative).startswith("static/img/pdf_destinations/"):
+            continue
+        photo = Path(settings.BASE_DIR) / relative
+        if not photo.is_file():
+            continue
+        author = txt(item.get("photographer")) or "Contributor"
+        license_name = txt(item.get("license")) or "See source for usage licence"
+        source = txt(item.get("source_url"))
+        credit = f"{author} / Wikimedia Commons ({license_name}). {source}"
+        return photo, credit
+    return None, None
+
+
 def matched_photo(package):
     """Only the exact package's image or a named city on its actual route."""
     for field in (package.cover_image, package.destination.image):
         image = safe_local(field)
         if image:
             return image, None
+    library_path, library_credit = packaged_destination_photo(package)
+    if library_path:
+        return library_path, library_credit
     route = (package.source_details or {}).get("route") or []
     places = [package.destination.name]
     places += [x.get("city", "") for x in route if isinstance(x, dict)]
