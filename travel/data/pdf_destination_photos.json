@@ -61,19 +61,19 @@
       "sha256": "e06575a7aedb3a0c4327711a73092defcb5a3a73566810f81c5db9ba505f02e9"
     },
     "Ayodhya": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Naya_ghat%2C_Saryu_river%2C_ayodhya.jpg",
-      "photographer": "Gamerzer",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ayodhya_city_at_night.jpg",
+      "photographer": "Mishra12krati",
       "license": "CC BY-SA 4.0",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "file": "static/img/pdf_destinations/ayodhya.jpg",
       "city": "Ayodhya",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Ayodhya",
-      "downloaded_at": "2026-11-20T11:33:40.101868+00:00",
+      "downloaded_at": "2026-11-20T11:35:01.840265+00:00",
       "cover_review_status": "approved",
-      "cover_reviewed_at": "2026-11-20T11:33:40.101647+00:00",
-      "sha256": "22251f2e11a0ebaeb025b4c4c5d7b776b0c92a283fc649a878588bba9e2a95a8",
-      "description": "Boats at Naya Ghat on the Sarayu River in Ayodhya",
-      "reviewed_filename": "Naya ghat, Saryu river, ayodhya.jpg"
+      "cover_reviewed_at": "2026-11-20T11:35:01.839983+00:00",
+      "sha256": "8caa3198f048249ce81c8bce48ca77b2e7e66e4d102fd3bd87948d087d54bf4b",
+      "description": "Illuminated historic Ayodhya city at night",
+      "reviewed_filename": "Ayodhya city at night.jpg"
     },
     "Bangalore": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Bengaluru_Palace.jpg",
