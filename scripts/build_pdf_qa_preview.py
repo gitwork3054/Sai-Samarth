@@ -36,6 +36,10 @@ m.Sightseeing.objects.create(package=pkg,name="Hawa Mahal",description="The Pink
 m.Hotel.objects.create(package=pkg,name="Jaipur Heritage Stay",city="Jaipur",nights=3,
                       star_rating=3,description="Example hotel; final allocation is on written confirmation.")
 site=m.SiteSettings.get()
+from travel.cinematic_pdf import matched_photo,fetch_trusted_photo
+print("PHOTO CANDIDATES",photo_url("Jaipur"),flush=True)
+jaipur_photo, jaipur_credit=matched_photo(pkg)
+print("PHOTO JAIPUR",str(jaipur_photo),str(jaipur_credit),flush=True)
 pdf=build_itinerary_pdf(pkg,site)
 Path("docs").mkdir(exist_ok=True)
 Path("docs/jaipur-design-qa.pdf").write_bytes(pdf)
@@ -49,6 +53,7 @@ for i in range(1,4):
     m.ItineraryDay.objects.create(package=sea,day_number=i,title=f"Kerala day {i}",
                                   description="Relax and explore the scenery.",stay="Kerala" if i<3 else "")
 cover=Path("static/img/hero/kerala-v2.webp").resolve()
+print("PHOTO KERALA",str(cover),cover.exists(),flush=True)
 with patch("travel.cinematic_pdf.matched_photo",return_value=(cover,None)):
     kerala_pdf=build_itinerary_pdf(sea,site)
 Path("docs/kerala-design-qa.pdf").write_bytes(kerala_pdf)

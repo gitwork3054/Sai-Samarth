@@ -179,7 +179,7 @@ class Brochure:
         c = self.c
         c.saveState()
         if hasattr(c, "setStrokeAlpha"):
-            c.setStrokeAlpha(.09)
+            c.setStrokeAlpha(.055)
         c.setStrokeColor(ORANGE)
         c.setLineWidth(.7)
         for x in range(-24, 525, 68):
@@ -200,12 +200,15 @@ class Brochure:
         c.rect(0, 0, W, H, fill=1, stroke=0)
         if self.photo:
             try:
-                with PILImage.open(self.photo) as img:
-                    iw, ih = img.size
-                ratio = max(W / iw, H / ih)
-                cw, ch = iw*ratio, ih*ratio
-                c.drawImage(str(self.photo), (W-cw)/2, (H-ch)/2,
-                            width=cw, height=ch)
+                with PILImage.open(self.photo) as source:
+                    rgb=ImageOps.exif_transpose(source).convert("RGB")
+                    iw,ih=rgb.size
+                    ratio=max(W/iw,H/ih)
+                    cw,ch=iw*ratio,ih*ratio
+                    # ImageReader supports JPG, PNG and WEBP without an
+                    # unsupported ReportLab file-extension decoder.
+                    c.drawImage(ImageReader(rgb), (W-cw)/2, (H-ch)/2,
+                                width=cw,height=ch)
             except Exception:
                 pass
         else:
