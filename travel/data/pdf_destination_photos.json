@@ -61,19 +61,20 @@
       "sha256": "e06575a7aedb3a0c4327711a73092defcb5a3a73566810f81c5db9ba505f02e9"
     },
     "Ayodhya": {
-      "source_url": "https://commons.wikimedia.org/wiki/File:Ayodhya_city_at_night.jpg",
-      "photographer": "Mishra12krati",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Sarayu_River_night_view%2C_Ayodhya_001.jpg",
+      "photographer": "Ruhi (Wikimedia Commons)",
       "license": "CC BY-SA 4.0",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "file": "static/img/pdf_destinations/ayodhya.jpg",
       "city": "Ayodhya",
       "wikipedia_page": "https://en.wikipedia.org/wiki/Ayodhya",
-      "downloaded_at": "2026-11-20T11:35:01.840265+00:00",
+      "downloaded_at": "2026-11-20T11:37:14.584458+00:00",
       "cover_review_status": "approved",
-      "cover_reviewed_at": "2026-11-20T11:35:01.839983+00:00",
-      "sha256": "8caa3198f048249ce81c8bce48ca77b2e7e66e4d102fd3bd87948d087d54bf4b",
-      "description": "Illuminated historic Ayodhya city at night",
-      "reviewed_filename": "Ayodhya city at night.jpg"
+      "cover_reviewed_at": "2026-11-20T11:37:14.584138+00:00",
+      "sha256": "4f27cfd41c3b486431166b4eb1f54237fdd32cd13e6d5e2f6397ca109c0e70a0",
+      "description": "Illuminated Ram ki Paidi ghat reflecting in the Sarayu River at dusk",
+      "reviewed_filename": "Sarayu River night view, Ayodhya 001.jpg",
+      "cover_focus_x": 0.23
     },
     "Bangalore": {
       "source_url": "https://commons.wikimedia.org/wiki/File:Bengaluru_Palace.jpg",
