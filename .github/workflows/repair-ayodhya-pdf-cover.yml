@@ -1,9 +1,5 @@
 name: Repair Ayodhya illustrated itinerary cover
 on:
-  push:
-    paths:
-      - 'scripts/repair_ayodhya_pdf_cover.py'
-      - '.github/workflows/repair-ayodhya-pdf-cover.yml'
   workflow_dispatch:
 permissions:
   contents: write

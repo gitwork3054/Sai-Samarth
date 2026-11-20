@@ -1,9 +1,5 @@
 name: Review illustrated travel PDF hero covers
 on:
-  push:
-    paths:
-      - 'scripts/qa_pdf_covers.py'
-      - '.github/workflows/qa-pdf-cover-visuals.yml'
   workflow_dispatch:
 permissions:
   contents: write
