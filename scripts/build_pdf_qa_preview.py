@@ -39,7 +39,9 @@ site=m.SiteSettings.get()
 pdf=build_itinerary_pdf(pkg,site)
 Path("docs").mkdir(exist_ok=True)
 Path("docs/jaipur-design-qa.pdf").write_bytes(pdf)
-kerala=m.Destination.objects.create(name="Kerala",region="domestic",state_or_country="Kerala")
+kerala=m.Destination.objects.filter(slug="kerala").first()
+if not kerala:
+    kerala=m.Destination.objects.create(name="Kerala Tour QA",slug="kerala-tour-qa",region="domestic",state_or_country="Kerala")
 sea=m.Package.objects.create(title="Kerala Backwaters and Hills",destination=kerala,days=3,nights=2,
     short_description="Tea gardens and tranquil backwaters.",overview="An easy-paced Kerala escape.",
     base_price=12500)
