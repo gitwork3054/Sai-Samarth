@@ -77,3 +77,40 @@ with ThreadPoolExecutor(max_workers=7) as pool:
             print(f.result(),flush=True)
         except Exception as exc:
             print("AREA_ERR",futures[f],str(exc),flush=True)
+
+
+# Focused structural inspection for day-wise schedule extraction. Never print
+# supplier's long written descriptions; only the layout and short city headings.
+detail_urls=[
+  base+"/india-tour-packages/rajasthan-holiday-tour-packages/udaipur-with-kumbhalgarh-4nights/f2025",
+  base+"/india-tour-packages/himachal-pradesh-holiday-tour-packages/scenic-himachal-7nights/f1360",
+]
+for detail_url in detail_urls:
+    response=requests.get(detail_url,timeout=25,headers={"User-Agent":"Mozilla/5.0"})
+    doc=BeautifulSoup(response.text,"html.parser")
+    lines=[x.strip() for x in doc.get_text("\n",strip=True).splitlines() if x.strip()]
+    marks=[i for i,x in enumerate(lines) if "day wise travel itinerary" in x.lower()]
+    print("DETAIL_STRUCTURE",detail_url.split("/")[-1],response.status_code,
+          "lines",len(lines),"day_markers",marks[:4],
+          "tag_headings",[(t.name,t.get_text(" ",strip=True)[:75]) for t in doc.find_all(["h2","h3","h4","h5"]) if re.match(r"^Day\s*\d+",t.get_text(" ",strip=True),re.I)][:15],
+          flush=True)
+    for mark in marks[:1]:
+        print("DAY_LINES",detail_url.split("/")[-1],
+              [(i,lines[i][:95]) for i in range(max(0,mark-2),min(len(lines),mark+42))],flush=True)
+    next_tag=doc.find("script",id="__NEXT_DATA__")
+    if next_tag:
+        data=json.loads(next_tag.string or "{}")
+        props=data.get("props",{}).get("pageProps",{})
+        print("DETAIL_PAGE_KEYS",detail_url.split("/")[-1],list(props.keys()),flush=True)
+        def drill(value,path="",depth=0):
+            if depth>8: return
+            if isinstance(value,dict):
+                for k,v in value.items():
+                    if any(key in k.lower() for key in ("itinerary","daywise","hotel","tourday","sightseeing","meal")):
+                        print("DETAIL_FIELD",path+"."+k,"type",type(v).__name__,
+                              "len",len(v) if isinstance(v,(list,dict)) else None,
+                              "sample_keys",list(v[0].keys())[:16] if isinstance(v,list) and v and isinstance(v[0],dict) else (list(v.keys())[:15] if isinstance(v,dict) else []),flush=True)
+                    drill(v,path+"."+k,depth+1)
+            elif isinstance(value,list) and value:
+                drill(value[0],path+"[0]",depth+1)
+        drill(props,"$.props.pageProps")
