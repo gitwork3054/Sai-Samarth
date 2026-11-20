@@ -17,11 +17,11 @@ from PIL import Image, ImageOps
 BASE = Path(__file__).resolve().parents[1]
 PHOTO = BASE / "static/img/pdf_destinations/ayodhya.jpg"
 INDEX = BASE / "travel/data/pdf_destination_photos.json"
-TITLE = "File:Naya ghat, Saryu river, ayodhya.jpg"
-PAGE = "https://commons.wikimedia.org/wiki/File:Naya_ghat%2C_Saryu_river%2C_ayodhya.jpg"
+TITLE = "File:Ayodhya city at night.jpg"
+PAGE = "https://commons.wikimedia.org/wiki/File:Ayodhya_city_at_night.jpg"
 LICENCE = "CC BY-SA 4.0"
 LICENCE_URL = "https://creativecommons.org/licenses/by-sa/4.0/"
-AUTHOR = "Gamerzer"
+AUTHOR = "Mishra12krati"
 
 
 def download():
@@ -80,8 +80,8 @@ def download():
         "license": LICENCE,
         "license_url": LICENCE_URL,
         "wikipedia_page": "https://en.wikipedia.org/wiki/Ayodhya",
-        "description": "Boats at Naya Ghat on the Sarayu River in Ayodhya",
-        "reviewed_filename": "Naya ghat, Saryu river, ayodhya.jpg",
+        "description": "Illuminated historic Ayodhya city at night",
+        "reviewed_filename": "Ayodhya city at night.jpg",
         "cover_review_status": "approved",
         "cover_reviewed_at": datetime.now(timezone.utc).isoformat(),
         "sha256": sha256(PHOTO.read_bytes()).hexdigest(),
