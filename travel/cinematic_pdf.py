@@ -227,7 +227,7 @@ class Brochure:
         c.setFillColor(WHITE)
         c.setFont("TripRegular", 11)
         c.drawCentredString(W/2, 562, "EXPLORE WITH SAI SAMARTH")
-        place = txt(self.p.destination.state_or_country or self.p.destination.name).upper()
+        place = txt(self.p.destination.name or self.p.destination.state_or_country).upper()
         if len(place) > 25:
             place = txt(self.p.destination.name).upper()
         parts = [place]

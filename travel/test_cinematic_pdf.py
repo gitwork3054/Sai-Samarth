@@ -41,7 +41,7 @@ class CinematicPdfTests(TestCase):
             self.assertEqual(float(reader.pages[0].mediabox.width),W)
             self.assertEqual(float(reader.pages[0].mediabox.height),H)
             all_text=" ".join(p.extract_text() or "" for p in reader.pages)
-            for phrase in ("RAJASTHAN","Jaipur Heritage Weekend","Hawa Mahal","Amber Fort",
+            for phrase in ("JAIPUR","Jaipur Heritage Weekend","Hawa Mahal","Amber Fort",
                            "DAY 01","DAY 02","Hotel stay","Ground transportation",
                            "Flights","10,500"):
                 self.assertIn(phrase,all_text)
@@ -52,7 +52,7 @@ class CinematicPdfTests(TestCase):
         day.save(update_fields=["description"])
         if PdfReader:
             text=" ".join(p.extract_text() or "" for p in PdfReader(io.BytesIO(self.get_pdf())).pages)
-            self.assertEqual(text.count("Explore culture and local scenery."),140)
+            self.assertEqual(" ".join(text.split()).count("Explore culture and local scenery."),140)
 
     def test_download_is_pdf_attachment(self):
         with patch("travel.cinematic_pdf.matched_photo",return_value=(None,None)):

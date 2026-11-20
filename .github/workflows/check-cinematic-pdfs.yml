@@ -19,4 +19,4 @@ jobs:
           python-version: '3.11'
       - run: python -m pip install -r requirements.txt pypdf
       - run: python manage.py check
-      - run: python manage.py test travel.test_cinematic_pdf --verbosity 2
+      - run: python manage.py test travel.test_cinematic_pdf travel.test_pdf_layout --verbosity 2
