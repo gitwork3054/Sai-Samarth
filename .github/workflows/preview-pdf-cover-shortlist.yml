@@ -1,0 +1,33 @@
+name: Preview hand-curated Wikimedia travel photo replacements
+on:
+  push:
+    branches:
+      - 'audit/destination-pdf-cover-images'
+    paths:
+      - 'scripts/preview_pdf_cover_shortlist.py'
+      - '.github/workflows/preview-pdf-cover-shortlist.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  shortlist:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install requests pillow beautifulsoup4
+      - run: python scripts/preview_pdf_cover_shortlist.py
+      - name: Publish licensed destination-specific shortlist
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/pdf-photo-shortlist/
+          if ! git diff --staged --quiet; then
+            git commit -m "QA: render licensed destination cover replacement shortlist"
+            git push
+          fi
