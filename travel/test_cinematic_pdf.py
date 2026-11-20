@@ -112,7 +112,7 @@ class AllDestinationPhotoTests(TestCase):
         photo,credit=matched_photo(pkg)
         self.assertIsNotNone(photo)
         self.assertEqual(photo.name,"ayodhya.jpg")
-        self.assertIn("Mishra12krati",credit)
+        self.assertIn("Sarayu_River_night_view",credit)
         self.assertIn("CC BY-SA 4.0",credit)
 
     def test_all_imported_private_van_routes_have_a_reviewed_city_photo(self):
