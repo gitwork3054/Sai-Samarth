@@ -149,7 +149,10 @@ def packaged_destination_photo(package):
         author = txt(item.get("photographer")) or "Contributor"
         license_name = txt(item.get("license")) or "See source for usage licence"
         source = txt(item.get("source_url"))
-        credit = f"{author} / Wikimedia Commons ({license_name}). {source}"
+        licence_link = txt(item.get("license_url"))
+        credit = f"{author} / Wikimedia Commons ({license_name}). Photo: {source}."
+        if licence_link:
+            credit += f" Licence: {licence_link}"
         return photo, credit
     return None, None
 

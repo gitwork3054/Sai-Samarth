@@ -140,9 +140,14 @@ def targeted_commons_photo(session,name):
             image.thumbnail((1500,1900),Image.Resampling.LANCZOS)
             path=OUT/(slug(name)+".jpg")
             image.save(path,"JPEG",quality=85,optimize=True)
-        return {"file":"static/img/pdf_destinations/"+path.name,
+        licence_links={
+        "CC BY-SA 4.0":"https://creativecommons.org/licenses/by-sa/4.0/",
+        "CC BY 4.0":"https://creativecommons.org/licenses/by/4.0/",
+        "CC0 1.0":"https://creativecommons.org/publicdomain/zero/1.0/",
+    }
+    return {"file":"static/img/pdf_destinations/"+path.name,
                 "city":name,"source_url":file_page,"photographer":author,
-                "license":license_name,"license_url":"https://commons.wikimedia.org/",
+                "license":license_name,"license_url":licence_links.get(license_name,file_page),
                 "downloaded_at":datetime.now(timezone.utc).isoformat(),
                 "wikipedia_page":""}
     except Exception as exc:
