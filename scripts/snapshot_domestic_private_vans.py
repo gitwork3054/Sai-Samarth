@@ -132,6 +132,75 @@ AREA_MAP = {
     "maharashtra": "Maharashtra",
 }
 
+
+# Additional verified/possible Indian catalogue routes. A missing category
+# is recorded as unavailable, never fabricated into an offered product.
+MORE_DOMESTIC_CATEGORIES = ("/india-tour-packages/delhi-holiday-tour-packages",
+"/india-tour-packages/delhi-tour-packages",
+"/india-tour-packages/andaman-holiday-tour-package",
+"/india-tour-packages/north-kerala-holiday-tour-packages",
+"/india-tour-packages/north-east-holiday-tour-packages",
+"/india-tour-packages/northeast-holiday-tour-packages",
+"/india-tour-packages/west-bengal-sikkim-holiday-tour-packages",
+"/india-tour-packages/sikkim-holiday-tour-packages",
+"/india-tour-packages/kashmir-tour-packages",
+"/india-tour-packages/leh-ladakh-holiday-tour-packages",
+"/india-tour-packages/leh-ladakh-tour-packages",
+"/india-tour-packages/lakshadweep-holiday-tour-packages",
+"/india-tour-packages/madhya-pradesh-holiday-tour-packages",
+"/india-tour-packages/tamil-nadu-holiday-tour-packages",
+"/india-tour-packages/hyderabad-holiday-tour-packages",
+"/india-tour-packages/punjab-holiday-tour-packages",
+"/india-tour-packages/south-india-holiday-tour-packages",
+"/india-tour-packages/north-india-holiday-tour-packages",
+"/india-tour-packages/bihar-holiday-tour-packages",
+"/india-tour-packages/assam-holiday-tour-packages",
+"/india-tour-packages/golden-triangle-tour-packages",
+"/india-tour-packages/uttar-pradesh-holiday-tour-packages",
+"/india-tour-packages/west-bengal-holiday-tour-packages",
+"/india-tour-packages/saurashtra-holiday-tour-packages",
+"/india-tour-packages/jammu-kashmir-holiday-tour-packages",
+"/india-tour-packages/kashmir-holiday-tour-packages",
+"/india-tour-packages/pondicherry-holiday-tour-packages",
+"/india-tour-packages/lakshadweep-island-holiday-tour-packages",)
+CATEGORY_STATES = {
+    "rajasthan": ["Rajasthan"],
+    "golden-triangle": ["Delhi", "Rajasthan"],
+    "delhi": ["Delhi"],
+    "gujarat": ["Gujarat"],
+    "saurashtra": ["Gujarat"],
+    "uttranchal": ["Uttarakhand"],
+    "uttarakhand": ["Uttarakhand"],
+    "himachal-pradesh": ["Himachal Pradesh"],
+    "kerala": ["Kerala"],
+    "north-kerala": ["Kerala", "Karnataka"],
+    "karnataka": ["Karnataka"],
+    "tamil-nadu": ["Tamil Nadu"],
+    "south-india": ["Karnataka", "Kerala", "Tamil Nadu"],
+    "andaman": ["Andaman & Nicobar"],
+    "odisha": ["Odisha"],
+    "uttar-pradesh": ["Uttar Pradesh"],
+    "west-bengal-sikkim": ["West Bengal", "Sikkim"],
+    "sikkim": ["Sikkim"],
+    "west-bengal": ["West Bengal"],
+    "maharashtra": ["Maharashtra"],
+    "goa": ["Goa"],
+    "kashmir": ["Jammu & Kashmir"],
+    "jammu-kashmir": ["Jammu & Kashmir"],
+    "leh": ["Ladakh"],
+    "leh-ladakh": ["Ladakh"],
+    "punjab": ["Punjab"],
+    "hyderabad": ["Telangana"],
+    "madhya-pradesh": ["Madhya Pradesh"],
+    "northeast": ["Assam", "Meghalaya", "Arunachal Pradesh"],
+    "north-east": ["Assam", "Meghalaya", "Arunachal Pradesh"],
+    "assam": ["Assam"],
+    "bihar": ["Bihar"],
+    "lakshadweep": ["Lakshadweep"],
+    "lakshadweep-island": ["Lakshadweep"],
+    "pondicherry": ["Puducherry"],
+}
+
 def tidy(value):
     return re.sub(r"\s+", " ", value or "").strip()
 
@@ -169,233 +238,257 @@ def sitemap_urls(session, url, depth=0, max_depth=2):
             result.extend(sitemap_urls(session, item, depth + 1, max_depth))
     return result
 
-def listing_facts(soup):
-    """Optional starting price from *listing*, which may not appear on detail."""
-    found = {}
-    for a in soup.find_all("a", href=True):
-        link = canonical(a.get("href", ""))
-        if not RE_DETAIL.match(urlparse(link).path):
-            continue
-        node = a
-        card_text = ""
-        for _ in range(6):
-            node = node.parent
-            if node is None:
-                break
-            text = tidy(node.get_text(" ", strip=True))
-            # Smallest card with a recognized style, duration and price.
-            if "Private Van Tour" in text and RE_DURATION.search(text) and len(text) < 1800:
-                card_text = text
-                break
-        if not card_text:
-            continue
-        value = RE_PRICE.search(card_text)
-        if not value:
-            continue
-        valid = RE_VALID.search(card_text)
-        found[link] = {
-            "starting_price_inr": int(value.group(1).replace(",", "")),
-            "valid_until": (f"{valid.group(3)}-{datetime.strptime(valid.group(2)[:3].title(), '%b').month:02d}-{int(valid.group(1)):02d}" if valid else ""),
-            "price_source": "supplier catalogue listing",
-            "flight_not_included": "flight not included" in card_text.lower(),
-        }
-    return found
 
-def text_lines(soup):
-    return [tidy(x) for x in soup.get_text("\n", strip=True).split("\n") if tidy(x)]
+def route_from_listing(text):
+    result = []
+    for item in (text or "").split(","):
+        found = re.search(r"^\s*(.{2,65}?)\s*\((\d{1,2})\s*N\)\s*$", item, re.I)
+        if not found:
+            return []
+        city = tidy(found.group(1))
+        nights = int(found.group(2))
+        if not city or nights < 1:
+            return []
+        result.append({"city": city, "nights": nights})
+    return result
 
-def get_route(text, nights):
-    marker = re.search(r"\bCities\s*:\s*", text, re.I)
-    if not marker:
+
+def category_key(url):
+    path = urlparse(url).path.strip("/").split("/")
+    if len(path) < 2 or path[0] != "india-tour-packages":
+        return ""
+    return re.sub(r"-(holiday-)?tour-packages?$", "", path[1], flags=re.I)
+
+
+def from_listing_next(html, listing_url):
+    """Flamingo's canonical cards are in Next.js pageProps.Details,
+    not server-rendered HTML anchors. Only use 'Private Van Tour' items.
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    tag = soup.find("script", id="__NEXT_DATA__")
+    if not tag or not tag.string:
         return []
-    segment = text[marker.end():marker.end() + 650]
-    result, total = [], 0
-    for m in RE_CITY.finditer(segment):
-        city = tidy(m.group(1)).split("  ")[-1]
-        # On scripts/menus, only a tightly-bounded city/name can be accepted.
-        if len(city) > 50 or len(city) < 2:
+    try:
+        prop = json.loads(tag.string)["props"]["pageProps"]
+    except (ValueError, TypeError, KeyError):
+        return []
+    details = prop.get("Details") or {}
+    rows = next((value for key, value in details.items()
+                 if tidy(key).casefold() == "private van tour"), [])
+    state_slugs = CATEGORY_STATES.get(category_key(listing_url), [])
+    result = []
+    for entry in rows or []:
+        raw_url = canonical(entry.get("pageSlug"))
+        match = RE_DETAIL.match(urlparse(raw_url).path)
+        supplier_code = tidy(str(entry.get("bI_Code") or ""))
+        if not match or supplier_code.upper() != "FIT/" + match.group("id")[1:]:
             continue
-        city = city.lstrip(" ,:")
-        night_count = int(m.group(2))
-        result.append({"city": city, "nights": night_count})
-        total += night_count
-        if nights and total >= nights:
-            break
-    return result if result and (not nights or total == nights) else []
+        # Flamingo occasionally cross-lists Indian itineraries in other states:
+        # they are still discoverable under each destination where they appear.
+        if not is_india_area(match.group("area")):
+            continue
+        route = route_from_listing(entry.get("cities") or "")
+        duration = RE_DURATION.search(tidy(str(entry.get("totalDays") or "")))
+        nights = int(duration.group(1)) if duration else sum(stop["nights"] for stop in route)
+        days = int(duration.group(2)) if duration else nights + 1
+        if not route or sum(stop["nights"] for stop in route) != nights or days != nights + 1:
+            continue
+        publish = str(entry.get("isSellingPricePublish") or "").lower()
+        sold_out = str(entry.get("soldOut") or "").lower() in ("1", "true", "yes")
+        price_raw = str(entry.get("sellingPrice") or "0").replace(",", "")
+        price = int(price_raw) if price_raw.isdecimal() and publish in ("1", "true", "yes") and not sold_out else 0
+        valid_string = tidy(str(entry.get("validityPeriods") or ""))
+        matches = re.findall(r"\b\d{1,2}\s+[A-Za-z]{3}\s+\d{4}\b", valid_string)
+        def date_str(raw):
+            try:
+                return datetime.strptime(raw, "%d %b %Y").strftime("%Y-%m-%d")
+            except (ValueError, TypeError):
+                return ""
+        start, end = (date_str(matches[0]), date_str(matches[-1])) if matches else ("", "")
+        result.append({
+            "source_url": raw_url,
+            "title": tidy(str(entry.get("name") or ""))[:160],
+            "tour_code_supplier": supplier_code,
+            "days": days, "nights": nights,
+            "route": route, "starting_price_inr": price,
+            "valid_from": start, "valid_until": end,
+            "price_source": "Flamingo domestic Private Van Tour catalogue",
+            "flight_not_included": str(entry.get("flightIncluded") or "").strip().lower() == "flight not included",
+            "listed_states": sorted(set(state_slugs)),
+            "source_categories": [category_key(listing_url)],
+            "published": True, "sold_out": sold_out,
+            "listed_services": [
+                tidy(x) for x in str(entry.get("inclusions") or "").split(",")
+                if 1 < len(tidy(x)) < 40
+            ][:12],
+        })
+    return result
 
-def parse_factual_sections(soup, nights):
-    lines = text_lines(soup)
-    joined = tidy(soup.get_text(" ", strip=True))
-    route = get_route(joined, nights)
-    stops = []
-    hotels = []
-    if route:
-        begin = next((i for i, line in enumerate(lines) if re.search(r"\bCities\s*:", line)), 0)
-        zone = lines[begin + 1:begin + 130]
-        # Scope to the initial overview, not duplicate gallery caption lists.
-        for j, value in enumerate(zone):
-            if j > 3 and value in ("Gallery", "Videos", "Videos and Guides", "Optionals", "Tour Information", "Day wise travel itinerary"):
-                zone = zone[:j]
-                break
-        found_sightseeing = False
-        current_city = ""
-        for line in zone:
-            if line in ("Sightseeing", "Sight Seeing"):
-                found_sightseeing = True
-                current_city = ""
-                continue
-            if line in ("Flight and transport", "Meals", "Gallery", "Hotels", "Hotel Included", "Tour Information"):
-                found_sightseeing = False
-            hotel = re.search(r"(\d+)\s*Night\(s\)\s*in\s+(.+?)\s+at\s+(.+?)\s+or similar", line, re.I)
-            if hotel and len(hotels) < 15:
-                hotels.append({"city": tidy(hotel.group(2))[:80], "nights": int(hotel.group(1)),
-                               "example": tidy(hotel.group(3))[:160]})
-            if not found_sightseeing:
-                continue
-            if re.fullmatch(r"[A-Za-z0-9 /&,\-().]{2,60},\s*India", line):
-                current_city = line.rsplit(",", 1)[0].strip()
-                continue
-            if current_city and 3 <= len(line) <= 95 and not line.startswith(("Image:", "Tour Code", "Click", "View")):
-                if not re.search(r"\d+\s*(Breakfast|Dinner|Lunch)|nights?\s*/|price", line, re.I):
-                    item = {"city": current_city, "name": line}
-                    if item not in stops and len(stops) < 80:
-                        stops.append(item)
-    meals = {}
-    for meal in ("Breakfast", "Lunch", "Dinner"):
-        match = re.search(r"\b(\d{1,2})\s+" + meal + r"\b", joined[:15000], re.I)
-        if match:
-            meals[meal.lower()] = int(match.group(1))
-    itinerary_titles = {}
-    start = next((i for i, ln in enumerate(lines) if ln.lower() == "day wise travel itinerary"), -1)
-    if start >= 0:
-        for line in lines[start + 1:start + 200]:
-            if line in ("Tour Information", "Important Notes", "Cancellation Policy"):
-                break
-            m = RE_DAY.match(line)
-            if m and int(m.group(1)) not in itinerary_titles:
-                itinerary_titles[int(m.group(1))] = tidy(m.group(2))[:95]
-    return route, stops, hotels, meals, itinerary_titles
 
 def parse_detail(url, html, listed):
+    """Read only factual highlights from details; public listing is canonical
+    for name, route, price and validity. Never reproduce proprietary prose.
+    """
+    if not html:
+        return None
     soup = BeautifulSoup(html, "html.parser")
     headline = soup.find("h1")
     if not headline:
         return None
-    name = tidy(headline.get_text(" ", strip=True))[:160]
     full = tidy(soup.get_text(" ", strip=True))
-    near_title = full.find(name)
-    if near_title < 0:
-        return None
-    header = full[near_title:near_title + 700]
-    # Prevent accidentally importing group or fixed-departure entries.
+    header_pos = full.find(tidy(headline.get_text(" ", strip=True)))
+    header = full[max(header_pos, 0):max(header_pos, 0) + 900]
     if not re.search(r"\bPrivate Van Tour\b", header, re.I):
         return None
-    duration = RE_DURATION.search(header)
-    if not duration:
-        return None
-    nights, days = int(duration.group(1)), int(duration.group(2))
-    if not (1 <= nights <= 24 and days == nights + 1):
-        return None
-    code = re.search(r"FIT\s*/\s*(\d+)", header, re.I)
-    category = RE_DETAIL.match(urlparse(url).path)
-    if not category or not is_india_area(category.group("area")):
-        return None
-    route, sightseeing, hotels, meals, day_headings = parse_factual_sections(soup, nights)
-    # Only publish source-grounded routes; skip misleading guessed itineraries.
-    if not route:
-        return None
-    nearby = full[near_title:near_title+12000].lower()
-    transfers = bool(re.search(r"transfers.{0,80}(?:vehicle|car)|(?:vehicle|car).{0,80}transfers", nearby))
+    parsed_duration = RE_DURATION.search(header)
+    detail_discrepancy = bool(
+        parsed_duration and (
+            int(parsed_duration.group(1)) != listed["nights"] or
+            int(parsed_duration.group(2)) != listed["days"]
+        )
+    )
+    parsed_route, sightseeing, hotels, meals, headings = parse_factual_sections(soup, listed["nights"])
+    if parsed_route and parsed_route != listed["route"]:
+        detail_discrepancy = True
+    category=RE_DETAIL.match(urlparse(url).path)
+    area=category.group("area").replace("-holiday-tour-packages","").replace("-holiday-tour-package","")
     return {
         "source_url": url, "supplier": "Flamingo Travels",
-        "title": name, "tour_code_supplier": f"FIT/{code.group(1)}" if code else "FIT/" + category.group("id")[1:],
-        "category": category.group("area").replace("-holiday-tour-packages", ""),
-        "region_label": AREA_MAP.get(category.group("area").replace("-holiday-tour-packages", ""), category.group("area").replace("-holiday-tour-packages", "").replace("-", " ").title()),
-        "type": "private_van", "days": days, "nights": nights,
-        "route": route, "sightseeing": sightseeing, "hotel_examples": hotels,
-        "meals": meals, "day_headings": day_headings,
-        "private_vehicle_mentioned": transfers,
-        "flight_not_included": bool(listed.get("flight_not_included", False)),
-        "starting_price_inr": int(listed.get("starting_price_inr") or 0),
-        "valid_until": listed.get("valid_until", ""),
-        "price_source": listed.get("price_source", ""),
-        "tags": [tag for tag in ("Family Tour", "Honeymoon", "Couple", "Romantic")
-                 if tag.lower() in header.lower()],
+        "title": listed["title"],
+        "tour_code_supplier": listed["tour_code_supplier"],
+        "category": area,
+        "region_label": AREA_MAP.get(area, area.replace("-", " ").title()),
+        "type": "private_van", "days": listed["days"], "nights": listed["nights"],
+        "route": listed["route"],
+        "sightseeing": sightseeing, "hotel_examples": hotels,
+        "meals": meals, "day_headings": headings,
+        "private_vehicle_mentioned": (
+            "private transfer" in " ".join(listed["listed_services"]).lower()
+            or bool(re.search(r"transfers.{0,80}(?:vehicle|car)|(?:vehicle|car).{0,80}transfers", full[:14000], re.I))
+        ),
+        "flight_not_included": listed["flight_not_included"],
+        "starting_price_inr": listed["starting_price_inr"],
+        "valid_from": listed["valid_from"], "valid_until": listed["valid_until"],
+        "price_source": listed["price_source"],
+        "listed_states": listed["listed_states"],
+        "source_categories": listed["source_categories"],
+        "listed_services": listed["listed_services"],
+        "detail_discrepancy": detail_discrepancy,
+        "tags": ["Couple"] if any(x in listed["title"].lower() for x in ("honeymoon", "romantic", "couple")) else [],
     }
+
 
 def main():
     cli = argparse.ArgumentParser()
     cli.add_argument("--out", default=str(OUTPUT))
     cli.add_argument("--max-detail", type=int, default=0, help="0 = all discovered")
-    cli.add_argument("--workers", type=int, default=6)
-    cli.add_argument("--min-records", type=int, default=12)
+    cli.add_argument("--workers", type=int, default=8)
+    cli.add_argument("--min-records", type=int, default=30)
     args = cli.parse_args()
     session = requests.Session()
     session.headers.update({"User-Agent": "Mozilla/5.0 (compatible; SaiSamarthCatalogue/1.0)"})
-    sources = sitemap_urls(session, SITEMAP)
-    print("Official sitemap entries:", len(sources))
-    categories = {canonical(BASE+p) for p in FALLBACK_CATEGORIES}
-    detail_urls = {canonical(BASE+p) for p in FALLBACK_DETAILS}
-    for url in sources:
-        url = canonical(url)
-        m = RE_DETAIL.match(urlparse(url).path)
-        if m and is_india_area(m.group("area")):
-            detail_urls.add(url)
-        elif RE_CATEGORY.match(urlparse(url).path):
-            cat = urlparse(url).path.rsplit("/", 1)[-1].replace("-holiday-tour-packages", "")
-            if is_india_area(cat):
-                categories.add(url)
-    prices = {}
-    for category in sorted(categories | {ROOT}):
+    sitemap = sitemap_urls(session, SITEMAP)
+    categories = {canonical(BASE + path) for path in (*FALLBACK_CATEGORIES, *MORE_DOMESTIC_CATEGORIES)}
+    # Discover additional official India category pages from sitemap and
+    # server-rendered navigation instead of relying on hardcoded tour URLs.
+    for url in sitemap:
+        url=canonical(url)
+        parts=urlparse(url).path.strip("/").split("/")
+        if len(parts) == 2 and parts[0] == "india-tour-packages" and is_india_area(parts[1]):
+            categories.add(url)
+    try:
+        root_soup = BeautifulSoup(get(session, ROOT), "html.parser")
+        for a in root_soup.find_all("a", href=True):
+            u=canonical(a["href"])
+            parts=urlparse(u).path.strip("/").split("/")
+            if len(parts)==2 and parts[0]=="india-tour-packages" and is_india_area(parts[1]):
+                categories.add(u)
+    except Exception as exc:
+        print("root navigation not available:", type(exc).__name__)
+    index = {}
+    coverage = {}
+    errors = []
+    for category in sorted(categories):
+        if not category:
+            continue
         try:
-            soup = BeautifulSoup(get(session, category), "html.parser")
-            prices.update(listing_facts(soup))
-            for a in soup.find_all("a", href=True):
-                url = canonical(a["href"])
-                m = RE_DETAIL.match(urlparse(url).path)
-                if m and is_india_area(m.group("area")):
-                    detail_urls.add(url)
+            cards=from_listing_next(get(session,category), category)
         except Exception as exc:
-            print("Listing unavailable:", category, type(exc).__name__)
-    for link in detail_urls:
-        match = RE_DETAIL.match(urlparse(link).path)
-        quote = KNOWN_LISTING_QUOTES.get(match.group("id").lower()) if match else None
-        if quote and link not in prices:
-            prices[link] = {"starting_price_inr": quote[0], "valid_until": quote[1],
-                            "price_source": "supplier published destination listing"}
-    urls = sorted(filter(None, detail_urls))
+            errors.append({"category": category, "reason": type(exc).__name__})
+            continue
+        if not cards:
+            coverage[category_key(category)] = 0
+            continue
+        coverage[category_key(category)] = len(cards)
+        for card in cards:
+            existing=index.get(card["tour_code_supplier"])
+            if existing:
+                for field in ("listed_states", "source_categories"):
+                    existing[field] = sorted(set(existing[field]) | set(card[field]))
+                # If duplicate listings disagree, keep the first published
+                # amount and flag for verification rather than silently switch.
+                if existing["starting_price_inr"] != card["starting_price_inr"]:
+                    existing["listing_price_conflict"]=True
+                    existing["conflicting_prices"]=sorted(set(
+                        existing.get("conflicting_prices", [existing["starting_price_inr"]]) + [card["starting_price_inr"]]
+                    ))
+            else:
+                index[card["tour_code_supplier"]]=card
+    cards=sorted(index.values(),key=lambda d:(d["source_categories"][0],d["title"]))
     if args.max_detail:
-        urls = urls[:args.max_detail]
-    print("Domestic detail candidates:", len(urls), "priced listings:", len(prices))
-    records = []
-    failed = 0
-    def fetch_one(url):
-        # One isolated Session per worker to avoid cross-thread connection state.
+        cards=cards[:args.max_detail]
+    print(f"India catalogue source categories={len(categories)}, with private van tours={sum(bool(v) for v in coverage.values())}; "
+          f"unique published tour codes={len(index)}; detail attempts={len(cards)}")
+    if len(cards)<args.min_records:
+        raise SystemExit(f"Only {len(cards)} current private van tours discovered; refusing incomplete catalogue")
+    records=[]
+    failures=[]
+    def fetch_one(card):
+        url=card["source_url"]
         with requests.Session() as client:
-            client.headers.update({"User-Agent": "Mozilla/5.0 (compatible; SaiSamarthCatalogue/1.0)"})
-            return parse_detail(url, get(client, url), prices.get(url, {}))
-    with ThreadPoolExecutor(max_workers=max(1, min(args.workers, 8))) as pool:
-        futures = {pool.submit(fetch_one, url): url for url in urls}
-        for f in as_completed(futures):
+            client.headers.update({"User-Agent":"Mozilla/5.0 (compatible; SaiSamarthCatalogue/1.0)"})
+            html=get(client,url,timeout=22)
+        return parse_detail(url,html,card)
+    with ThreadPoolExecutor(max_workers=max(1,min(args.workers,10))) as pool:
+        future_map={pool.submit(fetch_one,card):card for card in cards}
+        for future in as_completed(future_map):
+            card=future_map[future]
             try:
-                record = f.result()
+                record=future.result()
                 if record:
                     records.append(record)
+                else:
+                    failures.append({"code":card["tour_code_supplier"],"reason":"detail HTML missing or not Private Van Tour"})
             except Exception as exc:
-                failed += 1
-    records = sorted({p["tour_code_supplier"]: p for p in records}.values(),
-                     key=lambda r: (r["region_label"], r["title"], r["tour_code_supplier"]))
-    if len(records) < args.min_records:
-        raise SystemExit(f"Refusing incomplete snapshot: {len(records)} records, {failed} errors; need {args.min_records}")
-    output = Path(args.out)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    snapshot = {"source": ROOT, "retrieved_at": datetime.now(timezone.utc).isoformat(),
-                "kind": "indian_domestic_private_van_facts", "total": len(records),
-                "failed_details": failed, "packages": records}
-    tmp = output.with_suffix(".tmp")
-    tmp.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                failures.append({"code":card["tour_code_supplier"],"reason":type(exc).__name__})
+    records.sort(key=lambda r:(r["region_label"],r["title"],r["tour_code_supplier"]))
+    if len(records)<args.min_records:
+        raise SystemExit(f"Only {len(records)} verified detailed tours; need {args.min_records}; failures={failures[:7]}")
+    snapshot={
+        "source":ROOT, "retrieved_at":datetime.now(timezone.utc).isoformat(),
+        "kind":"indian_domestic_private_van_facts", "total":len(records),
+        "source_catalogue_count":len(index), "coverage":coverage,
+        "failed_details":len(failures), "failures":failures,
+        "source_category_errors":errors,
+        "packages":records,
+    }
+    output=Path(args.out)
+    output.parent.mkdir(parents=True,exist_ok=True)
+    tmp=output.with_suffix(".tmp")
+    tmp.write_text(json.dumps(snapshot,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     tmp.replace(output)
-    print(f"Collected {len(records)} verified Indian private-van tours into {output}")
+    print("Verified private van tours:",len(records),
+          "priced:",sum(bool(r["starting_price_inr"]) for r in records),
+          "detail/price conflicts:",sum(bool(r.get("detail_discrepancy") or r.get("listing_price_conflict")) for r in records),
+          "detail failures:",len(failures))
+    print("COVERAGE:",json.dumps(coverage,sort_keys=True))
+    if failures:
+        print("MISSING DETAIL CODES:",json.dumps(failures[:40]))
+    if len(failures)>0:
+        # Do not claim full parity when the supplier pages cannot be validated;
+        # surface missing rows for manual follow-up, retaining prior snapshot.
+        raise SystemExit(f"{len(failures)} supplier tour detail pages were unverified; refusing a partial replacement")
+
 
 if __name__ == "__main__":
     main()
