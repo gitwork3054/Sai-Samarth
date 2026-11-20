@@ -16,7 +16,7 @@ OUT=ROOT/"docs/pdf-photo-shortlist"
 OUT.mkdir(parents=True,exist_ok=True)
 CANDIDATES={
 "Shimla":["Shimla, India, Panoramic view of Shimla hills.jpg","Shimla Hills.jpg"],
-"Srinagar":["Dal-Lake, Srinagar, Kashmir.jpg","Dal Lake, Srinagar, Jammu and Kashmir.jpg"],
+"Srinagar":["Sunset at Dal Lake, Srinagar.jpg","Sunrise in Nigeen Lake.jpg"],
 "Katra":["Shri Mata Vaishno Devi Shrine, Katra, Jammu and Kashmir, India.jpg"],
 "Coorg":["Coorg view.jpg","Areca Paddy Mist Balamuri Coorg Feb24 A7C 09428.jpg"],
 "Chennai":["Chennai's Kapaleeshwarar Temple.jpg"],
@@ -27,7 +27,7 @@ CANDIDATES={
 "Kumarakom":["Kumarkom.jpg","House Boats At Vembanattu Lake,Kumarakom,Alleppy,Kerala,India - panoramio.jpg"],
 "Ooty":["Ooty-India.jpg","Tea plantations and rainforests Nilgiris.jpg"],
 "Lakshadweep":["Agatti Island Lakshadweep.jpg","LakshadweepIsland.jpg"],
-"Port Blair":["Corbyn's Cove beach Port Blair.jpg"],
+"Port Blair":["Corbyns Cove Sea Beach.jpg"],
 "Andaman":["Havelock Island, Radhanagar Beach, tropical bliss, Andaman Islands.jpg","Radhanagar Beach, Havelock Island,Andaman.jpg"],
 "Guwahati":["The Umananda Temple, located on Peacock Island in the middle of the Brahmaputra River, Guwahati.jpg"],
 "Goa":["Palolem Beach, south Goa.jpg","Palolem Beach.jpg"],
