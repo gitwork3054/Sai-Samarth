@@ -30,5 +30,6 @@ jobs:
           git add docs/pdf-photo-audit/final-cover-pdfs.jpg
           if ! git diff --staged --quiet; then
             git commit -m "QA: rendered approved destination itinerary PDF covers"
+            git pull --rebase origin audit/destination-pdf-cover-images
             git push
           fi
