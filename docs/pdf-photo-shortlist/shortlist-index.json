@@ -1,24 +1,48 @@
 {
-  "generated_at": "2026-11-20T10:55:46.455525+00:00",
+  "generated_at": "2026-11-20T10:56:17.699964+00:00",
   "entries": {
     "Shimla": [
       {
-        "file": "Shimla, India, Panoramic view of Shimla hills.jpg",
-        "error": "untrusted host"
+        "city": "Shimla",
+        "filename": "Shimla, India, Panoramic view of Shimla hills.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Shimla%2C_India%2C_Panoramic_view_of_Shimla_hills.jpg",
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0",
+        "author": "Vyacheslav Argenberg",
+        "width": 3072,
+        "height": 2048
       },
       {
-        "file": "Shimla Hills.jpg",
-        "error": "untrusted host"
+        "city": "Shimla",
+        "filename": "Shimla Hills.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Shimla_Hills.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Rigourfigure",
+        "width": 4618,
+        "height": 3464
       }
     ],
     "Srinagar": [
       {
-        "file": "Dal-Lake, Srinagar, Kashmir.jpg",
-        "error": "untrusted host"
+        "city": "Srinagar",
+        "filename": "Dal-Lake, Srinagar, Kashmir.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Dal-Lake%2C_Srinagar%2C_Kashmir.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Sudesh Nayak",
+        "width": 5184,
+        "height": 3456
       },
       {
-        "file": "Dal Lake, Srinagar, Jammu and Kashmir.jpg",
-        "error": "untrusted host"
+        "city": "Srinagar",
+        "filename": "Dal Lake, Srinagar, Jammu and Kashmir.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Dal_Lake%2C_Srinagar%2C_Jammu_and_Kashmir.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Dashrathgoyal85",
+        "width": 5184,
+        "height": 3456
       }
     ],
     "Katra": [
@@ -45,14 +69,26 @@
         "height": 640
       },
       {
-        "file": "Areca Paddy Mist Balamuri Coorg Feb24 A7C 09428.jpg",
-        "error": "untrusted host"
+        "city": "Coorg",
+        "filename": "Areca Paddy Mist Balamuri Coorg Feb24 A7C 09428.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Areca_Paddy_Mist_Balamuri_Coorg_Feb24_A7C_09428.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "This Photo was taken by Timothy A. Gonsalves .  Feel free to use my photos, but please mention me as the author.  I woul",
+        "width": 5110,
+        "height": 3407
       }
     ],
     "Chennai": [
       {
-        "file": "Chennai's Kapaleeshwarar Temple.jpg",
-        "error": "untrusted host"
+        "city": "Chennai",
+        "filename": "Chennai's Kapaleeshwarar Temple.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Chennai%27s_Kapaleeshwarar_Temple.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Srishti Sethi",
+        "width": 3024,
+        "height": 4032
       }
     ],
     "Tamil Nadu": [
@@ -69,62 +105,134 @@
     ],
     "Jaisalmer": [
       {
-        "file": "Golden Jaisalmer Fort.jpg",
-        "error": "untrusted host"
+        "city": "Jaisalmer",
+        "filename": "Golden Jaisalmer Fort.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Golden_Jaisalmer_Fort.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Bhartrihari Pandiya",
+        "width": 5184,
+        "height": 3456
       },
       {
-        "file": "Jaisalmer Fort in the afternoon sun.jpg",
-        "error": "untrusted host"
+        "city": "Jaisalmer",
+        "filename": "Jaisalmer Fort in the afternoon sun.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Jaisalmer_Fort_in_the_afternoon_sun.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Sreesarkar",
+        "width": 4517,
+        "height": 2333
       }
     ],
     "Varanasi": [
       {
-        "file": "Varanasi ghats at the sunrise.JPG",
-        "error": "untrusted host"
+        "city": "Varanasi",
+        "filename": "Varanasi ghats at the sunrise.JPG",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Varanasi_ghats_at_the_sunrise.JPG",
+        "license": "CC BY 3.0",
+        "license_url": "https://creativecommons.org/licenses/by/3.0",
+        "author": "Ilya Mauter",
+        "width": 2228,
+        "height": 1671
       },
       {
-        "file": "Varanasi Sunrise.jpg",
-        "error": "untrusted host"
+        "city": "Varanasi",
+        "filename": "Varanasi Sunrise.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Varanasi_Sunrise.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Jay.Jarosz",
+        "width": 3117,
+        "height": 2226
       }
     ],
     "Kodaikanal": [
       {
-        "file": "Top View of Kodai Lake.jpg",
-        "error": "untrusted host"
+        "city": "Kodaikanal",
+        "filename": "Top View of Kodai Lake.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Top_View_of_Kodai_Lake.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Lpriyatham",
+        "width": 6000,
+        "height": 4000
       },
       {
-        "file": "Upper Lake View in Kodaikanal.jpg",
-        "error": "untrusted host"
+        "city": "Kodaikanal",
+        "filename": "Upper Lake View in Kodaikanal.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Upper_Lake_View_in_Kodaikanal.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "KARTY JazZ",
+        "width": 5184,
+        "height": 3456
       }
     ],
     "Kumarakom": [
       {
-        "file": "Kumarkom.jpg",
-        "error": "untrusted host"
+        "city": "Kumarakom",
+        "filename": "Kumarkom.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Kumarkom.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Jigyasu",
+        "width": 4608,
+        "height": 3456
       },
       {
-        "file": "House Boats At Vembanattu Lake,Kumarakom,Alleppy,Kerala,India - panoramio.jpg",
-        "error": "untrusted host"
+        "city": "Kumarakom",
+        "filename": "House Boats At Vembanattu Lake,Kumarakom,Alleppy,Kerala,India - panoramio.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:House_Boats_At_Vembanattu_Lake%2CKumarakom%2CAlleppy%2CKerala%2CIndia_-_panoramio.jpg",
+        "license": "CC BY-SA 3.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+        "author": "Geyo John",
+        "width": 3888,
+        "height": 2592
       }
     ],
     "Ooty": [
       {
-        "file": "Ooty-India.jpg",
-        "error": "untrusted host"
+        "city": "Ooty",
+        "filename": "Ooty-India.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Ooty-India.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Geetha Grandhe",
+        "width": 2048,
+        "height": 1536
       },
       {
-        "file": "Tea plantations and rainforests Nilgiris.jpg",
-        "error": "untrusted host"
+        "city": "Ooty",
+        "filename": "Tea plantations and rainforests Nilgiris.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Tea_plantations_and_rainforests_Nilgiris.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Anand Osuri",
+        "width": 3200,
+        "height": 2400
       }
     ],
     "Lakshadweep": [
       {
-        "file": "Agatti Island Lakshadweep.jpg",
-        "error": "untrusted host"
+        "city": "Lakshadweep",
+        "filename": "Agatti Island Lakshadweep.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Agatti_Island_Lakshadweep.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Mdraghunath",
+        "width": 6000,
+        "height": 4000
       },
       {
-        "file": "LakshadweepIsland.jpg",
-        "error": "untrusted host"
+        "city": "Lakshadweep",
+        "filename": "LakshadweepIsland.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:LakshadweepIsland.jpg",
+        "license": "CC BY-SA 3.0",
+        "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+        "author": "Lenish Namath",
+        "width": 3038,
+        "height": 2012
       }
     ],
     "Port Blair": [
@@ -135,12 +243,24 @@
     ],
     "Andaman": [
       {
-        "file": "Havelock Island, Radhanagar Beach, tropical bliss, Andaman Islands.jpg",
-        "error": "untrusted host"
+        "city": "Andaman",
+        "filename": "Havelock Island, Radhanagar Beach, tropical bliss, Andaman Islands.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Havelock_Island%2C_Radhanagar_Beach%2C_tropical_bliss%2C_Andaman_Islands.jpg",
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0",
+        "author": "Vyacheslav Argenberg",
+        "width": 4032,
+        "height": 2688
       },
       {
-        "file": "Radhanagar Beach, Havelock Island,Andaman.jpg",
-        "error": "untrusted host"
+        "city": "Andaman",
+        "filename": "Radhanagar Beach, Havelock Island,Andaman.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Radhanagar_Beach%2C_Havelock_Island%2CAndaman.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Amey Ghule",
+        "width": 4608,
+        "height": 3456
       }
     ],
     "Guwahati": [
@@ -157,44 +277,92 @@
     ],
     "Goa": [
       {
-        "file": "Palolem Beach, south Goa.jpg",
-        "error": "untrusted host"
+        "city": "Goa",
+        "filename": "Palolem Beach, south Goa.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Palolem_Beach%2C_south_Goa.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Mahabalaindia",
+        "width": 7360,
+        "height": 4253
       },
       {
-        "file": "Palolem Beach.jpg",
-        "error": "untrusted host"
+        "city": "Goa",
+        "filename": "Palolem Beach.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Palolem_Beach.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Manojz Kumar",
+        "width": 3872,
+        "height": 2176
       }
     ],
     "Diu": [
       {
-        "file": "Nagoa Beach, Diu.jpg",
-        "error": "untrusted host"
+        "city": "Diu",
+        "filename": "Nagoa Beach, Diu.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Nagoa_Beach%2C_Diu.jpg",
+        "license": "Public domain",
+        "license_url": "",
+        "author": "User: (WT-shared) SyeN at  wts wikivoyage",
+        "width": 3000,
+        "height": 2250
       }
     ],
     "Bangalore": [
       {
-        "file": "Bengaluru Palace.jpg",
-        "error": "untrusted host"
+        "city": "Bangalore",
+        "filename": "Bengaluru Palace.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Bengaluru_Palace.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Shubham Shah",
+        "width": 12000,
+        "height": 9000
       },
       {
-        "file": "Aerial view of Bangalore Palace and Palace Grounds (2).jpg",
-        "error": "untrusted host"
+        "city": "Bangalore",
+        "filename": "Aerial view of Bangalore Palace and Palace Grounds (2).jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Bangalore_Palace_and_Palace_Grounds_%282%29.jpg",
+        "license": "CC BY-SA 2.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+        "author": "Vinu Thomas from Bangalore, India",
+        "width": 5184,
+        "height": 3456
       }
     ],
     "Darjeeling": [
       {
-        "file": "Kanchenjunga range from tea gardens of darjeeling.jpg",
-        "error": "untrusted host"
+        "city": "Darjeeling",
+        "filename": "Kanchenjunga range from tea gardens of darjeeling.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Kanchenjunga_range_from_tea_gardens_of_darjeeling.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Souviknshm",
+        "width": 3600,
+        "height": 2160
       },
       {
-        "file": "Tea Garden, Darjeeling.jpg",
-        "error": "untrusted host"
+        "city": "Darjeeling",
+        "filename": "Tea Garden, Darjeeling.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Tea_Garden%2C_Darjeeling.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Yonit Chauhan",
+        "width": 4128,
+        "height": 3096
       }
     ],
     "Rishikesh": [
       {
-        "file": "Ram Jhula footbridge - Rishikesh.jpg",
-        "error": "untrusted host"
+        "city": "Rishikesh",
+        "filename": "Ram Jhula footbridge - Rishikesh.jpg",
+        "file_page": "https://commons.wikimedia.org/wiki/File:Ram_Jhula_footbridge_-_Rishikesh.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "Paradise Chronicle",
+        "width": 5760,
+        "height": 3840
       }
     ]
   }
