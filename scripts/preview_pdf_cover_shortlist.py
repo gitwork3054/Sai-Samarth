@@ -60,11 +60,13 @@ def fetch_one(city,name):
     return (city,name,None,"resolution too low")
    url=details.get("thumburl") or details.get("url")
    host=urlparse(url or "").hostname
-   if host!="upload.wikimedia.org":
+   if host not in ("upload.wikimedia.org","thumb.wikimedia.org"):
     print("UNTRUSTED IMAGE HOST",city,repr(url)[:250],flush=True)
     return (city,name,None,"untrusted host")
    response=ses.get(url,timeout=22)
    response.raise_for_status()
+   if urlparse(response.url).hostname not in ("upload.wikimedia.org","thumb.wikimedia.org"):
+    return (city,name,None,"unexpected image redirect host")
    if len(response.content)>9*1024*1024:return (city,name,None,"too large")
    with Image.open(io.BytesIO(response.content)) as image:
     im=ImageOps.exif_transpose(image).convert("RGB")
