@@ -178,9 +178,9 @@ class Brochure:
     def arches(self):
         c = self.c
         c.saveState()
+        c.setStrokeColor(ORANGE)
         if hasattr(c, "setStrokeAlpha"):
             c.setStrokeAlpha(.055)
-        c.setStrokeColor(ORANGE)
         c.setLineWidth(.7)
         for x in range(-24, 525, 68):
             for n in range(5):
@@ -217,12 +217,12 @@ class Brochure:
             c.setFillColor(colors.HexColor("#EE8460"))
             c.circle(350, 365, 155, fill=1, stroke=0)
         c.saveState()
-        if hasattr(c, "setFillAlpha"):
-            c.setFillAlpha(.44)
         c.setFillColor(INK)
+        if hasattr(c, "setFillAlpha"):
+            c.setFillAlpha(.38)
         c.rect(0, 0, W, H, fill=1, stroke=0)
         if hasattr(c, "setFillAlpha"):
-            c.setFillAlpha(.42)
+            c.setFillAlpha(.44)
         c.rect(0, 0, W, 192, fill=1, stroke=0)
         c.restoreState()
         self.arches()
