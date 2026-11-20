@@ -325,6 +325,84 @@ def from_listing_next(html, listing_url):
     return result
 
 
+
+def text_lines(soup):
+    return [tidy(x) for x in soup.get_text("\n", strip=True).split("\n") if tidy(x)]
+
+
+def parse_factual_sections(soup, nights):
+    """Keep only geographic/meal facts, never the supplier's descriptive prose."""
+    lines=text_lines(soup)
+    joined=tidy(soup.get_text(" ",strip=True))
+    marker=re.search(r"\bCities\s*:\s*",joined,re.I)
+    route=[]
+    if marker:
+        chunk=joined[marker.end():marker.end()+750]
+        total=0
+        for m in RE_CITY.finditer(chunk):
+            city=tidy(m.group(1)).split("  ")[-1].lstrip(" ,:")
+            amount=int(m.group(2))
+            if 2<=len(city)<=60 and amount>0:
+                route.append({"city":city,"nights":amount})
+                total+=amount
+                if total>=nights:
+                    break
+        if total!=nights:
+            route=[]
+    sights=[]
+    hotels=[]
+    if route:
+        begin=next((i for i,line in enumerate(lines) if re.search(r"\bCities\s*:",line)),0)
+        zone=lines[begin+1:begin+155]
+        for j,line in enumerate(zone):
+            if j>3 and line in ("Gallery","Videos","Tour Information","Day wise travel itinerary"):
+                zone=zone[:j]
+                break
+        found_sightseeing=False
+        city=""
+        for line in zone:
+            if line in ("Sightseeing","Sight Seeing"):
+                found_sightseeing=True
+                city=""
+                continue
+            if line in ("Flight and transport","Meals","Gallery","Hotels","Hotel Included","Tour Information"):
+                found_sightseeing=False
+            hotel=re.search(r"(\d+)\s*Night\(s\)\s*in\s+(.+?)\s+at\s+(.+?)\s+or similar",line,re.I)
+            if hotel and len(hotels)<15:
+                hotels.append({"city":tidy(hotel.group(2))[:80],
+                               "nights":int(hotel.group(1)),"example":tidy(hotel.group(3))[:160]})
+            if not found_sightseeing:
+                continue
+            if re.fullmatch(r"[A-Za-z0-9 /&,\-().]{2,60},\s*India",line):
+                city=line.rsplit(",",1)[0].strip()
+                continue
+            if city and 3<=len(line)<=95 and not line.startswith(("Image:","Tour Code","Click","View")):
+                if not re.search(r"\d+\s*(Breakfast|Dinner|Lunch)|nights?\s*/|price",line,re.I):
+                    item={"city":city,"name":line}
+                    if item not in sights and len(sights)<80:
+                        sights.append(item)
+    meals={}
+    for kind in ("Breakfast","Lunch","Dinner"):
+        m=re.search(r"\b(\d{1,2})\s+"+kind+r"\b",joined[:15000],re.I)
+        if m:
+            meals[kind.lower()]=int(m.group(1))
+    days={}
+    start=next((i for i,line in enumerate(lines) if line.casefold()=="day wise travel itinerary"),-1)
+    if start>=0:
+        for i,line in enumerate(lines[start+1:start+240],start+1):
+            if line in ("Tour Information","Important Notes","Cancellation Policy"):
+                break
+            match=RE_DAY.match(line)
+            if match and int(match.group(1)) not in days:
+                days[int(match.group(1))]=tidy(match.group(2))[:95]
+            elif re.fullmatch(r"Day\s*\d{1,2}",line,re.I) and i+1<len(lines):
+                number=int(re.search(r"\d+",line).group())
+                candidate=lines[i+1]
+                if number not in days and len(candidate)<90:
+                    days[number]=candidate
+    return route,sights,hotels,meals,days
+
+
 def parse_detail(url, html, listed):
     """Read only factual highlights from details; public listing is canonical
     for name, route, price and validity. Never reproduce proprietary prose.
