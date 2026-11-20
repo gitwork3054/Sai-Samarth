@@ -51,7 +51,11 @@ ADDITIONAL=[
 SPECIAL_PHOTOS = {
     "Shimla": ("Mall Road Shimla.jpg", "Satyamrai7777", "CC BY-SA 4.0"),
     "Srinagar": ("View of Dal lake Srinagar.jpg", "Harvinder Chandigarh", "CC BY 4.0"),
-    "Mysore": ("Mysore-palace.jpg", "Mathew Mani", "CC BY-SA 4.0"),
+    "Mysore": ("Mysore Palace, Mysore, Karnataka, India.jpg", "Wikimedia Commons contributor", "CC BY-SA 4.0"),
+    "Ooty": ("Lake in Ooty.jpg", "Barkave Balusamy", "CC BY-SA 4.0"),
+    "Kodaikanal": ("Kodaikanal Lake, Tamil Nadu.jpg", "Sinash", "CC BY-SA 4.0"),
+    "Mahabalipuram": ("Shore Temple at Mahabalipuram Tamilnadu.jpg", "Rafflord", "CC BY-SA 4.0"),
+    "Tirupati": ("Tirupati temple.jpg", "Kajal Dhanotia", "CC BY-SA 4.0"),
     "Puri": ("Bird view of Jagannath Temple, Puri.jpg", "Government of Odisha", "CC BY 4.0"),
     "Nainital": ("Nainital-1.jpg", "Lalitgupta isgec", "CC BY-SA 4.0"),
     "Goa": ("Baga Beach, Calangute, Goa.jpg", "Wikimedia Commons contributor", "See Commons file page"),
@@ -207,10 +211,12 @@ def main():
         except Exception:
             pass
     all_names=sorted(city_names)
-    ready={}
+    ready={name:entry for name,entry in existing.items()
+           if name in all_names and (ROOT/entry.get("file","")).is_file()}
     failed={}
-    with ThreadPoolExecutor(max_workers=7) as pool:
-        pending={pool.submit(collect,name):name for name in all_names}
+    remaining=[name for name in all_names if name not in ready]
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        pending={pool.submit(collect,name):name for name in remaining}
         for task in as_completed(pending):
             city,entry,status=task.result()
             if entry:
