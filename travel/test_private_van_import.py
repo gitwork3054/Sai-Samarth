@@ -53,6 +53,19 @@ class DomesticPrivateVanTests(TestCase):
         self.assertEqual(days[2]["stay"], "")
         self.assertNotIn("Get ready for tour", " ".join(x["description"] for x in days))
 
+    def test_structured_day_facts_preserve_meals_and_place_names(self):
+        row = example_row()
+        row["day_facts"]=[
+            {"day_number":1,"route_label":"Shimla","meals":"Dinner","attractions":["Kufri Valley"]},
+            {"day_number":2,"route_label":"Shimla to Manali","meals":"Breakfast, Dinner","attractions":["Solang Valley"]},
+            {"day_number":3,"route_label":"Manali Departure","meals":"Breakfast","attractions":[]},
+        ]
+        days=list(independently_written_days(row))
+        self.assertEqual(days[0]["meals"],"Dinner")
+        self.assertIn("Kufri Valley",days[0]["description"])
+        self.assertIn("Solang Valley",days[1]["description"])
+        self.assertEqual(days[2]["meals"],"Breakfast")
+
     def test_import_preserves_group_and_removes_only_demo(self):
         dest = m.Destination.objects.create(name="Goa", region="domestic", state_or_country="Goa")
         demo = m.Package.objects.create(

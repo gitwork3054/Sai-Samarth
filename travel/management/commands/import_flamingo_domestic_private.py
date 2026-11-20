@@ -25,6 +25,8 @@ REGION_FIXES = {
     "Andaman Holiday Tour Package": "Andaman & Nicobar",
     "Golden Triangle Tour Packages": "Delhi / Agra / Rajasthan",
     "West Bengal Sikkim": "West Bengal & Sikkim",
+    "Jammu Kashmir": "Jammu & Kashmir",
+    "Kashmir Packages From Ahmedabad": "Jammu & Kashmir",
 }
 
 
@@ -67,61 +69,55 @@ def night_plan(route):
     return nights
 
 
+
 def independently_written_days(row):
-    nights = night_plan(row["route"])
-    source_headings = row.get("day_headings", {})
-    attractions_by_city = {}
-    for place in row.get("sightseeing", []):
-        city = place.get("city", "").strip().casefold()
-        if city:
-            attractions_by_city.setdefault(city, []).append(place.get("name", "").strip())
-    for day_number in range(1, int(row["days"]) + 1):
-        if day_number == len(nights) + 1:
-            previous = nights[-1]
-            yield {
-                "day_number": day_number,
-                "title": f"Complete the journey from {previous}",
-                "description": (
-                    f"The final day marks the end of the published route after {previous}. "
-                    "Check your confirmed travel documents for departure timing and onward transfer arrangements."
-                ),
-                "stay": "",
-                "meals": "",
-            }
+    """Generate Sai Samarth's own narrative from supplier-supplied factual
+    route names, meal allocations, and visit names; never copy itinerary prose.
+    """
+    nights=night_plan(row["route"])
+    source_days={int(d["day_number"]):d for d in row.get("day_facts",[])
+                 if d.get("day_number")}
+    general_sights={}
+    for item in row.get("sightseeing",[]):
+        name=item.get("name","").strip()
+        city=item.get("city","").strip().casefold()
+        if city and name and name not in general_sights.setdefault(city,[]):
+            general_sights[city].append(name)
+    for day in range(1,int(row["days"])+1):
+        facts=source_days.get(day,{})
+        meals=facts.get("meals","")
+        if day==len(nights)+1:
+            last=nights[-1]
+            stops=facts.get("attractions") or []
+            text=(f"Travel concludes after the final night in {last}. "
+                  "Confirm departure transfers and onward connections against the final booking documents.")
+            if stops:
+                text+=f" The supplier also lists {', '.join(stops[:2])} for this day; confirm that these fit your departure schedule."
+            yield {"day_number":day,"title":f"Departure after {last}",
+                   "description":text,"stay":"","meals":meals}
             continue
-        city = nights[day_number - 1]
-        previous = nights[day_number - 2] if day_number > 1 else ""
-        first_here = day_number == 1 or city != previous
-        if day_number == 1:
-            title = f"Begin your holiday in {city}"
-            lead = f"The first overnight stop on this route is {city}. "
-        elif first_here:
-            title = f"Continue from {previous} to {city}"
-            lead = f"The overnight route moves from {previous} to {city}. "
+        city=nights[day-1]
+        prev=nights[day-2] if day>1 else ""
+        if day==1:
+            title=f"Arrive in the {city} area"
+            lead=f"The published holiday begins with an overnight stay in {city}. "
+        elif city!=prev:
+            title=f"Journey from {prev} to {city}"
+            lead=f"The route continues from {prev} to {city} for the next overnight stay. "
         else:
-            title = f"Explore the {city} region"
-            lead = f"This part of the journey is based in {city}. "
-        attractions = attractions_by_city.get(city.lower(), [])
-        if len(attractions) > 1:
-            # Place names are geographical facts; do not invent day-specific inclusions.
-            attractions_text = (
-                f"The published sightseeing overview mentions {attractions[0]} and {attractions[1]} "
-                f"in the {city} area; please confirm the day and whether tickets are included. "
-            )
-        elif attractions:
-            attractions_text = (
-                f"The published sightseeing overview also identifies {attractions[0]} in this region. "
-            )
+            title=f"Discover {city}"
+            lead=f"Today remains centred around {city}. "
+        visits=facts.get("attractions") or []
+        if visits:
+            details=f"Places identified for this day include {', '.join(visits[:4])}. "
+        elif facts:
+            details="Sightseeing details for this day are confirmed with the final itinerary. "
         else:
-            attractions_text = ""
-        description = (
-            lead + attractions_text +
-            "Daily stops, hotel check-in arrangements and admission costs are subject to the final confirmed itinerary."
-        )
-        yield {
-            "day_number": day_number, "title": title,
-            "description": description, "stay": city, "meals": "",
-        }
+            options=general_sights.get(city.casefold(),[])
+            details=(f"Published area highlights include {', '.join(options[:2])}; "
+                     "the supplier has not confirmed their daily sequence. ") if options else ""
+        text=lead+details+"Stay and entry arrangements are subject to the confirmed travel plan."
+        yield {"day_number":day,"title":title,"description":text,"stay":city,"meals":meals}
 
 
 def package_overview(row):
@@ -136,8 +132,11 @@ def package_overview(row):
 
 def fact_based_terms(row):
     included = []
-    if row.get("hotel_examples"):
-        included.append("Hotel accommodation according to the selected itinerary; property options are not guaranteed.")
+    labels={str(x).casefold() for x in row.get("listed_services", [])}
+    if "hotels" in labels or row.get("hotel_examples"):
+        included.append("Hotel accommodation as outlined in the supplier package; listed properties are illustrative options.")
+    if "sightseeing" in labels:
+        included.append("Sightseeing stops according to the confirmed route; admission costs require reconfirmation.")
     if row.get("private_vehicle_mentioned"):
         included.append("Private vehicle for transfers and sightseeing where indicated in the supplier's itinerary.")
     for meal in ("breakfast", "lunch", "dinner"):
@@ -153,7 +152,7 @@ def fact_based_terms(row):
         "Source: Public Flamingo Travels tour listing; no booking is confirmed through this page",
         "Supplier tour code: " + row["tour_code_supplier"],
         "Price status: Published starting amount is indicative, not a Sai Samarth confirmed quotation",
-        "Price validity: " + (expiry or "Not provided; confirm with travel team"),
+        "Price validity: " + ((str(row.get("valid_from"))+" to "+expiry) if row.get("valid_from") and expiry else (expiry or "Not provided; confirm with travel team")),
         "Checked: " + timezone.localdate().isoformat(),
         "Travel style: Private vehicle tour; confirm vehicle size for your party",
         "Conditions: Hotel availability, optional entries, route timings and tax are reconfirmed before booking",
@@ -306,9 +305,12 @@ class Command(BaseCommand):
                 package.hotels.all().delete()
                 m.Hotel.objects.bulk_create([
                     m.Hotel(
-                        package=package, tier="standard", name=hotel["example"][:120],
+                        package=package,
+                        tier=("premium" if int(hotel.get("stars") or 0)>=5 else
+                              "deluxe" if int(hotel.get("stars") or 0)==4 else "standard"),
+                        name=hotel["example"][:120],
                         city=hotel["city"][:80], nights=int(hotel["nights"]),
-                        star_rating=0,
+                        star_rating=int(hotel.get("stars") or 0),
                         description="Example property from a public supplier listing, not an allocation or booking guarantee."
                     )
                     for hotel in row.get("hotel_examples", [])[:12] if hotel.get("example")

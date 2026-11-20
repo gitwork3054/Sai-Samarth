@@ -37,7 +37,7 @@ INDIA_TERMS = (
     "golden-triangle", "odisha", "northeast", "north-east", "madhya-pradesh",
     "hyderabad", "north-kerala", "uttar-pradesh", "kerala", "lakshadweep",
     "tamil-nadu", "south-india", "punjab", "assam", "west-bengal",
-    "telangana", "bihar", "chhattisgarh",
+    "telangana", "bihar", "chhattisgarh", "delhi", "north-india", "pondicherry", "puducherry", "jammu", "saurashtra",
 )
 FALLBACK_CATEGORIES = [
     "/india-tour-packages/himachal-pradesh-holiday-tour-packages",
@@ -129,7 +129,8 @@ AREA_MAP = {
     "andaman": "Andaman & Nicobar", "golden-triangle": "Delhi / Agra / Rajasthan",
     "north-kerala": "Kerala", "karnataka": "Karnataka", "leh": "Ladakh",
     "ladakh": "Ladakh", "south-india": "South India", "hyderabad": "Telangana",
-    "maharashtra": "Maharashtra",
+    "maharashtra": "Maharashtra", "delhi": "Delhi",
+    "jammu-kashmir": "Jammu & Kashmir", "kashmir-packages-from-ahmedabad": "Jammu & Kashmir",
 }
 
 
@@ -165,6 +166,8 @@ MORE_DOMESTIC_CATEGORIES = ("/india-tour-packages/delhi-holiday-tour-packages",
 "/india-tour-packages/lakshadweep-island-holiday-tour-packages",)
 CATEGORY_STATES = {
     "rajasthan": ["Rajasthan"],
+    "kashmir-packages-from-ahmedabad": ["Jammu & Kashmir"],
+    "jammu-kashmir": ["Jammu & Kashmir"],
     "golden-triangle": ["Delhi", "Rajasthan"],
     "delhi": ["Delhi"],
     "gujarat": ["Gujarat"],
@@ -403,56 +406,125 @@ def parse_factual_sections(soup, nights):
     return route,sights,hotels,meals,days
 
 
-def parse_detail(url, html, listed):
-    """Read only factual highlights from details; public listing is canonical
-    for name, route, price and validity. Never reproduce proprietary prose.
+
+def structured_detail_facts(soup, overview_route):
+    """Read compact factual day/meal/attraction/hotel options from Next.js.
+    Never persist the raw supplier's itinerary paragraphs or long marketing text.
     """
+    tag=soup.find("script",id="__NEXT_DATA__")
+    if not tag or not tag.string:
+        return [],[]
+    try:
+        props=json.loads(tag.string)["props"]["pageProps"]
+    except (KeyError,TypeError,ValueError):
+        return [],[]
+    details=props.get("data") or {}
+    itinerary=details.get("itinerary") or []
+    sights=details.get("sightSeeing") or []
+    names=[]
+    for sight in sights:
+        if not isinstance(sight,dict):
+            continue
+        name=tidy(sight.get("attractionName") or sight.get("product_name") or "")
+        if len(name)>3 and name not in names and len(name)<95:
+            names.append(name)
+    day_facts=[]
+    for i,entry in enumerate(itinerary[:25],start=1):
+        if not isinstance(entry,dict):
+            continue
+        route_label=tidy(BeautifulSoup(str(entry.get("from") or ""),"html.parser").get_text(" ",strip=True))[:140]
+        meals=tidy(str(entry.get("mealPlan") or "")).replace(",",", ")
+        original_description=tidy(BeautifulSoup(str(entry.get("description") or ""),"html.parser").get_text(" ",strip=True))
+        # Extract verifiable proper names from source text only; never store prose.
+        matches=[]
+        for name in names:
+            index=original_description.casefold().find(name.casefold())
+            if index>=0:
+                matches.append((index,name))
+        matching=[name for _,name in sorted(matches)[:7]]
+        day_facts.append({"day_number":i,"route_label":route_label,"meals":meals,
+                          "attractions":matching})
+    hotels=[]
+    groups=details.get("hotels") or []
+    nights_by_city={}
+    for item in overview_route:
+        nights_by_city[item["city"].lower()]=int(item["nights"])
+    seen=set()
+    # These are potential hotel options, not confirmed room assignments.
+    for group in groups[:8]:
+        if not isinstance(group,dict):
+            continue
+        payload=group.get("data") or {}
+        if not isinstance(payload,dict):
+            continue
+        category=tidy(str(payload.get("categoryName") or ""))
+        for hotel in (payload.get("data") or [])[:16]:
+            if not isinstance(hotel,dict):
+                continue
+            name=tidy(str(hotel.get("hotelName") or ""))[:120]
+            city=tidy(str(hotel.get("cityName") or ""))[:80]
+            stars=tidy(str(hotel.get("hotelStar") or ""))
+            key=(name.casefold(),city.casefold())
+            if not name or not city or key in seen:
+                continue
+            seen.add(key)
+            found=re.search(r"([1-5])\s*star",stars,re.I)
+            rating=int(found.group(1)) if found else 0
+            hotels.append({"city":city,"nights":nights_by_city.get(city.lower(),1),
+                           "example":name,"stars":rating,"category":category})
+            if len(hotels)>=25:
+                break
+        if len(hotels)>=25:
+            break
+    return day_facts,hotels
+
+
+def parse_detail(url, html, listed):
+    """Supplier's listing is canonical for price, title and route;
+    detail page contributes only geographic/meal/hotel facts."""
     if not html:
         return None
-    soup = BeautifulSoup(html, "html.parser")
-    headline = soup.find("h1")
+    soup=BeautifulSoup(html,"html.parser")
+    headline=soup.find("h1")
     if not headline:
         return None
-    full = tidy(soup.get_text(" ", strip=True))
-    header_pos = full.find(tidy(headline.get_text(" ", strip=True)))
-    header = full[max(header_pos, 0):max(header_pos, 0) + 900]
-    if not re.search(r"\bPrivate Van Tour\b", header, re.I):
+    full=tidy(soup.get_text(" ",strip=True))
+    headpos=full.find(tidy(headline.get_text(" ",strip=True)))
+    header=full[max(headpos,0):max(headpos,0)+900]
+    if not re.search(r"\bPrivate Van Tour\b",header,re.I):
         return None
-    parsed_duration = RE_DURATION.search(header)
-    detail_discrepancy = bool(
-        parsed_duration and (
-            int(parsed_duration.group(1)) != listed["nights"] or
-            int(parsed_duration.group(2)) != listed["days"]
-        )
-    )
-    parsed_route, sightseeing, hotels, meals, headings = parse_factual_sections(soup, listed["nights"])
-    if parsed_route and parsed_route != listed["route"]:
-        detail_discrepancy = True
+    parsed_duration=RE_DURATION.search(header)
+    discrepancy=bool(parsed_duration and (int(parsed_duration.group(1))!=listed["nights"] or
+                                          int(parsed_duration.group(2))!=listed["days"]))
+    detail_route,sights,_,meals,headings=parse_factual_sections(soup,listed["nights"])
+    if detail_route and detail_route!=listed["route"]:
+        # Listing price/route are always the authoritative current offer.
+        discrepancy=True
+    day_facts,hotel_options=structured_detail_facts(soup,listed["route"])
+    if day_facts and len(day_facts)!=listed["days"]:
+        discrepancy=True
     category=RE_DETAIL.match(urlparse(url).path)
     area=category.group("area").replace("-holiday-tour-packages","").replace("-holiday-tour-package","")
     return {
-        "source_url": url, "supplier": "Flamingo Travels",
-        "title": listed["title"],
-        "tour_code_supplier": listed["tour_code_supplier"],
-        "category": area,
-        "region_label": AREA_MAP.get(area, area.replace("-", " ").title()),
-        "type": "private_van", "days": listed["days"], "nights": listed["nights"],
-        "route": listed["route"],
-        "sightseeing": sightseeing, "hotel_examples": hotels,
-        "meals": meals, "day_headings": headings,
-        "private_vehicle_mentioned": (
+        "source_url":url,"supplier":"Flamingo Travels",
+        "title":listed["title"],"tour_code_supplier":listed["tour_code_supplier"],
+        "category":area,"region_label":AREA_MAP.get(area,area.replace("-"," ").title()),
+        "type":"private_van","days":listed["days"],"nights":listed["nights"],
+        "route":listed["route"],"sightseeing":sights,"hotel_examples":hotel_options,
+        "meals":meals,"day_facts":day_facts,
+        "private_vehicle_mentioned":(
             "private transfer" in " ".join(listed["listed_services"]).lower()
-            or bool(re.search(r"transfers.{0,80}(?:vehicle|car)|(?:vehicle|car).{0,80}transfers", full[:14000], re.I))
+            or bool(re.search(r"transfers.{0,80}(?:vehicle|car)|(?:vehicle|car).{0,80}transfers",full[:14000],re.I))
         ),
-        "flight_not_included": listed["flight_not_included"],
-        "starting_price_inr": listed["starting_price_inr"],
-        "valid_from": listed["valid_from"], "valid_until": listed["valid_until"],
-        "price_source": listed["price_source"],
-        "listed_states": listed["listed_states"],
-        "source_categories": listed["source_categories"],
-        "listed_services": listed["listed_services"],
-        "detail_discrepancy": detail_discrepancy,
-        "tags": ["Couple"] if any(x in listed["title"].lower() for x in ("honeymoon", "romantic", "couple")) else [],
+        "flight_not_included":listed["flight_not_included"],
+        "starting_price_inr":listed["starting_price_inr"],
+        "valid_from":listed["valid_from"],"valid_until":listed["valid_until"],
+        "price_source":listed["price_source"],
+        "listed_states":listed["listed_states"],
+        "source_categories":listed["source_categories"],
+        "listed_services":listed["listed_services"],
+        "detail_discrepancy":discrepancy,
+        "tags":["Couple"] if any(x in listed["title"].lower() for x in ("honeymoon","romantic","couple")) else [],
     }
 
 
@@ -540,6 +612,17 @@ def main():
             except Exception as exc:
                 failures.append({"code":card["tour_code_supplier"],"reason":type(exc).__name__})
     records.sort(key=lambda r:(r["region_label"],r["title"],r["tour_code_supplier"]))
+    # Loss-of-coverage and high-profile destination safeguards.
+    if coverage.get("rajasthan",0)<8:
+        raise SystemExit("Source listed fewer than eight Rajasthan Private Van Tours: stopping instead of silently dropping tours")
+    if OUTPUT.exists():
+        try:
+            previous=json.loads(OUTPUT.read_text(encoding="utf-8"))
+            prior_count=int(previous.get("source_catalogue_count") or 0)
+            if prior_count and len(records)<int(prior_count*0.9):
+                raise SystemExit(f"Catalogue shrank from {prior_count} to {len(records)}: stopping for review")
+        except (ValueError,TypeError,KeyError):
+            pass
     if len(records)<args.min_records:
         raise SystemExit(f"Only {len(records)} verified detailed tours; need {args.min_records}; failures={failures[:7]}")
     snapshot={
@@ -556,6 +639,8 @@ def main():
     tmp.write_text(json.dumps(snapshot,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     tmp.replace(output)
     print("Verified private van tours:",len(records),
+          "with day facts:",sum(bool(r.get("day_facts")) for r in records),
+          "with hotel options:",sum(bool(r.get("hotel_examples")) for r in records),
           "priced:",sum(bool(r["starting_price_inr"]) for r in records),
           "detail/price conflicts:",sum(bool(r.get("detail_discrepancy") or r.get("listing_price_conflict")) for r in records),
           "detail failures:",len(failures))
