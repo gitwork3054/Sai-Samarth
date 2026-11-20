@@ -59,6 +59,13 @@ SPECIAL_PHOTOS = {
     "Puri": ("Bird view of Jagannath Temple, Puri.jpg", "Government of Odisha", "CC BY 4.0"),
     "Nainital": ("Nainital-1.jpg", "Lalitgupta isgec", "CC BY-SA 4.0"),
     "Goa": ("Baga Beach, Calangute, Goa.jpg", "Wikimedia Commons contributor", "See Commons file page"),
+    "Diu": ("Diu fort, India.JPG", "Aditya Mahar", "CC BY-SA 4.0"),
+    "Kovalam": ("Kovalam Beach in Kerala.jpg", "Salman2018", "CC BY-SA 4.0"),
+    "Munnar": ("Munnar Tea gardens.jpg", "Sajith1sas", "CC BY-SA 4.0"),
+    "Kumarakom": ("Kumarakom Backwaters.jpg", "Rajkrishnan R", "CC BY-SA 4.0"),
+    "Coorg": ("Coorg landscape.jpg", "Cppfront", "CC0 1.0"),
+    "Shillong": ("The-Umiam-Lake.jpg", "Eurich B Nongsteng", "CC0 1.0"),
+    "Rishikesh": ("Ram Jhula footbridge - Rishikesh.jpg", "Paradise Chronicle", "CC BY-SA 4.0"),
 }
 
 SKIP=re.compile(r"flag|logo|coat.of.arms|seal|blank.map|political.map|locator.map|district.map|municipal.emblem",re.I)
